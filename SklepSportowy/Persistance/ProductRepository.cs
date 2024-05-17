@@ -1,26 +1,26 @@
-﻿using Kiosk.WebAPI.Models;
+﻿using SklepSportowy.Models;
 
-namespace Kiosk.WebAPI.Persistance
+namespace SklepSportowy.Persistance
 {
     // Implementacja repozytoriów specyficznych
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        private readonly KioskDbContext _kioskDbContext;
+        private readonly SklepDbContext _sklepDbContext;
 
-        public ProductRepository(KioskDbContext context)
+        public ProductRepository(SklepDbContext context)
             : base(context)
         {
-            _kioskDbContext = context;
+            _sklepDbContext = context;
         }
 
         public int GetMaxId()
         {
-            return _kioskDbContext.Products.Max(x => x.Id);
+            return _sklepDbContext.Products.Max(x => x.Id);
         }
 
         public bool IsNameUnique(string name)
         {
-            return _kioskDbContext.Products.Any(p => p.Name == name);
+            return _sklepDbContext.Products.Any(p => p.Name == name);
         }
 
     }

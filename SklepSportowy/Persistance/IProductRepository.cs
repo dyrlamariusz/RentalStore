@@ -1,6 +1,6 @@
-﻿using Kiosk.WebAPI.Models;
+﻿using SklepSportowy.Models;
 
-namespace Kiosk.WebAPI.Persistance
+namespace SklepSportowy.Persistance
 {
     // interfejsy repozytoriów specyficznych
     public interface IProductRepository : IRepository<Product>

@@ -1,6 +1,9 @@
 ﻿namespace SklepSportowy.Persistance
 {
-    public class IKioskUnitOfWork
-    {
-    }
+    //public class ISklepUnitOfWork: IDisposable
+    //{
+    //    IProductRepository ProductRepository { get; }
+
+    //    void Commit();
+    //}
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Kiosk.WebAPI.Persistance
+namespace SklepSportowy.Persistance
 {
     // interfejs repozytorium generycznego
     public interface IRepository<TEntity> where TEntity : class

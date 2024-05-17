@@ -1,13 +1,14 @@
-﻿namespace Kiosk.WebAPI.Persistance
+﻿namespace SklepSportowy.Persistance
 {
     // implementacja Unit of Work
-    public class KioskUnitOfWork : IKioskUnitOfWork
+    // zarządzanie repozytorium i transakcjami
+    public class SklepUnitOfWork 
     {
-        private readonly KioskDbContext _context;
+        private readonly SklepDbContext _context;
 
         public IProductRepository ProductRepository { get; }
 
-        public KioskUnitOfWork(KioskDbContext context, IProductRepository productRepository)
+        public SklepUnitOfWork(SklepDbContext context, IProductRepository productRepository)
         {
             this._context = context;
             this.ProductRepository = productRepository;

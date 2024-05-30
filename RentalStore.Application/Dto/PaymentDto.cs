@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Domain.Models
+namespace RentalStore.SharedKernel.Dto
 {
-    public class Payment
+    public class PaymentDto
     {
         public  int PaymentId { get; set; }
         public int RentalId { get; set; }
@@ -14,6 +14,5 @@ namespace RentalStore.Domain.Models
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
         public Rental Rental { get; set; }
-        public DateTime ModifiedAt { get; set; }
     }
 }

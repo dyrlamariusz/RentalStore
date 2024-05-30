@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Domain.Models
+namespace RentalStore.SharedKernel.Dto
 {
-    public class Feedback
+    public class FeedbackDto
     {
         public int FeedbackId { get; set; }
         public int EquimentId { get; set; }
@@ -14,6 +14,5 @@ namespace RentalStore.Domain.Models
         public string Comment { get; set; } 
         public DateTime FeedbackDate { get; set; }
         public Equipment Equipment { get; set; }
-        public DateTime ModifiedAt { get; set; }
     }
 }

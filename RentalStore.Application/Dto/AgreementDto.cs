@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Domain.Models
+namespace RentalStore.SharedKernel.Dto
 {
-    public class Agreement
+    public class AgreementDto
     {
         public int AgreementId { get; set; }
         public int RentalId { get; set; }
@@ -17,6 +17,5 @@ namespace RentalStore.Domain.Models
         public string CustomerAdress { get; set; }
         public DateTime AgreementDate { get; set; }
         public Rental Rental { get; set; }
-        public DateTime ModifiedAt { get; set; }
     }
 }

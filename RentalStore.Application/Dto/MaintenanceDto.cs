@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Domain.Models
+namespace RentalStore.SharedKernel.Dto
 {
-    public class Maintenance
+    public class MaintenanceDto
     {
         public int MaintenanceId { get; set; }
         public int EquipmentId { get; set; }
@@ -15,6 +15,5 @@ namespace RentalStore.Domain.Models
         public decimal Cost { get; set; }
         public DateTime? NextMaintenanceDate { get; set; }
         public Equipment Equipment { get; set;}
-        public DateTime ModifiedAt { get; set; }
     }
 }

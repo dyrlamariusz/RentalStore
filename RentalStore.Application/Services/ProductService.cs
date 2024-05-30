@@ -11,11 +11,11 @@ namespace RentalStore.Application.Services
         private readonly IRentalStoreUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        //public ProductService(IRentalStoreUnitOfWork unitOfWork, IMapper mapper)
-        //{
-        //    this._uow = unitOfWork;
-        //    this._mapper = mapper;
-        //}
+        public ProductService(IRentalStoreUnitOfWork unitOfWork, IMapper mapper)
+        {
+            this._uow = unitOfWork;
+            this._mapper = mapper;
+        }
 
         public int Create(CreateProductDto dto)
         {

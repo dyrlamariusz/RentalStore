@@ -1,4 +1,4 @@
-﻿using RentalStore.Domain.Contracts;
+﻿using RentalStore.Domain.Interfaces;
 using RentalStore.Domain.Models;
 
 namespace RentalStore.Infrastructure.Repositories

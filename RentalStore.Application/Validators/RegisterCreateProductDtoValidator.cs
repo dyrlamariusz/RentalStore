@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RentalStore.Domain.Contracts;
+using RentalStore.Domain.Interfaces;
 using RentalStore.SharedKernel.Dto;
 using System;
 using System.Collections.Generic;

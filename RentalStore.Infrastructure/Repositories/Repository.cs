@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RentalStore.Domain.Contracts;
+using RentalStore.Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace RentalStore.Infrastructure.Repositories

@@ -1,4 +1,4 @@
-﻿using RentalStore.Domain.Contracts;
+﻿using RentalStore.Domain.Interfaces;
 
 namespace RentalStore.Infrastructure
 {
@@ -7,12 +7,13 @@ namespace RentalStore.Infrastructure
     {
         private readonly RentalStoreDbContext _context;
 
-        public IProductRepository ProductRepository { get; }
+        public IProductRepository ProductRepository { get; } // DO USUNIECIA
+        public IEquipmentRepository EquipmentRepository { get; }
 
-        public RentalStoreUnitOfWork(RentalStoreDbContext context, IProductRepository productRepository)
+        public RentalStoreUnitOfWork(RentalStoreDbContext context, IEquipmentRepository equipmentRepository)
         {
             this._context = context;
-            this.ProductRepository = productRepository;
+            this.EquipmentRepository = equipmentRepository;
 
         }
 

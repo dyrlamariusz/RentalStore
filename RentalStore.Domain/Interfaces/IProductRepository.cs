@@ -1,6 +1,6 @@
 ﻿using RentalStore.Domain.Models;
 
-namespace RentalStore.Domain.Contracts
+namespace RentalStore.Domain.Interfaces
 {
     // interfejsy repozytoriów specyficznych
     public interface IProductRepository : IRepository<Product>

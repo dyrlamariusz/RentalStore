@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RentalStore.Application.Services;
-using RentalStore.Domain.Contracts;
+using RentalStore.Domain.Interfaces;
 using RentalStore.Infrastructure.Repositories;
 using RentalStore.Infrastructure;
 using RentalStore.SharedKernel.Dto;

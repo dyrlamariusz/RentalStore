@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RentalStore.SharedKernel.Dto;
+using RentalStore.Application.Dto;
 
 namespace RentalStore.Application.Validators
 {
@@ -10,7 +10,7 @@ namespace RentalStore.Application.Validators
             RuleFor(x => x.FeedbackId)
                 .GreaterThan(0).WithMessage("Feedback ID must be greater than 0.");
 
-            RuleFor(x => x.EquimentId)
+            RuleFor(x => x.EquipmentId)
                 .GreaterThan(0).WithMessage("Equipment ID must be greater than 0.");
 
             RuleFor(x => x.Rating)

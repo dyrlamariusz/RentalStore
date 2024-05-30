@@ -18,7 +18,7 @@ namespace RentalStore.Infrastructure
 
             if (_dbContext.Database.CanConnect())
             {
-                if (!_dbContext.Products.Any())
+                if (!_dbContext.Products.Any())                     // DO USUNIECIA
                 {
                     var products = new List<Product>
                     {
@@ -42,6 +42,52 @@ namespace RentalStore.Infrastructure
                     };
                     _dbContext.Products.AddRange(products);
                     _dbContext.SaveChanges();
+                }                                                   //
+
+                if (!_dbContext.Categories.Any())
+                {
+                    _dbContext.Categories.Add(new Category
+                    {
+                        CategoryName = "Narty zjazdowe",
+                        Description = "Sprzęt narciarski"
+                    });
+                }
+
+                if (!_dbContext.Equipments.Any())
+                {
+                    _dbContext.Equipments.Add(new Equipment
+                    {
+                        Name = "Narty zjazdowe damskie",
+                        CategoryId = 1,
+                        Brand = "ROSSIGNOL",
+                        Model = "Nova 6",
+                        Availability = true,
+                        Condition = "Nowe",
+                        Size = "Średnie"
+                    });
+                }
+
+                if (!_dbContext.Feedbacks.Any())
+                {
+                    _dbContext.Feedbacks.Add(new Feedback
+                    {
+                        EquipmentId = 1, 
+                        Rating = 5,
+                        Comment = "Great equipment!",
+                        FeedbackDate = DateTime.Now
+                    });
+                }
+
+                if (!_dbContext.Rentals.Any())
+                {
+                    _dbContext.Rentals.Add(new Rental
+                    {
+                        EquipmentId = 1,
+                        AgreementId = 1,
+                        RentalDate = DateTime.Now,
+                        ReturnDate = DateTime.Now.AddDays(7),
+                        Status = "Rented"
+                    });
                 }
             }
         }

@@ -10,11 +10,11 @@ namespace RentalStore.Infrastructure
         public IProductRepository ProductRepository { get; } // DO USUNIECIA
         public IEquipmentRepository EquipmentRepository { get; }
 
-        public RentalStoreUnitOfWork(RentalStoreDbContext context, IEquipmentRepository equipmentRepository)
+        public RentalStoreUnitOfWork(RentalStoreDbContext context, IEquipmentRepository equipmentRepository, IProductRepository productRepository)
         {
             this._context = context;
             this.EquipmentRepository = equipmentRepository;
-
+            this.ProductRepository = productRepository;
         }
 
         public void Commit()

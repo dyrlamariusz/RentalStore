@@ -3,7 +3,7 @@ using RentalStore.Application.Services;
 using RentalStore.Domain.Interfaces;
 using RentalStore.Infrastructure.Repositories;
 using RentalStore.Infrastructure;
-using RentalStore.SharedKernel.Dto;
+using RentalStore.Application.Dto;
 using RentalStore.WebAPI.Middleware;
 using RentalStore.Application.Mappings;
 using FluentValidation.AspNetCore;
@@ -45,11 +45,12 @@ try
     // rejestracja walidatora
     builder.Services.AddScoped<IValidator<CreateProductDto>, RegisterCreateProductDtoValidator>();
 
-    builder.Services.AddScoped<IRentalStoreUnitOfWork, RentalStoreUnitOfWork>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
     builder.Services.AddScoped<DataSeeder>();
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<ExceptionMiddleware>();
+    builder.Services.AddScoped<IRentalStoreUnitOfWork, RentalStoreUnitOfWork>();
 
     var app = builder.Build();
 

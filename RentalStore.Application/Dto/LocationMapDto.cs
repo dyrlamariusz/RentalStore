@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.SharedKernel.Dto
+namespace RentalStore.Application.Dto
 {
     public class LocationMapDto
     {
@@ -12,6 +12,5 @@ namespace RentalStore.SharedKernel.Dto
         public int EquipmentId { get; set; }
         public string Adress { get; set; }
         public EquipmentDto Equipment { get; set; }
-
     }
 }

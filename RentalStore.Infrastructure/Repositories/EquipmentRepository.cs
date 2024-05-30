@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 namespace RentalStore.Infrastructure.Repositories
 {
     // Implementacja repozytoriów specyficznych
-    public class EquipmentRepository : Repository<Product>, IEquipmentRepository
+    public class EquipmentRepository : Repository<Equipment>, IEquipmentRepository
     {
         private readonly RentalStoreDbContext _rentalStoreDbContext;
 

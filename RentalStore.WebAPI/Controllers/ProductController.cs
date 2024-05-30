@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentalStore.Application.Services;
 using RentalStore.Domain.Exceptions;
-using RentalStore.SharedKernel.Dto;
+using RentalStore.Application.Dto;
 
-namespace RentalStore.SharedKernel.Controllers
+namespace RentalStore.Application.Controllers
 {
 
     [ApiController]

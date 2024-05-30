@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RentalStore.Domain.Models;
-using RentalStore.SharedKernel.Dto;
+using RentalStore.Application.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

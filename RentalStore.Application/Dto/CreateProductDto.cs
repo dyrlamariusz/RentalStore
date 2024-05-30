@@ -2,7 +2,7 @@
 
 // DO USUNIECIA
 
-namespace RentalStore.SharedKernel.Dto
+namespace RentalStore.Application.Dto
 {
     public class CreateProductDto
     {

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RentalStore.SharedKernel.Dto;
+using RentalStore.Application.Dto;
 
 public class AgreementDtoValidator : AbstractValidator<AgreementDto>
 {

@@ -14,6 +14,6 @@ namespace RentalStore.SharedKernel.Dto
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public DateTime? NextMaintenanceDate { get; set; }
-        public Equipment Equipment { get; set;}
+        public EquipmentDto Equipment { get; set;}
     }
 }

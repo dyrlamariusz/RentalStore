@@ -13,6 +13,6 @@ namespace RentalStore.SharedKernel.Dto
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
-        public Rental Rental { get; set; }
+        public RentalDto Rental { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-using RentalStore.Domain.Models;
+﻿using RentalStore.Domain.Models;
 
 namespace RentalStore.Domain.Contracts
 {

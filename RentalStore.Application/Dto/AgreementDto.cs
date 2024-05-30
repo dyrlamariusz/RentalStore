@@ -16,6 +16,6 @@ namespace RentalStore.SharedKernel.Dto
         public string CustomerPhoneNumber { get; set; }
         public string CustomerAdress { get; set; }
         public DateTime AgreementDate { get; set; }
-        public Rental Rental { get; set; }
+        public RentalDto Rental { get; set; }
     }
 }

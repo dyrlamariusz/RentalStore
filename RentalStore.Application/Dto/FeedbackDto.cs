@@ -13,6 +13,6 @@ namespace RentalStore.SharedKernel.Dto
         public int Rating { get; set; }
         public string Comment { get; set; } 
         public DateTime FeedbackDate { get; set; }
-        public Equipment Equipment { get; set; }
+        public EquipmentDto Equipment { get; set; }
     }
 }

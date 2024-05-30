@@ -16,11 +16,11 @@ namespace RentalStore.SharedKernel.Dto
         public bool Availability { get; set; }
         public string Condition { get; set; }
         public string Size { get; set; }
-        public Category Category { get; set; }
-        public ICollection<Rental> Rentals { get; set; }
-        public ICollection<Feedback> Feedbacks { get; set; }
-        public ICollection<Maintenance> Maintenances { get; set;}
-        public ICollection<LocationMap> LocationMaps { get; set; }
+        public CategoryDto Category { get; set; }
+        public ICollection<RentalDto> Rentals { get; set; }
+        public ICollection<FeedbackDto> Feedbacks { get; set; }
+        public ICollection<MaintenanceDto> Maintenances { get; set;}
+        public ICollection<LocationMapDto> LocationMaps { get; set; }
         
     }
 }

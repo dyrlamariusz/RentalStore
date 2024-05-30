@@ -11,7 +11,7 @@ namespace RentalStore.SharedKernel.Dto
         public int LocationId { get; set; }
         public int EquipmentId { get; set; }
         public string Adress { get; set; }
-        public Equipment Equipment { get; set; }
+        public EquipmentDto Equipment { get; set; }
 
     }
 }

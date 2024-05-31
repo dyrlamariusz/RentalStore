@@ -13,7 +13,7 @@ namespace RentalStore.Infrastructure
 
         public void Seed()
         {
-            _dbContext.Database.EnsureDeleted();
+            // _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
             if (_dbContext.Database.CanConnect())
@@ -51,6 +51,7 @@ namespace RentalStore.Infrastructure
                         CategoryName = "Narty zjazdowe",
                         Description = "Sprzęt narciarski"
                     });
+                    _dbContext.SaveChanges();
                 }
 
                 if (!_dbContext.Equipments.Any())
@@ -65,6 +66,8 @@ namespace RentalStore.Infrastructure
                         Condition = "Nowe",
                         Size = "Średnie"
                     });
+                    _dbContext.SaveChanges();
+
                 }
 
                 if (!_dbContext.Feedbacks.Any())
@@ -88,6 +91,8 @@ namespace RentalStore.Infrastructure
                         ReturnDate = DateTime.Now.AddDays(7),
                         Status = "Rented"
                     });
+                    _dbContext.SaveChanges();
+
                 }
             }
         }

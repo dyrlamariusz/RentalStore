@@ -59,5 +59,14 @@ namespace RentalStore.Infrastructure.Repositories
         {
             return _rentalStoreDbContext.Equipments.FirstOrDefault(e => e.Name == name);
         }
+        public int GetMaxId()
+        {
+            return _rentalStoreDbContext.Equipments.Max(x => x.EquipmentId);
+        }
+
+        public bool IsInUse(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -19,8 +19,9 @@ namespace RentalStore.Application.Mappings
 
             // mapowanie dla obiektów DTO
             // ODKOMENTOWAC
-            /*CreateMap<Equipment, EquipmentDto>();
+            CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
+            CreateMap<CreateEquipmentDto, Equipment>();
 
             CreateMap<Rental, RentalDto>();
             CreateMap<RentalDto, Rental>();
@@ -41,7 +42,7 @@ namespace RentalStore.Application.Mappings
             CreateMap<FeedbackDto, Feedback>();
 
             CreateMap<LocationMap, LocationMapDto>();
-            CreateMap<LocationMapDto, LocationMap>();*/
+            CreateMap<LocationMapDto, LocationMap>();
 
 
 

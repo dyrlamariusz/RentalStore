@@ -46,5 +46,9 @@ namespace RentalStore.Infrastructure.Repositories
         {
             _context.Set<TEntity>().Remove(entity);
         }
+        public void Update(TEntity entity) // Implementacja metody Update
+        {
+            _context.Set<TEntity>().Update(entity);
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace RentalStore.Domain.Interfaces
         IList<TEntity> Find(Expression<Func<TEntity, bool>> expression);
         void Insert(TEntity entity);
         void Delete(TEntity entity);
+        void Update(TEntity entity);
+
     }
 }

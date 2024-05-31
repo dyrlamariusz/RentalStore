@@ -8,9 +8,9 @@ namespace RentalStore.Application.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : Controller
+    public class EquipmentController : Controller
     {
-        private readonly IProductService _productService;
+        private readonly IEquipmentService _equipmentService;
         private readonly ILogger<EquipmentController> _logger;
 
         //private readonly IValidator<CreateProductDto> _validator;
@@ -21,21 +21,21 @@ namespace RentalStore.Application.Controllers
         //    _validator = validator;
         //}
 
-        public ProductController(IProductService productService, ILogger<EquipmentController> logger)
+        public EquipmentController(IEquipmentService equipmentService, ILogger<EquipmentController> logger)
         {
-            this._productService = productService;
+            this._equipmentService = equipmentService;
             this._logger = logger;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductDto>> Get()
+        public ActionResult<IEnumerable<EquipmentDto>> Get()
         {
-            var result = _productService.GetAll();
-            _logger.LogDebug("Pobrano listę wszystkich produktów");
+            var result = _equipmentService.GetAll();
+            _logger.LogDebug("Pobrano listę wszystkich sprzętów");
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = "GetProduct")]
+        /*[HttpGet("{id}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,6 +98,6 @@ namespace RentalStore.Application.Controllers
             _productService.Update(dto);
             _logger.LogDebug($"Zaktualizowano produkt z id = {id}");
             return NoContent();
-        }
+        }*/
     }
 }

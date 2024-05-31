@@ -20,8 +20,6 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
-
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -45,11 +43,19 @@ try
     // rejestracja walidatora
     builder.Services.AddScoped<IValidator<CreateProductDto>, RegisterCreateProductDtoValidator>();
 
+    // Rejestracja generycznego repozytorium (Karina 31.05 22:15)
+    //builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+    // Rejestracja generycznego serwisu (Karina 31.05 22:15)
+    builder.Services.AddScoped(typeof(GenericService<>));
+
     builder.Services.AddScoped<IRentalStoreUnitOfWork, RentalStoreUnitOfWork>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
     builder.Services.AddScoped<DataSeeder>();
     builder.Services.AddScoped<IProductService, ProductService>();
+    builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+
     builder.Services.AddScoped<ExceptionMiddleware>();
 
     var app = builder.Build();

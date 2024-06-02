@@ -4,6 +4,7 @@
     {
         IProductRepository ProductRepository { get; } // DO USUNIECIA
         IEquipmentRepository EquipmentRepository { get; }
+        IRentalRepository RentalRepository { get; }
 
         void Commit();
     }

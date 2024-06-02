@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.WebAPI", "RentalStore.WebAPI\RentalStore.WebAPI.csproj", "{6986B553-2F10-4088-9ABD-FA8B816DAF66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.BlazorServer", "RentalStore.BlazorServer\RentalStore.BlazorServer.csproj", "{F6284656-3120-4B69-AF5D-7F75D868C34C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalStore.BlazorServer", "RentalStore.BlazorServer\RentalStore.BlazorServer.csproj", "{0C32FDB9-786C-4AD3-8181-401581BC2741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{6986B553-2F10-4088-9ABD-FA8B816DAF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6986B553-2F10-4088-9ABD-FA8B816DAF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6986B553-2F10-4088-9ABD-FA8B816DAF66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6284656-3120-4B69-AF5D-7F75D868C34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6284656-3120-4B69-AF5D-7F75D868C34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6284656-3120-4B69-AF5D-7F75D868C34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6284656-3120-4B69-AF5D-7F75D868C34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C32FDB9-786C-4AD3-8181-401581BC2741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C32FDB9-786C-4AD3-8181-401581BC2741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C32FDB9-786C-4AD3-8181-401581BC2741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C32FDB9-786C-4AD3-8181-401581BC2741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

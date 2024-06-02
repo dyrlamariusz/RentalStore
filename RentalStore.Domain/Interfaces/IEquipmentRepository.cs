@@ -11,6 +11,6 @@ namespace RentalStore.Domain.Interfaces
 
         //skopiowane z IProductRepository
         int GetMaxId();
-        //bool IsInUse(string email);
+        
     }
 }

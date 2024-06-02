@@ -52,10 +52,12 @@ try
     builder.Services.AddScoped<IRentalStoreUnitOfWork, RentalStoreUnitOfWork>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+    builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+
     builder.Services.AddScoped<DataSeeder>();
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IEquipmentService, EquipmentService>();
-
+    builder.Services.AddScoped<IRentalService, RentalService>();
     builder.Services.AddScoped<ExceptionMiddleware>();
 
     var app = builder.Build();

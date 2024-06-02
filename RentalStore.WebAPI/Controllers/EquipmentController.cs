@@ -35,14 +35,14 @@ namespace RentalStore.Application.Controllers
             return Ok(result);
         }
 
-        /*[HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetEquipment")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ProductDto> Get(int id)
+        public ActionResult<EquipmentDto> Get(int id)
         {
-            var result = _productService.GetById(id);
-            _logger.LogDebug($"Pobrano produkt o id = {id}");
+            var result = _equipmentService.GetById(id);
+            _logger.LogDebug($"Pobrano sprzęt o id = {id}");
             return Ok(result);
         }
 
@@ -51,7 +51,7 @@ namespace RentalStore.Application.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Create([FromBody] CreateProductDto dto)
+        public ActionResult Create([FromBody] CreateEquipmentDto dto)
         {
             // 1. Atrybut [ApiController]                               --> uruchamia automatyczną walidację
             // 2. Brak atrybutu [ApiController]                         --> automatyczna walidacja nie jest uruchamiania 
@@ -65,9 +65,9 @@ namespace RentalStore.Application.Controllers
             //    return BadRequest(validationResult);
             //}
 
-            var id = _productService.Create(dto);
+            var id = _equipmentService.Create(dto);
 
-            _logger.LogDebug($"Utworzono nowy produkt z id = {id}");
+            _logger.LogDebug($"Utworzono nowy sprzęt z id = {id}");
             var actionName = nameof(Get);
             var routeValues = new { id };
             return CreatedAtAction(actionName, routeValues, null);
@@ -79,8 +79,8 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
-            _productService.Delete(id);
-            _logger.LogDebug($"Usunieto produkt z id = {id}");
+            _equipmentService.Delete(id);
+            _logger.LogDebug($"Usunieto sprzęt z id = {id}");
             return NoContent();
         }
 
@@ -88,16 +88,16 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Update(int id, [FromBody] UpdateProductDto dto)
+        public ActionResult Update(int id, [FromBody] UpdateEquipmentDto dto)
         {
-            if (id != dto.Id)
+            if (id != dto.EquipmentId)
             {
                 throw new BadRequestException("Id param is not valid");
             }
 
-            _productService.Update(dto);
-            _logger.LogDebug($"Zaktualizowano produkt z id = {id}");
+            _equipmentService.Update(dto);
+            _logger.LogDebug($"Zaktualizowano sprzęt z id = {id}");
             return NoContent();
-        }*/
+        }
     }
 }

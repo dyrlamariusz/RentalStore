@@ -24,8 +24,7 @@ namespace RentalStore.Application.Validators
                 .NotEmpty().WithMessage("Return date is required.");
 
             RuleFor(x => x.Status)
-                .NotEmpty().WithMessage("Status is required.")
-                .MaximumLength(50).WithMessage("Status can't be longer than 50 characters.");
+                .IsInEnum().WithMessage("Invalid status value.");
         }
     }
 }

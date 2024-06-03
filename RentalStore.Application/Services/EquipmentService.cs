@@ -24,20 +24,19 @@ namespace RentalStore.Application.Services
 
         public int Create(CreateEquipmentDto dto)
         {
-            if (dto == null)
+            var category = _uow.CategoryRepository.Find(c => c.CategoryName == dto.CategoryName).FirstOrDefault();
+            if (category == null)
             {
-                throw new BadRequestException("Equipment is null");
+                throw new BadRequestException("Invalid category name");
             }
 
-            var id = _uow.EquipmentRepository.GetMaxId() + 1;
             var equipment = _mapper.Map<Equipment>(dto);
-            equipment.EquipmentId = id;
-
+            equipment.CategoryId = category.CategoryId; // Ustawianie CategoryId na podstawie znalezionej kategorii
             _uow.EquipmentRepository.Insert(equipment);
             _uow.Commit();
-
-            return id;
+            return equipment.EquipmentId;
         }
+    
 
         public void Delete(int id)
         {
@@ -89,9 +88,9 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Equipment not found");
             }
 
-            equipment.Name = dto.Name;
+            /*equipment.Name = dto.Name;
             equipment.Brand = dto.Brand;
-            equipment.Model = dto.Model;
+            equipment.Model = dto.Model;*/
 
             _uow.Commit();
         }

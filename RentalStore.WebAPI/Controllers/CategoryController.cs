@@ -7,52 +7,53 @@ namespace RentalStore.Application.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EquipmentController : Controller
+    public class CategoryController : Controller
     {
-        private readonly IEquipmentService _equipmentService;
-        private readonly ILogger<EquipmentController> _logger;
+        private readonly ICategoryService _categoryService;
+        private readonly ICategoryService categoryService;
+        private readonly ILogger<CategoryController> _logger;
 
-        public EquipmentController(IEquipmentService equipmentService, ILogger<EquipmentController> logger)
+        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
         {
-            this._equipmentService = equipmentService;
+            this._categoryService = categoryService;
             this._logger = logger;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EquipmentDto>> Get()
+        public ActionResult<IEnumerable<CategoryDto>> Get()
         {
-            var result = _equipmentService.GetAll();
-            _logger.LogDebug("Pobrano listę wszystkich sprzętów");
+            var result = _categoryService.GetAll();
+            _logger.LogDebug("Pobrano listę wszystkich kategorii");
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = "GetEquipment")]
+        [HttpGet("{id}", Name = "GetCategory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<EquipmentDto> Get(int id)
+        public ActionResult<CategoryDto> Get(int id)
         {
-            var result = _equipmentService.GetById(id);
+            var result = _categoryService.GetById(id);
             if (result == null)
             {
                 return NotFound();
             }
-            _logger.LogDebug($"Pobrano sprzęt o id = {id}");
+            _logger.LogDebug($"Pobrano kategorie o id = {id}");
             return Ok(result);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Create([FromBody] CreateEquipmentDto dto)
+        public ActionResult Create([FromBody] CreateCategoryDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var id = _equipmentService.Create(dto);
-            _logger.LogDebug($"Utworzono nowy sprzęt z id = {id}");
+            var id = _categoryService.Create(dto);
+            _logger.LogDebug($"Utworzono nowy kategorie z id = {id}");
             var actionName = nameof(Get);
             var routeValues = new { id };
             return CreatedAtAction(actionName, routeValues, null);
@@ -63,13 +64,13 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
-            var equipment = _equipmentService.GetById(id);
-            if (equipment == null)
+            var category = _categoryService.GetById(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            _equipmentService.Delete(id);
-            _logger.LogDebug($"Usunieto sprzęt z id = {id}");
+            _categoryService.Delete(id);
+            _logger.LogDebug($"Usunieto kategorie z id = {id}");
             return NoContent();
         }
 
@@ -77,21 +78,21 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Update(int id, [FromBody] UpdateEquipmentDto dto)
+        public ActionResult Update(int id, [FromBody] UpdateCategoryDto dto)
         {
-            if (id != dto.EquipmentId)
+            if (id != dto.CategoryId)
             {
                 throw new BadRequestException("Id param is not valid");
             }
 
-            var equipment = _equipmentService.GetById(id);
-            if (equipment == null)
+            var category = _categoryService.GetById(id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            _equipmentService.Update(dto);
-            _logger.LogDebug($"Zaktualizowano sprzęt z id = {id}");
+            _categoryService.Update(dto);
+            _logger.LogDebug($"Zaktualizowano kategoriez id = {id}");
             return NoContent();
         }
     }

@@ -46,39 +46,60 @@ namespace RentalStore.Infrastructure
 
                 if (!_dbContext.Categories.Any())
                 {
-                    _dbContext.Categories.Add(new Category
+                    var categories = new List<Category>
                     {
-                        CategoryName = "Narty zjazdowe",
-                        Description = "Sprzęt narciarski"
-                    });
+                        new Category { CategoryName = "Narty zjazdowe", Description = "Sprzęt narciarski" },
+                        new Category { CategoryName = "Rower", Description = "Rower górski" }
+                    };
+                    _dbContext.Categories.AddRange(categories);
                     _dbContext.SaveChanges();
                 }
 
                 if (!_dbContext.Equipments.Any())
                 {
-                    _dbContext.Equipments.Add(new Equipment
+                    var category = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == "Narty zjazdowe");
+                    if (category != null)
                     {
-                        Name = "Narty zjazdowe damskie",
-                        CategoryId = 1,
-                        Brand = "ROSSIGNOL",
-                        Model = "Nova 6",
-                        Availability = true,
-                        Condition = "Nowe",
-                        Size = "Średnie"
-                    });
-                    _dbContext.SaveChanges();
+                        _dbContext.Equipments.Add(new Equipment
+                        {
+                            Name = "Narty zjazdowe damskie",
+                            CategoryId = category.CategoryId,
+                            Brand = "ROSSIGNOL",
+                            Model = "Nova 6",
+                            Availability = true,
+                            Condition = "Nowe",
+                            Size = "Średnie"
+                        });
+                    }
 
+                    category = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == "Rower");
+                    if (category != null)
+                    {
+                        _dbContext.Equipments.Add(new Equipment
+                        {
+                            Name = "Rower górski",
+                            CategoryId = category.CategoryId,
+                            Brand = "Kross",
+                            Model = "Hexagon 6.0",
+                            Availability = true,
+                            Condition = "Nowe",
+                            Size = "L"
+                        });
+                    }
+
+                    _dbContext.SaveChanges();
                 }
 
                 if (!_dbContext.Feedbacks.Any())
                 {
                     _dbContext.Feedbacks.Add(new Feedback
                     {
-                        EquipmentId = 1, 
+                        EquipmentId = 1,
                         Rating = 5,
                         Comment = "Great equipment!",
                         FeedbackDate = DateTime.Now
                     });
+                    _dbContext.SaveChanges();
                 }
 
                 if (!_dbContext.Rentals.Any())
@@ -89,10 +110,9 @@ namespace RentalStore.Infrastructure
                         AgreementId = 1,
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
-                        Status = "Rented"
+                        Status = Rental.RentalStatus.Active
                     });
                     _dbContext.SaveChanges();
-
                 }
             }
         }

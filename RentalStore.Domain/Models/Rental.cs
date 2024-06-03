@@ -13,7 +13,14 @@ namespace RentalStore.Domain.Models
         public int AgreementId { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public string Status { get; set; }
+        public RentalStatus Status { get; set; }
+        public enum RentalStatus
+        {
+            Active,
+            Completed,
+            Canceled,
+            Overdue
+        }
         public DateTime ModifiedAt { get; set; }
     }
 }

@@ -16,32 +16,39 @@ namespace RentalStore.Infrastructure.Repositories
             _rentalStoreDbContext = context;
         }
 
-        public Equipment Get(int id)
+        public int GetMaxId()
         {
-            return _rentalStoreDbContext.Equipments.Find(id);
-        }    
-        
-        public IList<Equipment> GetAll()
-        {
-            return _rentalStoreDbContext.Equipments.ToList();
+            return _rentalStoreDbContext.Equipments.Max(x => x.EquipmentId);
         }
 
-        public void Insert(Equipment entity)
+        
+        // DO USUNIECIA (KARINA 03.03. 17:46)
+        /*public Equipment Get(int id)
+        {
+            return _rentalStoreDbContext.Equipments.Find(id);
+        } */   
+        
+       /* public IList<Equipment> GetAll()
+        {
+            return _rentalStoreDbContext.Equipments.ToList();
+        }*/
+
+        /*public void Insert(Equipment entity)
         {
             _rentalStoreDbContext.Equipments.Add(entity);
             _rentalStoreDbContext.SaveChanges();
-        }
+        }*/
 
-        public void Delete(Equipment entity)
+        /*public void Delete(Equipment entity)
         {
             _rentalStoreDbContext.Equipments.Remove(entity);
             _rentalStoreDbContext.SaveChanges();
-        }
+        }*/
 
-        public IList<Equipment> Find(Expression<Func<Equipment, bool>> expression)
+        /*public IList<Equipment> Find(Expression<Func<Equipment, bool>> expression)
         {
             return _rentalStoreDbContext.Equipments.Where(expression).ToList();
-        }
+        }*/
 
         public IList<Equipment> GetAvailableEquipments()
         {
@@ -59,14 +66,6 @@ namespace RentalStore.Infrastructure.Repositories
         {
             return _rentalStoreDbContext.Equipments.FirstOrDefault(e => e.Name == name);
         }
-        public int GetMaxId()
-        {
-            return _rentalStoreDbContext.Equipments.Max(x => x.EquipmentId);
-        }
-
-        public bool IsInUse(string email)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

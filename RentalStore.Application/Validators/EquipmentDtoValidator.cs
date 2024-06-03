@@ -33,14 +33,14 @@ namespace RentalStore.Application.Validators
                 .NotEmpty().WithMessage("Size is required.")
                 .MaximumLength(50).WithMessage("Size can't be longer than 50 characters.");
 
-            RuleFor(x => x.Category)
+            /*RuleFor(x => x.Category)
                 .NotNull().WithMessage("Category is required.")
                 .SetValidator(new CategoryDtoValidator());
 
             RuleForEach(x => x.Rentals).SetValidator(new RentalDtoValidator());
             RuleForEach(x => x.Feedbacks).SetValidator(new FeedbackDtoValidator());
             RuleForEach(x => x.Maintenances).SetValidator(new MaintenanceDtoValidator());
-            RuleForEach(x => x.LocationMaps).SetValidator(new LocationMapDtoValidator());
+            RuleForEach(x => x.LocationMaps).SetValidator(new LocationMapDtoValidator());*/
         }
     }
 }

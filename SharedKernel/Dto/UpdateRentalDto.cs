@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+# warning czy mozna to zamienic ?
 using static RentalStore.Domain.Models.Rental;
 
-namespace RentalStore.Application.Dto
+namespace RentalStore.SharedKernel.Dto
 {
     public class UpdateRentalDto
     {

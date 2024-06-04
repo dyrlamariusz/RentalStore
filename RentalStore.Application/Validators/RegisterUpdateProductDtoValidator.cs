@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RentalStore.Application.Dto;
+using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.Application.Validators
 {
@@ -20,7 +20,7 @@ namespace RentalStore.Application.Validators
             RuleFor(p => p.UnitPrice)
                 .GreaterThan(0);
 
-            
+
         }
 
     }

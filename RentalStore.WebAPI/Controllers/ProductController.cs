@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentalStore.Application.Services;
 using RentalStore.Domain.Exceptions;
-using RentalStore.Application.Dto;
+using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.Application.Controllers
 {

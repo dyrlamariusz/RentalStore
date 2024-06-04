@@ -1,4 +1,4 @@
-﻿namespace RentalStore.Application.Dto
+﻿namespace RentalStore.SharedKernel.Dto
 
 // DO USUNIECIA
 

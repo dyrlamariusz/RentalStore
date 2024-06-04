@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Application.Dto
+namespace RentalStore.SharedKernel.Dto
 {
-    public class AgreementDto
+    public class CreateAgreementDto
     {
-        //public int AgreementId { get; set; }
+       // public int AgreementId { get; set; }
         public int RentalId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerIdNumber { get; set; }

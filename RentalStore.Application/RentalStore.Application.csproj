@@ -14,7 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentalStore.Domain\RentalStore.Domain.csproj" />
-    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\RentalStore.SharedKernel\RentalStore.SharedKernel.csproj" />
+    <ProjectReference Include="..\SharedKernel\RentalStore.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

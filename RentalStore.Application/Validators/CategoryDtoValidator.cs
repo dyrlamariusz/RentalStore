@@ -17,7 +17,7 @@ namespace RentalStore.Application.Validators
             RuleFor(x => x.Description)
                 .MaximumLength(500).WithMessage("Description can't be longer than 500 characters.");
 
-            RuleForEach(x => x.Equipments).SetValidator(new EquipmentDtoValidator());
+            //RuleForEach(x => x.Equipments).SetValidator(new EquipmentDtoValidator());
         }
     }
 }

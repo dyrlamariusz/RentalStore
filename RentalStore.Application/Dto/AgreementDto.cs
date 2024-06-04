@@ -8,7 +8,7 @@ namespace RentalStore.Application.Dto
 {
     public class AgreementDto
     {
-        public int AgreementId { get; set; }
+        //public int AgreementId { get; set; }
         public int RentalId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerIdNumber { get; set; }

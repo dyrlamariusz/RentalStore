@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RentalStore.Domain.Models.Rental;
 
 namespace RentalStore.Application.Dto
 {
@@ -12,6 +13,6 @@ namespace RentalStore.Application.Dto
         //public int AgreementId { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public string Status { get; set; }
+        public RentalStatus Status { get; set; }
     }
 }

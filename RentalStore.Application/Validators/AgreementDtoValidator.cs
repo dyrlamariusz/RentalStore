@@ -5,9 +5,9 @@ public class AgreementDtoValidator : AbstractValidator<AgreementDto>
 {
     public AgreementDtoValidator()
     {
-        RuleFor(x => x.AgreementId).NotEmpty().WithMessage("Agreement ID is required.");
+        //RuleFor(x => x.AgreementId).NotEmpty().WithMessage("Agreement ID is required.");
 
-        RuleFor(x => x.RentalId).NotEmpty().WithMessage("Rental ID is required.");
+       // RuleFor(x => x.RentalId).NotEmpty().WithMessage("Rental ID is required.");
 
         RuleFor(x => x.CustomerName)
             .NotEmpty().WithMessage("Customer name is required.")

@@ -94,7 +94,7 @@ namespace RentalStore.Infrastructure
                 {
                     _dbContext.Feedbacks.Add(new Feedback
                     {
-                        EquipmentId = 1,
+                        EquipmentId = 2,
                         Rating = 5,
                         Comment = "Great equipment!",
                         FeedbackDate = DateTime.Now
@@ -106,12 +106,13 @@ namespace RentalStore.Infrastructure
                 {
                     _dbContext.Rentals.Add(new Rental
                     {
+                        RentalId = 1,
                         EquipmentId = 1,
-                        AgreementId = 1,
+                       // AgreementId = 1,
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
                         Status = Rental.RentalStatus.Active
-                    });
+                    }); ;
                     _dbContext.SaveChanges();
                 }
             }

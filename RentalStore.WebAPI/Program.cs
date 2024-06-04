@@ -11,6 +11,7 @@ using FluentValidation;
 using RentalStore.Application.Validators;
 using NLog.Web;
 using NLog;
+using System.Text.Json.Serialization;
 
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -19,6 +20,11 @@ logger.Debug("init main");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+    // Add services to the container.
+    builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
@@ -41,7 +47,7 @@ try
         options.UseSqlite(sqliteConnectionString));
 
     // rejestracja walidatora
-    builder.Services.AddScoped<IValidator<CreateProductDto>, RegisterCreateProductDtoValidator>();
+    //builder.Services.AddScoped<IValidator<CreateProductDto>, RegisterCreateProductDtoValidator>();
 
     // Rejestracja generycznego repozytorium (Karina 31.05 22:15)
     //builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

@@ -58,12 +58,12 @@ namespace RentalStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        public IList<Rental> GetRentalsByAgreementId(int agreementId)
+        /*public IList<Rental> GetRentalsByAgreementId(int agreementId)
         {
             return _context.Set<Rental>()
                 .Where(r => r.AgreementId == agreementId)
                 .ToList();
-        }
+        }*/
 
     }
 }

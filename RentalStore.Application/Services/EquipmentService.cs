@@ -89,13 +89,18 @@ namespace RentalStore.Application.Services
                 throw new BadRequestException("Invalid category name");
             }
 
-            // Mapuj wartości z DTO do istniejącego rekordu
+            // Mapowanie wartości z DTO do istniejącego rekordu
             _mapper.Map(dto, equipment);
-            equipment.CategoryId = category.CategoryId; // Ustaw ID kategorii
+            equipment.CategoryId = category.CategoryId; // Ustawianie ID kategorii
 
-            // Zaktualizuj rekord
+            
             _uow.EquipmentRepository.Update(equipment);
             _uow.Commit();
+        }
+        public List<EquipmentDto> GetEquipmentByCategoryName(string categoryName)
+        {
+            var equipments = _uow.EquipmentRepository.GetEquipmentByCategoryName(categoryName);
+            return _mapper.Map<List<EquipmentDto>>(equipments);
         }
     }
 }

@@ -26,12 +26,13 @@ namespace RentalStore.Infrastructure.Repositories
             return _rentalStoreDbContext.Equipments.Where(e => e.Availability).ToList();
         }
 
-        public Equipment GetEquipmentByCategory(string categoryName)
+        public IList<Equipment> GetEquipmentByCategoryName(string categoryName)
         {
             return _rentalStoreDbContext.Equipments
-                .Include(e => e.Category)
-                .FirstOrDefault(e => e.Category.CategoryName == categoryName);
+                .Where(e => e.Category.CategoryName == categoryName)
+                .ToList();
         }
+
 
         public Equipment GetEquipmentByName(string name)
         {

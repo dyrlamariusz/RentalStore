@@ -7,9 +7,8 @@ namespace RentalStore.Domain.Interfaces
     {
         IList<Equipment> GetAvailableEquipments();
         Equipment GetEquipmentByName(string name);
-        Equipment GetEquipmentByCategory(string categoryName);
+        IList<Equipment> GetEquipmentByCategoryName(string categoryName);
 
-        //skopiowane z IProductRepository
         int GetMaxId();
         
     }

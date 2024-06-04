@@ -9,5 +9,6 @@ namespace RentalStore.Application.Services
         int Create(CreateEquipmentDto dto);
         void Update(int id, UpdateEquipmentDto dto);
         void Delete(int id);
+        List<EquipmentDto> GetEquipmentByCategoryName(string categoryName); 
     }
 }

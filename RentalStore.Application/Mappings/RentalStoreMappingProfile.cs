@@ -17,16 +17,7 @@ namespace RentalStore.Application.Mappings
             CreateMap<CreateProductDto, Product>()
                 .ForMember(m => m.Description, c => c.MapFrom(s => s.Desc));
 
-            /*CreateMap<Equipment, EquipmentDto>()
-            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.CategoryName))
-            .ReverseMap()
-            .ForMember(dest => dest.Category, opt => opt.Ignore());
-
-            CreateMap<EquipmentDto, Equipment>()
-           .ForMember(dest => dest.Category, opt => opt.Ignore());
-
-            CreateMap<CreateEquipmentDto, Equipment>()
-                .ForMember(dest => dest.Category, opt => opt.Ignore());*/
+            
 
             // mapowanie dla obiektów DTO
             // ODKOMENTOWAC
@@ -46,8 +37,8 @@ namespace RentalStore.Application.Mappings
             CreateMap<UpdateRentalDto, Rental>();
             CreateMap<Agreement, AgreementDto>().ReverseMap();
 
-            CreateMap<Agreement, AgreementDto>();
-            CreateMap<AgreementDto, Agreement>();
+            /*CreateMap<Agreement, AgreementDto>();
+            CreateMap<AgreementDto, Agreement>();*/
 
             CreateMap<Maintenance, MaintenanceDto>();
             CreateMap<MaintenanceDto, Maintenance>();

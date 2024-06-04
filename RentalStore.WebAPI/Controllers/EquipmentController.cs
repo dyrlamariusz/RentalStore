@@ -116,5 +116,25 @@ namespace RentalStore.Application.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpGet("category/{categoryName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<EquipmentDto>> GetByCategoryName(string categoryName)
+        {
+            try
+            {
+                var result = _equipmentService.GetEquipmentByCategoryName(categoryName);
+                if (result == null || result.Count == 0)
+                {
+                    return NotFound(new { Message = "No equipment found for the specified category" });
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas pobierania sprzętu na podstawie nazwy kategorii");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

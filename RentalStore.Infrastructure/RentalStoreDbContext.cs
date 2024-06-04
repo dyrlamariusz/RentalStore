@@ -16,6 +16,11 @@ namespace RentalStore.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Equipment>()
+            .HasOne(e => e.Category)
+            .WithMany(c => c.Equipments)
+            .HasForeignKey(e => e.CategoryId);
+
             modelBuilder.Entity<LocationMap>()
                 .HasKey(lm => lm.LocationId);
 

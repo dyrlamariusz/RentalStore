@@ -1,0 +1,26 @@
+﻿@page "/equipment"
+@inject IEquipmentService _equipmentService;
+
+<PageTitle>Equipment list</PageTitle>
+<h1>Equipment list</h1>
+<div class="row">
+    @foreach (var e in _equipmentList)
+    {
+        <div class="card m-2" style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@e.Name</h5>
+                <p class="card-text">@e.Model</p>
+                <p class="card-text">@e.Condition</p>
+                <a href="#" class="btn btn-primary">Add to cart</a>
+            </div>
+        </div>
+    }
+</div>
+@code {
+    private IEnumerable<EquipmentDto> _equipmentList = new List<EquipmentDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        _equipmentList = await _equipmentService.GetAll();
+    }
+} 

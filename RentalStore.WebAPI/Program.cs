@@ -68,6 +68,13 @@ try
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<ExceptionMiddleware>();
 
+    // rejestruje w kontenerze zale¿noœci politykê CORS o nazwie SaleKiosk,
+    // która zapewnia dostêp do API z dowolnego miejsca oraz przy pomocy dowolnej metody
+    builder.Services.AddCors(o => o.AddPolicy("RentalStore", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    }));
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -85,6 +92,9 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    // wstawia politykê CORS obs³ugi do potoku ¿¹dania
+    app.UseCors("RentalStore");
 
     // seeding data
     using (var scope = app.Services.CreateScope())

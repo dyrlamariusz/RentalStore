@@ -75,23 +75,26 @@ namespace RentalStore.Application.Services
             return result;
         }
 
-        public void Update(UpdateEquipmentDto dto)
+        public void Update(int id, UpdateEquipmentDto dto)
         {
-            if (dto == null)
-            {
-                throw new BadRequestException("No equipment data");
-            }
-
-            var equipment = _uow.EquipmentRepository.Get(dto.EquipmentId);
+            var equipment = _uow.EquipmentRepository.Get(id);
             if (equipment == null)
             {
                 throw new NotFoundException("Equipment not found");
             }
 
-            /*equipment.Name = dto.Name;
-            equipment.Brand = dto.Brand;
-            equipment.Model = dto.Model;*/
+            var category = _uow.CategoryRepository.GetCategoryByName(dto.CategoryName);
+            if (category == null)
+            {
+                throw new BadRequestException("Invalid category name");
+            }
 
+            // Mapuj wartości z DTO do istniejącego rekordu
+            _mapper.Map(dto, equipment);
+            equipment.CategoryId = category.CategoryId; // Ustaw ID kategorii
+
+            // Zaktualizuj rekord
+            _uow.EquipmentRepository.Update(equipment);
             _uow.Commit();
         }
     }

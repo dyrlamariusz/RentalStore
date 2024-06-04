@@ -1,88 +1,123 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentalStore.Application.Dto;
 using RentalStore.Application.Services;
+using RentalStore.Domain.Exceptions;
 using RentalStore.Domain.Models;
 
 namespace RentalStore.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RentalsController : ControllerBase
+    public class RentalController : ControllerBase
     {
         private readonly IRentalService _rentalService;
+        private readonly ILogger<RentalController> _logger;
 
-        public RentalsController(IRentalService rentalService)
+        public RentalController(IRentalService rentalService, ILogger<RentalController> logger)
         {
             _rentalService = rentalService;
+            _logger = logger;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Rental>> GetAll()
+        public ActionResult<IEnumerable<RentalDto>> Get()
         {
-            var rentals = _rentalService.GetAll();
-            return Ok(rentals);
+            var result = _rentalService.GetAll();
+            _logger.LogDebug("Pobrano listę wszystkich wypożyczeń");
+            return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Rental> Get(int id)
+        [HttpGet("{id}", Name = "GetRental")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<RentalDto> Get(int id)
         {
-            var rental = _rentalService.Get(id);
-            if (rental == null)
+            var result = _rentalService.GetById(id);
+            if (result == null)
             {
                 return NotFound();
             }
-            return Ok(rental);
+            _logger.LogDebug($"Pobrano wypożyczenie o id = {id}");
+            return Ok(result);
         }
 
         [HttpPost]
-        public ActionResult<int> Post([FromBody] CreateRentalDto rentalDto)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Create([FromBody] CreateRentalDto dto)
         {
-            if (rentalDto == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Rental data is null");
+                return BadRequest(ModelState);
             }
 
-            var rentalId = _rentalService.Create(rentalDto);
-            return CreatedAtAction(nameof(Get), new { id = rentalId }, rentalId);
+            var id = _rentalService.Create(dto);
+            _logger.LogDebug($"Utworzono nowe wypożyczenie z id = {id}");
+            var actionName = nameof(Get);
+            var routeValues = new { id };
+            return CreatedAtAction(actionName, routeValues, null);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Rental rental)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Update(int id, [FromBody] UpdateRentalDto dto)
         {
-            if (id != rental.RentalId)
+            try
             {
-                return BadRequest("ID mismatch");
+                _rentalService.Update(id, dto);
+                _logger.LogDebug($"Zaktualizowano wypożyczenie z id = {id}");
+                return NoContent();
             }
-
-            _rentalService.Update(rental);
-            return NoContent();
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas aktualizacji wypożyczenia");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+        /*[HttpPut("{rentalId}/assign-agreement")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult AssignAgreement(int rentalId, [FromBody] Agreement agreement)
+        {
+            try
+            {
+                _rentalService.AssignAgreement(rentalId, agreement);
+                _logger.LogDebug($"Przypisano umowę do wypożyczenia o id = {rentalId}");
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+        }*/
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult Delete(int id)
         {
-            var rental = _rentalService.Get(id);
-            if (rental == null)
+            try
             {
-                return NotFound();
+                _rentalService.Delete(id);
+                _logger.LogDebug($"Usunięto wypożyczenie z id = {id}");
+                return NoContent();
             }
-
-            _rentalService.Delete(rental);
-            return NoContent();
-        }
-
-        [HttpGet("active")]
-        public ActionResult<IEnumerable<Rental>> GetActiveRentals()
-        {
-            var activeRentals = _rentalService.GetActiveRentals();
-            return Ok(activeRentals);
-        }
-
-        [HttpGet("agreement/{agreementId}")]
-        public ActionResult<IEnumerable<Rental>> GetRentalsByAgreementId(int agreementId)
-        {
-            var rentals = _rentalService.GetRentalsByAgreementId(agreementId);
-            return Ok(rentals);
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
         }
     }
 }

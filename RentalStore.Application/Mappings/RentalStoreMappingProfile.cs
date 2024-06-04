@@ -33,13 +33,18 @@ namespace RentalStore.Application.Mappings
             CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
             CreateMap<CreateEquipmentDto, Equipment>();
+            CreateMap<UpdateEquipmentDto, Equipment>();
 
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
             CreateMap<CreateCategoryDto, Category>();
 
-            CreateMap<Rental, RentalDto>();
-            CreateMap<RentalDto, Rental>();
+            /*CreateMap<Rental, RentalDto>();
+            CreateMap<RentalDto, Rental>();*/
+            CreateMap<Rental, RentalDto>().ReverseMap();
+            CreateMap<CreateRentalDto, Rental>();
+            CreateMap<UpdateRentalDto, Rental>();
+            CreateMap<Agreement, AgreementDto>().ReverseMap();
 
             CreateMap<Agreement, AgreementDto>();
             CreateMap<AgreementDto, Agreement>();

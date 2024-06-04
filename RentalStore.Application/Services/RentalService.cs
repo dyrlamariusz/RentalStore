@@ -18,48 +18,52 @@ namespace RentalStore.Application.Services
 
         public RentalService(IRentalStoreUnitOfWork unitOfWork, IMapper mapper)
         {
-            this._uow = unitOfWork;
-            this._mapper = mapper;
+            _uow = unitOfWork;
+            _mapper = mapper;
         }
 
         public int Create(CreateRentalDto dto)
         {
-            if (dto == null)
-            {
-                throw new BadRequestException("Rental is null");
-            }
-
             var rental = _mapper.Map<Rental>(dto);
-
             _uow.RentalRepository.Insert(rental);
             _uow.Commit();
 
             return rental.RentalId;
         }
 
-        public void Delete(Rental rental)
+        public void Delete(int id)
         {
+            var rental = _uow.RentalRepository.Get(id);
+            if (rental == null)
+            {
+                throw new NotFoundException("Rental not found");
+            }
+
             _uow.RentalRepository.Delete(rental);
             _uow.Commit();
         }
 
-        public Rental Get(int id)
+        public RentalDto GetById(int id)
         {
-            return _uow.RentalRepository.Get(id);
-        }
-        public IList<Rental> GetAll()
-        {
-            return _uow.RentalRepository.GetAll();
+            var rental = _uow.RentalRepository.Get(id);
+            if (rental == null)
+            {
+                throw new NotFoundException("Rental not found");
+            }
+
+            return _mapper.Map<RentalDto>(rental);
         }
 
-        public IList<Rental> GetActiveRentals()
+        public IList<RentalDto> GetAll()
         {
-            return _uow.RentalRepository.GetActiveRentals();
+            var rentals = _uow.RentalRepository.GetAll();
+            return _mapper.Map<IList<RentalDto>>(rentals);
         }
 
-        public IList<Rental> GetRentalsByAgreementId(int agreementId)
+        public IList<RentalDto> GetActiveRentals()
         {
-            return _uow.RentalRepository.GetRentalsByAgreementId(agreementId);
+            var rentals = _uow.RentalRepository.GetActiveRentals();
+            return _mapper.Map<IList<RentalDto>>(rentals);
         }
 
         public void Insert(Rental rental)
@@ -68,11 +72,30 @@ namespace RentalStore.Application.Services
             _uow.Commit();
         }
 
-        public void Update(Rental rental)
+        public void Update(int id, UpdateRentalDto dto)
         {
+            var rental = _uow.RentalRepository.Get(id);
+            if (rental == null)
+            {
+                throw new NotFoundException("Rental not found");
+            }
+
+            _mapper.Map(dto, rental);
             _uow.RentalRepository.Update(rental);
             _uow.Commit();
         }
 
+        /*public void AssignAgreement(int rentalId, Agreement agreement)
+        {
+            var rental = _uow.RentalRepository.Get(rentalId);
+            if (rental == null)
+            {
+                throw new NotFoundException("Rental not found");
+            }
+
+            agreement.RentalId = rentalId;
+            _uow.AgreementRepository.Insert(agreement);
+            _uow.Commit();
+        }*/
     }
 }

@@ -10,13 +10,13 @@ namespace RentalStore.Application.Services
 {
     public interface IRentalService
     {
-        Rental Get(int id);
-        IList<Rental> GetAll();
+        RentalDto GetById(int id);
+        IList<RentalDto> GetAll();
         void Insert(Rental rental);
-        void Update(Rental rental);
-        void Delete(Rental rental);
-        IList<Rental> GetActiveRentals();
-        IList<Rental> GetRentalsByAgreementId(int agreementId);
+        void Update(int id, UpdateRentalDto dto);
+        void Delete(int id);
+        IList<RentalDto> GetActiveRentals();
+        //void AssignAgreement(int rentalId, Agreement agreement);
         int Create(CreateRentalDto dto);
     }
 }

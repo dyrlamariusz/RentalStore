@@ -32,13 +32,23 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<EquipmentDto> Get(int id)
         {
-            var result = _equipmentService.GetById(id);
+            /*var result = _equipmentService.GetById(id);
             if (result == null)
             {
                 return NotFound();
             }
             _logger.LogDebug($"Pobrano sprzęt o id = {id}");
-            return Ok(result);
+            return Ok(result);*/
+            try
+            {
+                var result = _equipmentService.GetById(id);
+                _logger.LogDebug($"Pobrano sprzęt o id = {id}");
+                return Ok(result);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -63,14 +73,21 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
-            var equipment = _equipmentService.GetById(id);
-            if (equipment == null)
+            try
             {
-                return NotFound();
+                _equipmentService.Delete(id);
+                _logger.LogDebug($"Usunięto sprzęt z id = {id}");
+                return NoContent();
             }
-            _equipmentService.Delete(id);
-            _logger.LogDebug($"Usunieto sprzęt z id = {id}");
-            return NoContent();
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas usuwania sprzętu");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut("{id}")]
@@ -79,20 +96,25 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Update(int id, [FromBody] UpdateEquipmentDto dto)
         {
-            if (id != dto.EquipmentId)
+            try
             {
-                throw new BadRequestException("Id param is not valid");
+                _equipmentService.Update(id, dto);
+                _logger.LogDebug($"Zaktualizowano sprzęt z id = {id}");
+                return NoContent();
             }
-
-            var equipment = _equipmentService.GetById(id);
-            if (equipment == null)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new { Message = ex.Message });
             }
-
-            _equipmentService.Update(dto);
-            _logger.LogDebug($"Zaktualizowano sprzęt z id = {id}");
-            return NoContent();
+            catch (BadRequestException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas aktualizacji sprzętu");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace RentalStore.Domain.Models
     {
         public int RentalId { get; set; }
         public int EquipmentId { get; set; }
-        public int AgreementId { get; set; }
+        public int? AgreementId { get; set; } // puste agreementid, bo najpierw tworzy sie rental bez agreementid
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatus Status { get; set; }

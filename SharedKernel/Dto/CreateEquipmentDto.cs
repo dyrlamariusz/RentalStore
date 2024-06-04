@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace RentalStore.Application.Dto
+namespace RentalStore.SharedKernel.Dto
 {
     public class CreateEquipmentDto
     {

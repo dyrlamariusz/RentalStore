@@ -2,7 +2,7 @@
 
 // DO USUNIECIA
 
-namespace RentalStore.Application.Dto
+namespace RentalStore.SharedKernel.Dto
 {
     public class UpdateEquipmentDto
     {

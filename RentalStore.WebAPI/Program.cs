@@ -3,7 +3,7 @@ using RentalStore.Application.Services;
 using RentalStore.Domain.Interfaces;
 using RentalStore.Infrastructure.Repositories;
 using RentalStore.Infrastructure;
-using RentalStore.Application.Dto;
+using RentalStore.SharedKernel.Dto;
 using RentalStore.WebAPI.Middleware;
 using RentalStore.Application.Mappings;
 using FluentValidation.AspNetCore;

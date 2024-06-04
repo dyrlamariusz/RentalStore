@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentalStore.Application.Dto;
+using RentalStore.SharedKernel.Dto;
 using RentalStore.Application.Services;
 using RentalStore.Domain.Exceptions;
 using RentalStore.Domain.Models;

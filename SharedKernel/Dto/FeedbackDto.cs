@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentalStore.Application.Dto
+namespace RentalStore.SharedKernel.Dto
 {
     public class FeedbackDto
     {

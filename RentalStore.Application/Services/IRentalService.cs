@@ -1,4 +1,4 @@
-﻿using RentalStore.Application.Dto;
+﻿using RentalStore.SharedKernel.Dto;
 using RentalStore.Domain.Models;
 using System;
 using System.Collections.Generic;

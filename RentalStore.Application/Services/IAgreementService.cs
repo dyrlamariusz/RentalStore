@@ -1,4 +1,4 @@
-﻿using RentalStore.Application.Dto;
+﻿using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.Application.Services
 {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RentalStore.Application.Dto;
+using RentalStore.SharedKernel.Dto;
 using RentalStore.Domain.Exceptions;
 using RentalStore.Domain.Interfaces;
 using RentalStore.Domain.Models;

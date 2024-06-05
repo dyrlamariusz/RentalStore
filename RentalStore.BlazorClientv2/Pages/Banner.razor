@@ -1,0 +1,33 @@
+﻿@page "/banner"
+
+<div class="container-fluid p-0">
+    <div class="banner">
+        <img src="images/banner.jpg" class="img-fluid w-100" alt="Banner Image" />
+        <div class="banner-text">
+            @*<h1 class="display-4">Kolekcja reprezentacji na 2024 r.</h1>*@
+            @*<p>Zaufanie i niezawodność w  pomaganiu naszym klientom w realizacji ich potencjału</p>*@
+        </div>
+    </div>
+</div>
+
+<style>
+    .banner {
+        position: relative;
+    }
+    .banner img {
+        max-height: 800px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .banner-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-align: center;
+    }
+</style>
+@code {
+
+}

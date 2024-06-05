@@ -44,7 +44,7 @@ namespace RentalStore.Infrastructure
                     _dbContext.SaveChanges();
                 }                                                   //
 
-                if (!_dbContext.Categories.Any())
+                /*if (!_dbContext.Categories.Any())
                 {
                     var categories = new List<Category>
                     {
@@ -114,7 +114,7 @@ namespace RentalStore.Infrastructure
                         Status = Rental.RentalStatus.Active
                     }); ;
                     _dbContext.SaveChanges();
-                }
+                }*/
             }
         }
     }

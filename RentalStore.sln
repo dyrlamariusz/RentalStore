@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.BlazorClient", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.SharedKernel", "RentalStore.SharedKernel\RentalStore.SharedKernel.csproj", "{B1D7C7F8-9750-474E-B746-285FEEF7E3CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalStore.BlazorClientv2", "RentalStore.BlazorClientv2\RentalStore.BlazorClientv2.csproj", "{F2A88433-BA05-4918-ACB5-9F76B2F1BF60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.BlazorClientv2", "RentalStore.BlazorClientv2\RentalStore.BlazorClientv2.csproj", "{F2A88433-BA05-4918-ACB5-9F76B2F1BF60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalStore.BlazorServer", "RentalStore.BlazorServer\RentalStore.BlazorServer.csproj", "{52B43832-08D8-4807-9719-2F9542018A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{F2A88433-BA05-4918-ACB5-9F76B2F1BF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A88433-BA05-4918-ACB5-9F76B2F1BF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A88433-BA05-4918-ACB5-9F76B2F1BF60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B43832-08D8-4807-9719-2F9542018A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B43832-08D8-4807-9719-2F9542018A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B43832-08D8-4807-9719-2F9542018A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B43832-08D8-4807-9719-2F9542018A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

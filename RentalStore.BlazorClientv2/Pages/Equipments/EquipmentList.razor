@@ -2,6 +2,7 @@
 @inject IEquipmentService _equipmentService;
 
 <PageTitle>Equipment list</PageTitle>
+
 <h1>Equipment list</h1>
 <div class="row">
     @foreach (var e in _equipmentList)
@@ -17,6 +18,7 @@
         </div>
     }
 </div>
+
 @code {
     private IEnumerable<EquipmentDto> _equipmentList = new List<EquipmentDto>();
     protected override async Task OnInitializedAsync()

@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+@*<div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -14,5 +14,37 @@
             @Body
         </article>
     </main>
+</div>*@
+@*<NavMenu />*@
 
+<nav class="navbar navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="#">Rental Store</a>
+    </div>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <NavLink class="nav-link text-white" href="equipment">
+                    <h5>Equipment</h5>
+                </NavLink>
+                <NavLink class="nav-link text-white" href="">
+                    <h5>About Us</h5>
+                </NavLink>
+                <NavLink class="nav-link text-white" href="">
+                    <h5>Contact</h5>
+                </NavLink>
+
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            @Body
+        </div>
+    </div>
 </div>

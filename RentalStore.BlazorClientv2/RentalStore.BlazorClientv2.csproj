@@ -16,4 +16,8 @@
     <ProjectReference Include="..\RentalStore.SharedKernel\RentalStore.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="img\" />
+  </ItemGroup>
+
 </Project>

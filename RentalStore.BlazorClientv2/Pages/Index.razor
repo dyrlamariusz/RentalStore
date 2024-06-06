@@ -2,16 +2,52 @@
 @using RentalStore.BlazorClientv2.Services
 @inject IEquipmentService EquipmentService
 
-<div class="container mt-5">
-    <blockquote class="blockquote text-center">
-        <h2 class="display-3">Rental Store Company</h2>
-        <p class="mb-0">Your go-to source for all sports equipment rentals. From skis to bicycles, we have it all. Rent online today and enjoy top-quality gear!</p>
-        <footer class="blockquote-footer"><cite title="Source Title">The Rental Store Team</cite></footer>
-    </blockquote>
-</div>
-<div class="container mt-5">
+
+<div class="d-flex align-content-center justify-content-center">
     <div class="banner">
-        <img src="images/banner.jpg" class="img-fluid w-100" alt="Banner Image" />
+        <div class="banner-text bg-primary bg-opacity-75">
+            <h1 class="display-3">Rental Store Company</h1>
+            <p>Your go-to source for all sports equipment rentals. From skis to bicycles, we have it all. Rent online today and enjoy top-quality gear!</p>
+            <footer class="blockquote-footer text-white"><cite title="Source Title">The Rental Store Team</cite></footer>
+        </div>
     </div>
 </div>
 
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        align-content:center
+    }
+
+    .banner {
+        position: center;
+        height: 80vh; 
+        width: 80vw; 
+        background-image: url('/images/banner4.jpg');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0; 
+    }
+
+    .banner-text {
+        /*background-color: rgba(0, 50, 255, 0.7); */
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+        .banner-text h1 {
+            font-size: 4rem;
+        }
+
+        .banner-text p {
+            font-size: 1.5rem;
+        }
+
+</style>

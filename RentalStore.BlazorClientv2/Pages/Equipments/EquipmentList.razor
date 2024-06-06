@@ -4,21 +4,30 @@
 <PageTitle>Equipment list</PageTitle>
 
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Sports Collection</h1>
+    <div class="d-flex flex-row justify-content-around">
+        <div class="row justify-content-end">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-secondary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
-        <div class="col">
-            <div class="row justify-content-end">
-                <div class="spinner-grow text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-secondary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-success" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+        <div class="mw-10">
+            <h1 class="text-center" style="display: inline-block">Sports Collection</h1>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-secondary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
@@ -32,8 +41,8 @@
                 @if (isDropdownOpen1)
                 {
                     <div class="dropdown-menu show">
-                        <a class="dropdown-item" @onclick='() => SortBy("NameAsc")'>Rosnąco nazwie</a>
-                        <a class="dropdown-item" @onclick='() => SortBy("NameDesc")'>Malejąco po nazwie</a>
+                        <a class="dropdown-item" @onclick='() => SortBy("NameAsc")' style="cursor: pointer;">Rosnąco nazwie</a>
+                        <a class="dropdown-item" @onclick='() => SortBy("NameDesc")' style="cursor: pointer;">Malejąco po nazwie</a>
                     </div>
                 }
             </div>
@@ -44,9 +53,9 @@
                 @if (isDropdownOpen2)
                 {
                     <div class="dropdown-menu show">
-                        <a class="dropdown-item">Kategoria 1</a>
-                        <a class="dropdown-item">Kategoria 2</a>
-                        <a class="dropdown-item">Kategoria 3</a>
+                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 1</a>
+                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 2</a>
+                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 3</a>
                     </div>
                 }
             </div>
@@ -111,6 +120,10 @@
                 _equipmentList = _allEquipment.OrderByDescending(e => e.Name);
                 break;
         }
+
+        // Zamknij dropdown po sortowaniu
+        isDropdownOpen1 = false;
+        isDropdownOpen2 = false;
     }
 
     private void SelectItem(string item)

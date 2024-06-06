@@ -16,5 +16,5 @@ Projekt oparty jest o technologie takie jak:
  - C#
  - ASP.NET Core
  - Entity Framework Core dla obsługi bazy danych
- - (coś do front-endu)
+ - Blazor Server, Blazor Server Web Assembly
 

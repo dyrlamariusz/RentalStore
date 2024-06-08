@@ -16,12 +16,8 @@ namespace RentalStore.SharedKernel.Dto
         public bool Availability { get; set; }
         public string Condition { get; set; }
         public string Size { get; set; }
-        //public object Category { get; internal set; }
-        /* public CategoryDto Category { get; set; }
-public ICollection<RentalDto> Rentals { get; set; }
-public ICollection<FeedbackDto> Feedbacks { get; set; }
-public ICollection<MaintenanceDto> Maintenances { get; set;}
-public ICollection<LocationMapDto> LocationMaps { get; set; }*/
+        public int QuantityInStock { get; set; }
+
 
     }
 }

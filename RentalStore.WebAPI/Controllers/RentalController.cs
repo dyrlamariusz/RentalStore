@@ -86,22 +86,9 @@ namespace RentalStore.WebAPI.Controllers
             }
         }
 
-        /*[HttpPut("{rentalId}/assign-agreement")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult AssignAgreement(int rentalId, [FromBody] Agreement agreement)
-        {
-            try
-            {
-                _rentalService.AssignAgreement(rentalId, agreement);
-                _logger.LogDebug($"Przypisano umowę do wypożyczenia o id = {rentalId}");
-                return NoContent();
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new { Message = ex.Message });
-            }
-        }*/
+
+
+        
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -112,6 +99,23 @@ namespace RentalStore.WebAPI.Controllers
             {
                 _rentalService.Delete(id);
                 _logger.LogDebug($"Usunięto wypożyczenie z id = {id}");
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/complete")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult Complete(int id)
+        {
+            try
+            {
+                _rentalService.CompleteRental(id);
+                _logger.LogDebug($"Zakończono wypożyczenie z id = {id}");
                 return NoContent();
             }
             catch (NotFoundException ex)

@@ -16,6 +16,8 @@ namespace RentalStore.Domain.Models
         public bool Availability { get; set; }
         public string Condition { get; set; }
         public string Size { get; set; }
+        public int QuantityInStock { get; set; }
+        public decimal PricePerDay { get; set; }
         public Category Category { get; set; }
         public ICollection<Rental> Rentals { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }

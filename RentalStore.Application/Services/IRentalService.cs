@@ -16,7 +16,7 @@ namespace RentalStore.Application.Services
         void Update(int id, UpdateRentalDto dto);
         void Delete(int id);
         IList<RentalDto> GetActiveRentals();
-        //void AssignAgreement(int rentalId, Agreement agreement);
         int Create(CreateRentalDto dto);
+        void CompleteRental(int id);
     }
 }

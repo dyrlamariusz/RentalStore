@@ -50,6 +50,7 @@ namespace RentalStore.Application.Services
             _uow.Commit();
         }
 
+
         public List<EquipmentDto> GetAll()
         {
             var equipment = _uow.EquipmentRepository.GetAll();
@@ -57,6 +58,7 @@ namespace RentalStore.Application.Services
             List<EquipmentDto> result = _mapper.Map<List<EquipmentDto>>(equipment);
             return result;
         }
+
 
         public EquipmentDto GetById(int id)
         {
@@ -75,6 +77,7 @@ namespace RentalStore.Application.Services
             return result;
         }
 
+
         public void Update(int id, UpdateEquipmentDto dto)
         {
             var equipment = _uow.EquipmentRepository.Get(id);
@@ -89,14 +92,15 @@ namespace RentalStore.Application.Services
                 throw new BadRequestException("Invalid category name");
             }
 
-            // Mapowanie wartości z DTO do istniejącego rekordu
+            
             _mapper.Map(dto, equipment);
-            equipment.CategoryId = category.CategoryId; // Ustawianie ID kategorii
+            equipment.CategoryId = category.CategoryId; 
 
             
             _uow.EquipmentRepository.Update(equipment);
             _uow.Commit();
         }
+
         public List<EquipmentDto> GetEquipmentByCategoryName(string categoryName)
         {
             var equipments = _uow.EquipmentRepository.GetEquipmentByCategoryName(categoryName);

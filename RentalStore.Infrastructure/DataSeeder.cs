@@ -13,7 +13,7 @@ namespace RentalStore.Infrastructure
 
         public void Seed()
         {
-            // _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
             if (_dbContext.Database.CanConnect())
@@ -42,9 +42,9 @@ namespace RentalStore.Infrastructure
                     };
                     _dbContext.Products.AddRange(products);
                     _dbContext.SaveChanges();
-                }                                                   //
+                }                                                   
 
-                /*if (!_dbContext.Categories.Any())
+                if (!_dbContext.Categories.Any())
                 {
                     var categories = new List<Category>
                     {
@@ -68,7 +68,9 @@ namespace RentalStore.Infrastructure
                             Model = "Nova 6",
                             Availability = true,
                             Condition = "Nowe",
-                            Size = "Średnie"
+                            Size = "Średnie",
+                            QuantityInStock=15,
+                            PricePerDay = 200
                         });
                     }
 
@@ -83,7 +85,10 @@ namespace RentalStore.Infrastructure
                             Model = "Hexagon 6.0",
                             Availability = true,
                             Condition = "Nowe",
-                            Size = "L"
+                            Size = "L",
+                            QuantityInStock = 15,
+                            PricePerDay = 170
+
                         });
                     }
 
@@ -108,13 +113,13 @@ namespace RentalStore.Infrastructure
                     {
                         RentalId = 1,
                         EquipmentId = 1,
-                       // AgreementId = 1,
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
-                        Status = Rental.RentalStatus.Active
-                    }); ;
+                        Status = Rental.RentalStatus.Active,
+                        Quantity = 2
+                    }); 
                     _dbContext.SaveChanges();
-                }*/
+                }
             }
         }
     }

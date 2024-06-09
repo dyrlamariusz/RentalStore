@@ -34,8 +34,6 @@ namespace RentalStore.Application.Services
             return id;
         }
 
-        
-
         public void Delete(int id)
         {
             var category = _uow.CategoryRepository.Get(id);
@@ -85,10 +83,6 @@ namespace RentalStore.Application.Services
             {
                 throw new NotFoundException("Category not found");
             }
-
-            /*product.Name = dto.Name;
-            product.Description = dto.Desc;
-            product.UnitPrice = dto.UnitPrice;*/
 
             _uow.Commit();
         }

@@ -25,6 +25,22 @@ namespace RentalStore.Application.Services
         public int Create(CreateRentalDto dto)
         {
             var rental = _mapper.Map<Rental>(dto);
+
+           
+            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
+            if (equipment == null)
+            {
+                throw new NotFoundException("Equipment not found");
+            }
+
+            if (equipment.QuantityInStock < dto.Quantity)
+            {
+                throw new BadRequestException("Insufficient stock");
+            }
+
+            equipment.QuantityInStock -= dto.Quantity;
+            _uow.EquipmentRepository.Update(equipment);
+
             _uow.RentalRepository.Insert(rental);
             _uow.Commit();
 
@@ -84,18 +100,30 @@ namespace RentalStore.Application.Services
             _uow.RentalRepository.Update(rental);
             _uow.Commit();
         }
-
-        /*public void AssignAgreement(int rentalId, Agreement agreement)
+        public void CompleteRental(int id)
         {
-            var rental = _uow.RentalRepository.Get(rentalId);
+            var rental = _uow.RentalRepository.Get(id);
             if (rental == null)
             {
                 throw new NotFoundException("Rental not found");
             }
 
-            agreement.RentalId = rentalId;
-            _uow.AgreementRepository.Insert(agreement);
+            rental.Status = Rental.RentalStatus.Completed;
+            _uow.RentalRepository.Update(rental);
+
+            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
+            if (equipment == null)
+            {
+                throw new NotFoundException("Equipment not found");
+            }
+
+            equipment.QuantityInStock += rental.Quantity;
+            _uow.EquipmentRepository.Update(equipment);
+
             _uow.Commit();
-        }*/
+        }
+
+
+
     }
 }

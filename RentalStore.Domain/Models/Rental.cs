@@ -22,5 +22,6 @@ namespace RentalStore.Domain.Models
             Overdue
         }
         public DateTime ModifiedAt { get; set; }
+        public int Quantity { get; set; }
     }
 }

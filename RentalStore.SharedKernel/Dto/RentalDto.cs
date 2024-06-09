@@ -14,8 +14,7 @@ namespace RentalStore.SharedKernel.Dto
         //public int AgreementId { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        
-        #warning czy mozna to zmienic?
-        public Rental.RentalStatus Status { get; set; }  
+        public Rental.RentalStatus Status { get; set; }
+        public int Quantity { get; set; }
     }
 }

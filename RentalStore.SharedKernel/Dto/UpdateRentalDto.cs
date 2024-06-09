@@ -14,6 +14,6 @@ namespace RentalStore.SharedKernel.Dto
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatus Status { get; set; }
-        // public int? AgreementId { get; set; } // Nullable AgreementId
+        public int Quantity { get; set; }
     }
 }

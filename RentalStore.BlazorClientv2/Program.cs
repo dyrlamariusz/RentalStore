@@ -18,7 +18,8 @@ namespace RentalStore.BlazorClientv2
             // rejestracja Service w kontenerze zale¿noœci
             builder.Services.AddScoped<IEquipmentService, EquipmentService>();
             builder.Services.AddScoped<IRentalClientService, RentalClientService>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();    
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICartService, CartService>();
 
             // modyfikacja klienta http aby pobiera³ dane z pliku konfiguracyjnego
             builder.Services.AddScoped(sp => new HttpClient

@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Wyklucz pliki .db, .db-shm, i .db-wal w folderze RentalStore.WebAPI
+RentalStore.WebAPI/*.db
+RentalStore.WebAPI/*.db-shm
+RentalStore.WebAPI/*.db-wal

@@ -64,6 +64,7 @@ namespace RentalStore.Infrastructure
                         {
                             Name = "Narty zjazdowe damskie",
                             CategoryId = category.CategoryId,
+                            Description = "Super szybkie narty damskie. Idealne w góry jak i w jezdzie po asfalcie. Nie przegap okazji! Tylko U NAS!",
                             Brand = "ROSSIGNOL",
                             Model = "Nova 6",
                             Availability = true,
@@ -71,7 +72,7 @@ namespace RentalStore.Infrastructure
                             Size = "Średnie",
                             QuantityInStock=15,
                             PricePerDay = 200
-                        });
+                        });;
                     }
 
                     category = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == "Rower");
@@ -81,6 +82,7 @@ namespace RentalStore.Infrastructure
                         {
                             Name = "Rower górski",
                             CategoryId = category.CategoryId,
+                            Description = "Wygodny i lekki rower górski. Idealny do jazdy po górach. Nawet w mieście z ziomakmi pojezdzisz. Sprawdz!",
                             Brand = "Kross",
                             Model = "Hexagon 6.0",
                             Availability = true,

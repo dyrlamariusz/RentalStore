@@ -6,6 +6,7 @@ namespace RentalStore.SharedKernel.Dto
     public class CreateEquipmentDto
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         //public int CategoryId { get; set; }
         //nowe pole zamiast id:
         public string CategoryName { get; set; }

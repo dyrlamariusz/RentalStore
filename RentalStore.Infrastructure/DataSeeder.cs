@@ -119,7 +119,8 @@ namespace RentalStore.Infrastructure
                         ReturnDate = DateTime.Now.AddDays(7),
                         Status = Rental.RentalStatus.Active,
                         Quantity = 2,
-                        CustomerName = "Karina Krotkiewicz",
+                        CustomerName = "Karina",
+                        CustomerSurname = "Krotkiewicz",
                         CustomerEmail = "karina@vp.pl",
                         CustomerPhone = "99711"
                     }); 

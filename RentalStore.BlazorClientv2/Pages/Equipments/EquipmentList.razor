@@ -31,8 +31,8 @@
                 @if (isDropdownOpen2)
                 {
                     <div class="dropdown-menu show" style="position: absolute;">
-                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 1</a>
-                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 2</a>
+                        <a class="dropdown-item" @onclick='() => FilterByCategory("Narty zjazdowe")' style="cursor: pointer;">Narty zjazdowe</a>
+                        <a class="dropdown-item" @onclick='() => FilterByCategory("Rower")' style="cursor: pointer;">Rower</a>
                         <a class="dropdown-item" style="cursor: pointer;">Kategoria 3</a>
                     </div>
                 }
@@ -110,5 +110,10 @@
         isDropdownOpen1 = false;
         isDropdownOpen2 = false;
         Console.WriteLine($"Selected: {item}");
+    }
+
+    private void FilterByCategory(string categoryName)
+    {
+        _equipmentList = _allEquipment.Where(e => e.CategoryName == categoryName).ToList();
     }
 }

@@ -12,6 +12,7 @@ namespace RentalStore.SharedKernel.Dto
         public string Name { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }   
         public bool Availability { get; set; }

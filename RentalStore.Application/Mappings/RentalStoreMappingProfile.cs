@@ -23,6 +23,15 @@ namespace RentalStore.Application.Mappings
             // ODKOMENTOWAC
             CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
+
+            CreateMap<Equipment, EquipmentDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom((src, dest, destMember, context) =>
+                {
+                    var category = context.Items["categories"] as IEnumerable<Category>;
+                    return category?.FirstOrDefault(c => c.CategoryId == src.CategoryId)?.CategoryName;
+                }));
+
+
             CreateMap<CreateEquipmentDto, Equipment>();
             CreateMap<UpdateEquipmentDto, Equipment>();
 

@@ -41,5 +41,17 @@ namespace RentalStore.BlazorClientv2.Services
             }
             return null;
         }
+
+        public async Task<EquipmentDto> GetByCategory(string categoryName)
+        {
+            var response = await _httpClient.GetAsync($"/equipment/{categoryName}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var equipment = JsonConvert.DeserializeObject<EquipmentDto>(content);
+                return equipment;
+            }
+            return null;
+        }
     }
 }

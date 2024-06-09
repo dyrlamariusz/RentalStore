@@ -1,5 +1,6 @@
 ﻿@page "/equipment"
 @inject IEquipmentService _equipmentService;
+@inject ICategoryService _categoryService;
 
 <PageTitle>Equipment list</PageTitle>
 
@@ -31,9 +32,10 @@
                 @if (isDropdownOpen2)
                 {
                     <div class="dropdown-menu show" style="position: absolute;">
-                        <a class="dropdown-item" @onclick='() => FilterByCategory("Narty zjazdowe")' style="cursor: pointer;">Narty zjazdowe</a>
-                        <a class="dropdown-item" @onclick='() => FilterByCategory("Rower")' style="cursor: pointer;">Rower</a>
-                        <a class="dropdown-item" style="cursor: pointer;">Kategoria 3</a>
+                        @foreach (var c in _categoryList)
+                        {
+                            <a class="dropdown-item" @onclick="@(e => FilterByCategory(c.CategoryName))" style="cursor: pointer;">@c.CategoryName</a>
+                        }
                     </div>
                 }
             </div>
@@ -64,11 +66,13 @@
 @code {
     private IEnumerable<EquipmentDto> _equipmentList = new List<EquipmentDto>();
     private IEnumerable<EquipmentDto> _allEquipment = new List<EquipmentDto>();
+    private IEnumerable<CategoryDto> _categoryList = new List<CategoryDto>();
 
     protected override async Task OnInitializedAsync()
     {
         _allEquipment = await _equipmentService.GetAll();
         _equipmentList = _allEquipment;
+        _categoryList = await _categoryService.GetAll();
     }
 
     private bool isDropdownOpen1 = false;

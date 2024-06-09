@@ -1,6 +1,8 @@
 ﻿@page "/equipment"
 @inject IEquipmentService _equipmentService;
 @inject ICategoryService _categoryService;
+@inject ICartService CartService
+
 
 <PageTitle>Equipment list</PageTitle>
 
@@ -63,7 +65,7 @@
                         <p class="card-text">@e.Model</p>
                         <p class="card-text">@e.Condition</p>
                         <a href="/equipment/@e.EquipmentId" class="btn btn-outline-primary w-100 mb-1">See more</a>
-                        <a href="/equipment/@e.EquipmentId" class="btn btn-primary w-100">Dodaj do koszyka</a>
+                        <a class="btn btn-primary w-100" @onclick="() => AddToCart(e)">Dodaj do koszyka</a>
                     </div>
                 </div>
             }
@@ -135,5 +137,10 @@
     private void ShowAllEquipments()
     {
         _equipmentList = _allEquipment;
+    }
+
+    private async Task AddToCart(EquipmentDto equipment)
+    {
+        await CartService.AddToCart(equipment);
     }
 }

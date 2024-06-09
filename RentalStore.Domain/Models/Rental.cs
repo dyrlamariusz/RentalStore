@@ -10,7 +10,6 @@ namespace RentalStore.Domain.Models
     {
         public int RentalId { get; set; }
         public int EquipmentId { get; set; }
-        //public int? AgreementId { get; set; } // puste agreementid, bo najpierw tworzy sie rental bez agreementid
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatus Status { get; set; }
@@ -23,5 +22,9 @@ namespace RentalStore.Domain.Models
         }
         public DateTime ModifiedAt { get; set; }
         public int Quantity { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerPhone { get; set; }
+
     }
 }

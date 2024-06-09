@@ -18,7 +18,7 @@ namespace RentalStore.Infrastructure
 
             if (_dbContext.Database.CanConnect())
             {
-                if (!_dbContext.Products.Any())                     // DO USUNIECIA
+                if (!_dbContext.Products.Any())   // do usuniecie w przyszlosci
                 {
                     var products = new List<Product>
                     {
@@ -116,7 +116,10 @@ namespace RentalStore.Infrastructure
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
                         Status = Rental.RentalStatus.Active,
-                        Quantity = 2
+                        Quantity = 2,
+                        CustomerName = "Karina Krotkiewicz",
+                        CustomerEmail = "karina@vp.pl",
+                        CustomerPhone = "99711"
                     }); 
                     _dbContext.SaveChanges();
                 }

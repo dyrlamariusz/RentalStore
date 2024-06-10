@@ -1,8 +1,7 @@
 ﻿@page "/equipment"
-@inject IEquipmentService _equipmentService;
-@inject ICategoryService _categoryService;
+@inject IEquipmentService _equipmentService
+@inject ICategoryService _categoryService
 @inject ICartService CartService
-
 
 <PageTitle>Equipment list</PageTitle>
 
@@ -29,7 +28,7 @@
             </div>
             <div class="p-2 dropdown">
                 <button class="btn btn-primary dropdown-toggle" @onclick="() => ToggleDropdown(2)">
-                    Kategoria 
+                    Kategoria
                 </button>
                 @if (isDropdownOpen2)
                 {
@@ -141,6 +140,10 @@
 
     private async Task AddToCart(EquipmentDto equipment)
     {
+        if (equipment == null)
+        {
+            throw new ArgumentNullException(nameof(equipment), "Equipment cannot be null");
+        }
         await CartService.AddToCart(equipment);
     }
 }

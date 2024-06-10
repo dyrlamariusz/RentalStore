@@ -25,7 +25,7 @@
             item.Quantity--;
             await CartService.UpdateCartItemQuantity(item.Equipment.EquipmentId, item.Quantity);
             CalculateTotalAmount();
-        }
+}
     }
 
     private async Task IncreaseQuantity(CartItemDto item)

@@ -152,13 +152,11 @@ namespace RentalStore.Infrastructure
                             {
                                 EquipmentId = 1,
                                 Count = 2,
-                                EquipmentPrice = 50
                             },
                             new RentalDetail
                             {
                                 EquipmentId = 2,
                                 Count = 1,
-                                EquipmentPrice = 75
                             }
                         }
                     };

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace RentalStore.SharedKernel.Dto
 {
-    public class RentalDetailDto
+    public class CreateRentalDetailDto
     {
-        public int RentalDetailId { get; set; }
+        
         public int Count { get; set; }
         public int EquipmentId { get; set; }
-        
+    
     }
 }

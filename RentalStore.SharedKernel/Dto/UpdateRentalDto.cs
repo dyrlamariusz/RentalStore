@@ -19,6 +19,7 @@ namespace RentalStore.SharedKernel.Dto
         public string CustomerSurname { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerPhone { get; set; }
+        public decimal Total { get; set; }
         public List<RentalDetailDto> Details { get; set; } = new List<RentalDetailDto>();
     }
 }

@@ -39,11 +39,23 @@ namespace RentalStore.Application.Mappings
             CreateMap<CategoryDto, Category>();
             CreateMap<CreateCategoryDto, Category>();
 
-            /*CreateMap<Rental, RentalDto>();
-            CreateMap<RentalDto, Rental>();*/
-            CreateMap<Rental, RentalDto>().ReverseMap();
-            CreateMap<CreateRentalDto, Rental>();
+            // Mapowanie dla obiektów Rental
+            CreateMap<Rental, RentalDto>()
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details))
+                .ReverseMap();
+
+            CreateMap<CreateRentalDto, Rental>()
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
+
             CreateMap<UpdateRentalDto, Rental>();
+
+            // Mapowanie dla obiektów RentalDetail
+            CreateMap<RentalDetail, RentalDetailDto>().ReverseMap();
+            CreateMap<CreateRentalDetailDto, RentalDetail>();
+
+            // Mapowanie dla obiektów RentalStatus
+            CreateMap<RentalStatus, RentalStatusDto>().ReverseMap();
+
             CreateMap<Agreement, AgreementDto>().ReverseMap();
 
             /*CreateMap<Agreement, AgreementDto>();
@@ -64,7 +76,6 @@ namespace RentalStore.Application.Mappings
             CreateMap<LocationMapDto, LocationMap>();
 
             CreateMap<RentalStatus, RentalStatusDto>().ReverseMap();
-            CreateMap<RentalDetail, RentalDetailDto>().ReverseMap();
             //CreateMap<RentalDetail, Rental>().ReverseMap();
 
 

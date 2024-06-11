@@ -11,7 +11,7 @@ namespace RentalStore.Domain.Interfaces
         int GetMaxId();
         Rental GetByIdWithDetails(int id);
 
-
+        int GetMaxRentalDetailId();
 
     }
 }

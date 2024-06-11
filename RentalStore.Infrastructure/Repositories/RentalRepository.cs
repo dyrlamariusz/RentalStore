@@ -22,12 +22,16 @@ namespace RentalStore.Infrastructure.Repositories
 
         public Rental Get(int id)
         {
-            return _rentalStoreDbContext.Rentals.Find(id);
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .FirstOrDefault(r => r.RentalId == id);
         }
 
         public IList<Rental> GetAll()
         {
-            return _rentalStoreDbContext.Rentals.ToList();
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .ToList();
         }
 
         public void Insert(Rental entity)
@@ -61,11 +65,14 @@ namespace RentalStore.Infrastructure.Repositories
 
         public Rental GetByIdWithDetails(int id)
         {
-            var rental = _rentalStoreDbContext.Rentals
-            .Include(o => o.Details)
-            .FirstOrDefault();
-            return rental;
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .FirstOrDefault(r => r.RentalId == id);
         }
 
+        public int GetMaxRentalDetailId()
+        {
+            return _rentalStoreDbContext.RentalDetails.Max(x => x.RentalDetailId);
+        }
     }
 }

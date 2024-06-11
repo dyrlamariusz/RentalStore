@@ -17,19 +17,19 @@
         <div class="d-flex flex-row">
             <div class="p-2 dropdown">
                 <button class="btn btn-primary dropdown-toggle" @onclick="() => ToggleDropdown(1)">
-                    Sortuj
+                    Sort
                 </button>
                 @if (isDropdownOpen1)
                 {
                     <div class="dropdown-menu show" style="position: absolute;">
-                        <a class="dropdown-item" @onclick='() => SortBy("NameAsc")' style="cursor: pointer;">Rosnąco nazwie</a>
-                        <a class="dropdown-item" @onclick='() => SortBy("NameDesc")' style="cursor: pointer;">Malejąco po nazwie</a>
+                        <a class="dropdown-item" @onclick='() => SortBy("NameAsc")' style="cursor: pointer;">Ascending by Name</a>
+                        <a class="dropdown-item" @onclick='() => SortBy("NameDesc")' style="cursor: pointer;">Descending by Name</a>
                     </div>
                 }
             </div>
             <div class="p-2 dropdown">
                 <button class="btn btn-primary dropdown-toggle" @onclick="() => ToggleDropdown(2)">
-                    Kategoria
+                    Category
                 </button>
                 @if (isDropdownOpen2)
                 {
@@ -57,7 +57,7 @@
             @foreach (var e in _equipmentList)
             {
                 <div class="card m-2" style="width: 18rem;">
-                    <img class="card-img-top img-fluid" src="https://t4.ftcdn.net/jpg/02/13/33/89/360_F_213338964_UxvKyZZINlNBO8VhfbjnyZuXK7tn3qiO.jpg" alt="Card image cap">
+                    <img class="card-img-top img-fluid" src="@e.ImageUrl" alt="Card image cap">
                     <div class="card-body align-content-center pb-0">
                         <h5 class="card-title fw-bold m-0">@e.Name</h5>
                     </div>
@@ -65,7 +65,7 @@
                         <p class="card-text">@e.Model</p>
                         <p class="card-text">@e.Condition</p>
                         <a href="/equipment/@e.EquipmentId" class="btn btn-outline-primary w-100 mb-1">See more</a>
-                        <a class="btn btn-primary w-100" @onclick="() => AddToCart(e)">Dodaj do koszyka</a>
+                        <a class="btn btn-primary w-100" @onclick="() => AddToCart(e)">Add to Cart</a>
                     </div>
                 </div>
             }

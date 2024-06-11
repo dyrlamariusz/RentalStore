@@ -71,7 +71,8 @@ namespace RentalStore.Infrastructure
                             Condition = "Nowe",
                             Size = "Średnie",
                             QuantityInStock=15,
-                            PricePerDay = 200
+                            PricePerDay = 200,
+                            ImageUrl = "/images/no-image-icon.png"
                         });;
                     }
 
@@ -89,7 +90,8 @@ namespace RentalStore.Infrastructure
                             Condition = "Nowe",
                             Size = "L",
                             QuantityInStock = 15,
-                            PricePerDay = 170
+                            PricePerDay = 170,
+                            ImageUrl = "/images/no-image-icon.png"
 
                         });
                     }

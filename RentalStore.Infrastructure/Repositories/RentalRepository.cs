@@ -1,4 +1,5 @@
-﻿using RentalStore.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RentalStore.Domain.Interfaces;
 using RentalStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -54,16 +55,17 @@ namespace RentalStore.Infrastructure.Repositories
         public IList<Rental> GetActiveRentals()
         {
             return _rentalStoreDbContext.Rentals
-                .Where(r => r.Status == Rental.RentalStatus.Active) 
+                .Where(r => r.Status == RentalStatus.Active) 
                 .ToList();
         }
 
-        /*public IList<Rental> GetRentalsByAgreementId(int agreementId)
+        public Rental GetByIdWithDetails(int id)
         {
-            return _context.Set<Rental>()
-                .Where(r => r.AgreementId == agreementId)
-                .ToList();
-        }*/
+            var rental = _rentalStoreDbContext.Rentals
+            .Include(o => o.Details)
+            .FirstOrDefault();
+            return rental;
+        }
 
     }
 }

@@ -63,6 +63,10 @@ namespace RentalStore.Application.Mappings
             CreateMap<LocationMap, LocationMapDto>();
             CreateMap<LocationMapDto, LocationMap>();
 
+            CreateMap<RentalStatus, RentalStatusDto>().ReverseMap();
+            CreateMap<RentalDetail, RentalDetailDto>().ReverseMap();
+            //CreateMap<RentalDetail, Rental>().ReverseMap();
+
 
 
         }

@@ -27,19 +27,13 @@ namespace RentalStore.Application.Services
             var rental = _mapper.Map<Rental>(dto);
 
            
-            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
+            /*var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
             if (equipment == null)
             {
                 throw new NotFoundException("Equipment not found");
-            }
+            }*/
 
-            if (equipment.QuantityInStock < dto.Quantity)
-            {
-                throw new BadRequestException("Insufficient stock");
-            }
-
-            equipment.QuantityInStock -= dto.Quantity;
-            _uow.EquipmentRepository.Update(equipment);
+            //_uow.EquipmentRepository.Update(equipment);
 
             _uow.RentalRepository.Insert(rental);
             _uow.Commit();
@@ -108,19 +102,34 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Rental not found");
             }
 
-            rental.Status = Rental.RentalStatus.Completed;
+            rental.Status = RentalStatus.Completed;
             _uow.RentalRepository.Update(rental);
 
-            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
-            if (equipment == null)
+            //var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
+            /*if (equipment == null)
             {
                 throw new NotFoundException("Equipment not found");
             }
 
-            equipment.QuantityInStock += rental.Quantity;
-            _uow.EquipmentRepository.Update(equipment);
+            //equipment.QuantityInStock += rental.Quantity;
+            _uow.EquipmentRepository.Update(equipment);*/
 
             _uow.Commit();
+        }
+
+        public RentalDto GetByIdWithDetails(int id)
+        {
+            if (id <= 0)
+            {
+                throw new BadRequestException("Id is less than zero");
+            }
+            var order = _uow.RentalRepository.GetByIdWithDetails(id);
+            if (order == null)
+            {
+                throw new NotFoundException("Rental not found");
+            }
+            var result = _mapper.Map<RentalDto>(order);
+            return result;
         }
 
 

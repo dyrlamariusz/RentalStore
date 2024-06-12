@@ -1,4 +1,5 @@
-﻿using RentalStore.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RentalStore.Domain.Interfaces;
 using RentalStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,16 @@ namespace RentalStore.Infrastructure.Repositories
 
         public Rental Get(int id)
         {
-            return _rentalStoreDbContext.Rentals.Find(id);
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .FirstOrDefault(r => r.RentalId == id);
         }
 
         public IList<Rental> GetAll()
         {
-            return _rentalStoreDbContext.Rentals.ToList();
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .ToList();
         }
 
         public void Insert(Rental entity)
@@ -54,16 +59,20 @@ namespace RentalStore.Infrastructure.Repositories
         public IList<Rental> GetActiveRentals()
         {
             return _rentalStoreDbContext.Rentals
-                .Where(r => r.Status == Rental.RentalStatus.Active) 
+                .Where(r => r.Status == RentalStatus.Active) 
                 .ToList();
         }
 
-        /*public IList<Rental> GetRentalsByAgreementId(int agreementId)
+        public Rental GetByIdWithDetails(int id)
         {
-            return _context.Set<Rental>()
-                .Where(r => r.AgreementId == agreementId)
-                .ToList();
-        }*/
+            return _rentalStoreDbContext.Rentals
+                .Include(r => r.Details)
+                .FirstOrDefault(r => r.RentalId == id);
+        }
 
+        public int GetMaxRentalDetailId()
+        {
+            return _rentalStoreDbContext.RentalDetails.Max(x => x.RentalDetailId);
+        }
     }
 }

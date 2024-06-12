@@ -1,4 +1,5 @@
 ﻿using RentalStore.Domain.Models;
+using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.Infrastructure
 {
@@ -18,7 +19,7 @@ namespace RentalStore.Infrastructure
 
             if (_dbContext.Database.CanConnect())
             {
-                if (!_dbContext.Products.Any())   // do usuniecie w przyszlosci
+                /*if (!_dbContext.RentalDetail.Any())   // do usuniecie w przyszlosci
                 {
                     var products = new List<Product>
                     {
@@ -40,9 +41,9 @@ namespace RentalStore.Infrastructure
                             CreatedAt = DateTime.Now.AddDays(-2),
                         },
                     };
-                    _dbContext.Products.AddRange(products);
+                    _dbContext.Product.AddRange(products);
                     _dbContext.SaveChanges();
-                }                                                   
+                }*/
 
                 if (!_dbContext.Categories.Any())
                 {
@@ -70,9 +71,10 @@ namespace RentalStore.Infrastructure
                             Availability = true,
                             Condition = "Nowe",
                             Size = "Średnie",
-                            QuantityInStock=15,
-                            PricePerDay = 200
-                        });;
+                            QuantityInStock = 15,
+                            PricePerDay = 200,
+                            ImageUrl = "/images/no-image-icon.png"
+                        }); ;
                     }
 
                     category = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == "Rower");
@@ -89,7 +91,8 @@ namespace RentalStore.Infrastructure
                             Condition = "Nowe",
                             Size = "L",
                             QuantityInStock = 15,
-                            PricePerDay = 170
+                            PricePerDay = 170,
+                            ImageUrl = "/images/no-image-icon.png"
 
                         });
                     }
@@ -109,21 +112,56 @@ namespace RentalStore.Infrastructure
                     _dbContext.SaveChanges();
                 }
 
+                /*if (!_dbContext.RentalDetails.Any())
+                {
+                    var rentaldetail = new List<RentalDetail>
+                    {
+                        new RentalDetail
+                            {
+                                RentalDetailId = 1,
+                                EquipmentId = 1,
+                                Count = 2,
+                                EquipmentPrice = 50
+                            },
+                            new RentalDetail
+                            {
+                                RentalDetailId = 2,
+                                EquipmentId = 2,
+                                Count = 1,
+                                EquipmentPrice = 75
+                            }
+                    };
+                    _dbContext.RentalDetails.AddRange(rentaldetail);
+                    _dbContext.SaveChanges();
+                }*/
+
                 if (!_dbContext.Rentals.Any())
                 {
-                    _dbContext.Rentals.Add(new Rental
+                    var rental = new Rental
                     {
-                        RentalId = 1,
-                        EquipmentId = 1,
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
-                        Status = Rental.RentalStatus.Active,
-                        Quantity = 2,
+                        Status = RentalStatus.Active,
                         CustomerName = "Karina",
                         CustomerSurname = "Krotkiewicz",
                         CustomerEmail = "karina@vp.pl",
-                        CustomerPhone = "99711"
-                    }); 
+                        CustomerPhone = "99711",
+                        Details = new List<RentalDetail>
+                        {
+                            new RentalDetail
+                            {
+                                EquipmentId = 1,
+                                Count = 2,
+                            },
+                            new RentalDetail
+                            {
+                                EquipmentId = 2,
+                                Count = 1,
+                            }
+                        }
+                    };
+
+                    _dbContext.Rentals.Add(rental);
                     _dbContext.SaveChanges();
                 }
             }

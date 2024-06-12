@@ -7,6 +7,8 @@
         IRentalRepository RentalRepository { get; }
         ICategoryRepository CategoryRepository { get; }
 
+        
+
         void Commit();
     }
 }

@@ -38,6 +38,6 @@ namespace RentalStore.Infrastructure.Repositories
         {
             return _rentalStoreDbContext.Equipments.FirstOrDefault(e => e.Name == name);
         }
-        
+
     }
 }

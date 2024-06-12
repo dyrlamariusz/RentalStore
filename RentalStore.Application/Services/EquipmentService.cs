@@ -30,6 +30,12 @@ namespace RentalStore.Application.Services
 
             var equipment = _mapper.Map<Equipment>(dto);
             equipment.CategoryId = category.CategoryId; // Ustawianie CategoryId na podstawie znalezionej kategorii
+
+            // ustawianie domyslnego zdjecia
+            equipment.ImageUrl = String.IsNullOrEmpty(dto.ImageUrl)
+            ? "/images/no-image-icon.png"
+            : dto.ImageUrl;
+
             _uow.EquipmentRepository.Insert(equipment);
             _uow.Commit();
             return equipment.EquipmentId;
@@ -99,6 +105,11 @@ namespace RentalStore.Application.Services
 
             _mapper.Map(dto, equipment);
             equipment.CategoryId = category.CategoryId;
+
+            // set default image url if user did not support its own
+            equipment.ImageUrl = String.IsNullOrEmpty(dto.ImageUrl)
+                ? "/images/no-image-icon.png"
+:               dto.ImageUrl;
 
             _uow.EquipmentRepository.Update(equipment);
             _uow.Commit();

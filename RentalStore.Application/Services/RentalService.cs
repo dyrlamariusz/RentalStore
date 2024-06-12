@@ -26,20 +26,17 @@ namespace RentalStore.Application.Services
         {
             var rental = _mapper.Map<Rental>(dto);
 
-           
-            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
-            if (equipment == null)
+            foreach (var detail in rental.Details)
             {
-                throw new NotFoundException("Equipment not found");
-            }
+                var equipment = _uow.EquipmentRepository.Get(detail.EquipmentId);
+                if (equipment == null)
+                {
+                    throw new NotFoundException("Equipment not found");
+                }
 
-            if (equipment.QuantityInStock < dto.Quantity)
-            {
-                throw new BadRequestException("Insufficient stock");
+                equipment.QuantityInStock -= detail.Count;
+                _uow.EquipmentRepository.Update(equipment);
             }
-
-            equipment.QuantityInStock -= dto.Quantity;
-            _uow.EquipmentRepository.Update(equipment);
 
             _uow.RentalRepository.Insert(rental);
             _uow.Commit();
@@ -47,14 +44,29 @@ namespace RentalStore.Application.Services
             return rental.RentalId;
         }
 
+
         public void Delete(int id)
         {
-            var rental = _uow.RentalRepository.Get(id);
+            var rental = _uow.RentalRepository.GetByIdWithDetails(id);
             if (rental == null)
             {
                 throw new NotFoundException("Rental not found");
             }
 
+            // Przywrócenie ilości sprzętu na stan magazynowy
+            foreach (var detail in rental.Details)
+            {
+                var equipment = _uow.EquipmentRepository.Get(detail.EquipmentId);
+                if (equipment == null)
+                {
+                    throw new NotFoundException("Equipment not found");
+                }
+
+                equipment.QuantityInStock += detail.Count;
+                _uow.EquipmentRepository.Update(equipment);
+            }
+
+            
             _uow.RentalRepository.Delete(rental);
             _uow.Commit();
         }
@@ -108,19 +120,35 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Rental not found");
             }
 
-            rental.Status = Rental.RentalStatus.Completed;
+            rental.Status = RentalStatus.Completed;
             _uow.RentalRepository.Update(rental);
 
-            var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);
-            if (equipment == null)
+            foreach (var detail in rental.Details)
             {
-                throw new NotFoundException("Equipment not found");
+                var equipment = _uow.EquipmentRepository.Get(detail.EquipmentId);
+                if (equipment != null)
+                {
+                    equipment.QuantityInStock += detail.Count;
+                    _uow.EquipmentRepository.Update(equipment);
+                }
             }
 
-            equipment.QuantityInStock += rental.Quantity;
-            _uow.EquipmentRepository.Update(equipment);
-
             _uow.Commit();
+        }
+
+        public RentalDto GetByIdWithDetails(int id)
+        {
+            if (id <= 0)
+            {
+                throw new BadRequestException("Id is less than zero");
+            }
+            var rental = _uow.RentalRepository.GetByIdWithDetails(id);
+            if (rental == null)
+            {
+                throw new NotFoundException("Rental Details not found");
+            }
+            var result = _mapper.Map<RentalDto>(rental);
+            return result;
         }
 
 

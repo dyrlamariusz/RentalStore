@@ -54,7 +54,7 @@ namespace RentalStore.Infrastructure.Repositories
         public IList<Rental> GetActiveRentals()
         {
             return _rentalStoreDbContext.Rentals
-                .Where(r => r.Status == Rental.RentalStatus.Active) 
+                .Where(r => r.Status == RentalStatus.Active) 
                 .ToList();
         }
 

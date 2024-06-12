@@ -1,0 +1,347 @@
+@inject ICategoryService CategoryService
+@inject IEquipmentService EquipmentService
+
+<div class="modal @(IsVisible ? "show" : "hide")" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add or update equipment</h5>
+            </div>
+            <div class="modal-body">
+                @if (equipment != null)
+                {
+                    <EditForm Model="equipment" OnValidSubmit="HandleValidSubmit">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name">Name</label>
+                                <InputText id="name" class="form-control" @bind-Value="equipment.Name" placeholder="Name" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="description">Description</label>
+                                <InputText id="description" class="form-control" @bind-Value="equipment.Description" placeholder="Description" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="category">Category</label>
+                                <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryId">
+                                    <option value="">Select a category</option>
+                                    @if (categories != null)
+                                    {
+                                        @foreach (var category in categories)
+                                        {
+                                            <option value="@category.CategoryId">@category.CategoryName</option>
+                                        }
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="brand">Brand</label>
+                                <InputText id="brand" class="form-control" @bind-Value="equipment.Brand" placeholder="Brand" />
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="model">Model</label>
+                                <InputText id="model" class="form-control" @bind-Value="equipment.Model" placeholder="Model" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="size">Size</label>
+                                <InputText id="size" class="form-control" @bind-Value="equipment.Size" placeholder="Size" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="condition">Condition</label>
+                                <InputText id="condition" class="form-control" @bind-Value="equipment.Condition" placeholder="Condition" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="price">Price</label>
+                                <InputNumber id="price" class="form-control" @bind-Value="equipment.PricePerDay" placeholder="Price" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="form-check">
+                                    <InputCheckbox id="availability" class="form-check-input" @bind-Value="equipment.Availability" />
+                                    <label class="form-check-label" for="availability">Available</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-dialog {
+        max-width: 1500px;
+        margin: 1.75rem auto;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: .3rem;
+        box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: .3rem;
+        border-top-right-radius: .3rem;
+    }
+
+    .modal-body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 1rem;
+    }
+
+    .close {
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+</style>
+
+@code {
+    [Parameter] public EventCallback OnSubmit { get; set; }
+    private EquipmentDto equipment;
+    private List<CategoryDto> categories;
+    private bool IsVisible { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = CategoryService.GetAll();
+    }
+
+    public void Show(EquipmentDto equipmentToEdit = null)
+    {
+        if (equipmentToEdit != null)
+        {
+            equipment = equipmentToEdit;
+        }
+        else
+        {
+            equipment = new EquipmentDto();
+        }
+
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (equipment.EquipmentId == 0)
+        {
+            EquipmentService.Create(equipment);
+        }
+        else
+        {
+            EquipmentService.Update(equipment.EquipmentId, equipment);
+        }
+
+        IsVisible = false;
+        await OnSubmit.InvokeAsync();
+        StateHasChanged();
+    }
+
+    private void CloseModal()
+    {
+        IsVisible = false;
+        StateHasChanged();
+    }
+}
+
+
+
+
+
+
+
+@* @inject IEquipmentService EquipmentService
+@inject ICategoryService CategoryService
+@inject NavigationManager _navigationManager
+
+@if (isPopupVisible)
+{
+    <div class="modal" style="display: block;">
+        <div class="modal-content">
+            <span class="close" @onclick="Close">&times;</span>
+            @EditForm
+            <EditForm Model="equipment" OnValidSubmit="Submit">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <InputText id="name" class="form-control" @bind-Value="equipment.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <InputTextArea id="description" class="form-control" @bind-Value="equipment.Description" />
+                </div>
+
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <InputText id="brand" class="form-control" @bind-Value="equipment.Brand" />
+                </div>
+
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <InputText id="model" class="form-control" @bind-Value="equipment.Model" />
+                </div>
+
+                <div class="form-group">
+                    <label for="availability">Availability</label>
+                    <InputCheckbox id="availability" class="form-control" @bind-Value="equipment.Availability" />
+                </div>
+
+                <div class="form-group">
+                    <label for="condition">Condition</label>
+                    <InputText id="condition" class="form-control" @bind-Value="equipment.Condition" />
+                </div>
+
+                <div class="form-group">
+                    <label for="size">Size</label>
+                    <InputText id="size" class="form-control" @bind-Value="equipment.Size" />
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <InputNumber id="price" class="form-control" @bind-Value="equipment.PricePerDay" />
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName">
+                        <option value="">Select a category</option>
+                        @foreach (var category in categories)
+                        {
+                            <option value="@category.CategoryId">@category.CategoryName</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                <button type="submit" class="btn btn-primary" @onclick="Submit">Submit</button>
+                <button type="button" class="btn btn-secondary" @onclick="Close">Cancel</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<style>
+    .modal {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+        .modal.show {
+            display: flex;
+        }
+
+    .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+
+@code {
+    [Parameter]
+    public RenderFragment EditForm { get; set; }
+
+    private EquipmentDto equipment = new EquipmentDto();
+    private List<CategoryDto> categories = new List<CategoryDto>();
+    private bool isPopupVisible = true;
+
+    protected override void OnInitialized()
+    {
+        categories = CategoryService.GetAll();
+    }
+
+    public void Show(EquipmentDto equipmentToEdit = null)
+    {
+        base.OnInitialized();
+        if (equipmentToEdit != null)
+        {
+            equipment = equipmentToEdit;
+        }
+        else
+        {
+            equipment = new EquipmentDto();
+        }
+
+        Show();
+        isPopupVisible = true;
+        StateHasChanged();
+    }
+
+    private async Task Submit()
+    {
+        if (equipment.EquipmentId == 0)
+        {
+            EquipmentService.Create(equipment);
+        }
+        else
+        {
+            EquipmentService.Update(equipment.EquipmentId, equipment);
+        }
+
+        isPopupVisible = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _navigationManager.NavigateTo("/equipments");
+    }
+}
+ *@

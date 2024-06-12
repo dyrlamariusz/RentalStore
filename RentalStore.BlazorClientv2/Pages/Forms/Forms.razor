@@ -46,7 +46,7 @@
             Quantity = 3, // Stała wartość dla ilości
             RentalDate = DateTime.UtcNow, // Stała wartość dla RentalDate
             ReturnDate = DateTime.UtcNow.AddDays(7), // Stała wartość dla ReturnDate (np. 7 dni od dzisiaj)
-            Status = RentalStore.Domain.Models.Rental.RentalStatus.Active // Stała wartość dla Status
+            Status = RentalStatus.Active // Stała wartość dla Status
         };
 
     private async Task HandleSubmit()

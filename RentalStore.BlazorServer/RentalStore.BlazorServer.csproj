@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RentalStore.Application\RentalStore.Application.csproj" />
-    <ProjectReference Include="..\RentalStore.Domain\RentalStore.Domain.csproj" />
     <ProjectReference Include="..\RentalStore.Infrastructure\RentalStore.Infrastructure.csproj" />
-    <ProjectReference Include="..\RentalStore.WebAPI\RentalStore.WebAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

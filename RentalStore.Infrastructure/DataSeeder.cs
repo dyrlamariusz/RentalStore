@@ -117,7 +117,7 @@ namespace RentalStore.Infrastructure
                         EquipmentId = 1,
                         RentalDate = DateTime.Now,
                         ReturnDate = DateTime.Now.AddDays(7),
-                        Status = Rental.RentalStatus.Active,
+                        Status = RentalStatus.Active,
                         Quantity = 2,
                         CustomerName = "Karina",
                         CustomerSurname = "Krotkiewicz",

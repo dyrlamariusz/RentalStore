@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace RentalStore.Domain.Models
 {
+    public enum RentalStatus
+    {
+        Active,
+        Completed,
+        Canceled,
+        Overdue
+    }
     public class Rental
     {
         public int RentalId { get; set; }
@@ -13,13 +20,6 @@ namespace RentalStore.Domain.Models
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatus Status { get; set; }
-        public enum RentalStatus
-        {
-            Active,
-            Completed,
-            Canceled,
-            Overdue
-        }
         public DateTime ModifiedAt { get; set; }
         public int Quantity { get; set; }
         public string CustomerName { get; set; }

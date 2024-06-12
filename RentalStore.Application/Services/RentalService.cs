@@ -108,7 +108,7 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Rental not found");
             }
 
-            rental.Status = Rental.RentalStatus.Completed;
+            rental.Status = Domain.Models.RentalStatus.Completed;
             _uow.RentalRepository.Update(rental);
 
             var equipment = _uow.EquipmentRepository.Get(rental.EquipmentId);

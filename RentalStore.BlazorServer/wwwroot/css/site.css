@@ -62,3 +62,24 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #343a40;
+    text-align: center;
+}
+
+.container {
+    padding: 1.5rem;
+}
+
+.rz-datagrid {
+    margin-top: 1.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.rz-button {
+    margin-right: 0.5rem;
+}

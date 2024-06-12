@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using RentalStore.Application.Mappings;
 using RentalStore.Application.Services;
 using RentalStore.BlazorServer.Data;
+using RentalStore.Domain.Interfaces;
 using RentalStore.Infrastructure;
+using RentalStore.Infrastructure.Repositories;
+using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.BlazorServer
 {
@@ -30,10 +33,15 @@ namespace RentalStore.BlazorServer
             options.UseSqlite(sqliteConnectionString));
             // rejestracja walidatora:
 
+            builder.Services.AddScoped<IRentalStoreUnitOfWork, RentalStoreUnitOfWork>();
+            builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+            builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
             // dodanie innych serwisow i zale¿noœci
             builder.Services.AddScoped<DataSeeder>();
-
-
+            builder.Services.AddScoped<IRentalService, RentalService>();
 
 
             var app = builder.Build();

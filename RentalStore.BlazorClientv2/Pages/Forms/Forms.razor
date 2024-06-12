@@ -1,1 +1,72 @@
-﻿
+﻿@page "/forms"
+@inject IRentalClientService RentalService
+@inject ICartService CartService
+@inject NavigationManager Navigation
+
+<EditForm Model="@rental" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Make an order</h1>
+                <div class="form-outline mb-4">
+                    <InputText id="name" class="form-control shadow" @bind-Value="rental.CustomerName" />
+                    <label class="form-label" for="name">Name</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <InputText id="surname" class="form-control shadow" @bind-Value="rental.CustomerSurname" />
+                    <label class="form-label" for="surname">Surname</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <InputText id="email" type="email" class="form-control shadow" @bind-Value="rental.CustomerEmail" />
+                    <label class="form-label" for="email">Email address</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <InputText id="phone" type="tel" class="form-control shadow" @bind-Value="rental.CustomerPhone" />
+                    <label class="form-label" for="phone">Phone</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block mb-2">Send</button>
+                <button type="button" class="btn btn-outline-primary btn-block mb-2" @onclick="BackToCardPage">Back</button>
+                <button type="button" class="btn btn-outline-danger btn-block mb-2" @onclick="HandleCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private CreateRentalDto rental = new CreateRentalDto
+        {
+            RentalDate = DateTime.UtcNow,
+            ReturnDate = DateTime.UtcNow.AddDays(1) // Default 1 day rental
+        };
+
+    private async Task HandleValidSubmit()
+    {
+        rental.Total = await CalculateTotal();
+        await RentalService.CreateRentalAsync(rental);
+
+    }
+
+    private async Task<decimal> CalculateTotal()
+    {
+        var cartItems = await CartService.GetCartItems();
+        return cartItems.Sum(item => (decimal) item.Equipment.PricePerDay);
+    }
+
+    private void BackToCardPage()
+    {
+        Navigation.NavigateTo("/cart");
+    }
+
+    private async Task HandleCancel()
+    {
+        await CartService.ClearCart();
+        Navigation.NavigateTo("/equipment");
+    }
+}

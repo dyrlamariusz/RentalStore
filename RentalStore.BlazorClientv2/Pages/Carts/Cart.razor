@@ -4,6 +4,7 @@
 @code {
     private List<CartItemDto> _cartItems;
     private decimal _totalAmount = 0;
+    private int _rentalDays = 1; // Default rental days
 
     protected override async Task OnInitializedAsync()
     {
@@ -25,7 +26,7 @@
             item.Quantity--;
             await CartService.UpdateCartItemQuantity(item.Equipment.EquipmentId, item.Quantity);
             CalculateTotalAmount();
-}
+        }
     }
 
     private async Task IncreaseQuantity(CartItemDto item)
@@ -38,9 +39,24 @@
         }
     }
 
+    private void DecreaseDays()
+    {
+        if (_rentalDays > 1)
+        {
+            _rentalDays--;
+            CalculateTotalAmount();
+        }
+    }
+
+    private void IncreaseDays()
+    {
+        _rentalDays++;
+        CalculateTotalAmount();
+    }
+
     private void CalculateTotalAmount()
     {
-        _totalAmount = _cartItems.Sum(item => (decimal)item.Equipment.PricePerDay * item.Quantity);
+        _totalAmount = _cartItems.Sum(item => (decimal)item.Equipment.PricePerDay * item.Quantity * _rentalDays);
     }
 }
 
@@ -49,6 +65,12 @@
 
     @if (_cartItems != null && _cartItems.Any())
     {
+        <div class="d-flex align-items-center justify-content-center mb-4">
+            <button class="btn btn-outline-secondary mx-1" @onclick="DecreaseDays">-</button>
+            <span class="mx-2">@_rentalDays day(s)</span>
+            <button class="btn btn-outline-secondary mx-1" @onclick="IncreaseDays">+</button>
+        </div>
+
         @foreach (var item in _cartItems)
         {
             <div class="card mb-2">

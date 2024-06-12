@@ -10,6 +10,7 @@ namespace RentalStore.Infrastructure
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<RentalDetail> RentalDetails { get; set; }
 
         public RentalStoreDbContext(DbContextOptions<RentalStoreDbContext> options) : base(options)
         { }
@@ -18,7 +19,7 @@ namespace RentalStore.Infrastructure
         {
             modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Category)
-            .WithMany(c => c.Equipments)
+            .WithMany(c => c.Equipment)
             .HasForeignKey(e => e.CategoryId);
 
             modelBuilder.Entity<LocationMap>()

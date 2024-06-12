@@ -18,5 +18,6 @@ namespace RentalStore.Application.Services
         IList<RentalDto> GetActiveRentals();
         int Create(CreateRentalDto dto);
         void CompleteRental(int id);
+        RentalDto GetByIdWithDetails(int id);
     }
 }

@@ -123,5 +123,25 @@ namespace RentalStore.WebAPI.Controllers
                 return NotFound(new { Message = ex.Message });
             }
         }
+
+        [HttpGet("{id}/details")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<RentalDto> GetByIdWithDetails(int id)
+        {
+            try
+            {
+                var result = _rentalService.GetByIdWithDetails(id);
+                return Ok(result);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
     }
 }

@@ -1,5 +1,8 @@
+@namespace RentalStore.BlazorServer.Components
 @inject ICategoryService CategoryService
 @inject IEquipmentService EquipmentService
+@inject IFileService FileService
+@inject IToastService ToastService
 
 <div class="modal @(IsVisible ? "show" : "hide")" tabindex="-1">
     <div class="modal-dialog modal-xl">
@@ -11,57 +14,93 @@
                 @if (equipment != null)
                 {
                     <EditForm Model="equipment" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="alert alert-danger" role="alert" hidden="@(validationErrors.Count == 0)">
+                            <ul>
+                                @foreach (var error in validationErrors)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name">Name</label>
-                                <InputText id="name" class="form-control" @bind-Value="equipment.Name" placeholder="Name" />
+                                <InputText id="name" class="form-control" @bind-Value="equipment.Name" placeholder="Treadmill" />
+                                <ValidationMessage For="@(() => equipment.Name)" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="description">Description</label>
-                                <InputText id="description" class="form-control" @bind-Value="equipment.Description" placeholder="Description" />
+                                <InputText id="description" class="form-control" @bind-Value="equipment.Description" placeholder="Specification" />
+                                <ValidationMessage For="@(() => equipment.Description)" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="category">Category</label>
-                                <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryId">
-                                    <option value="">Select a category</option>
+                                <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName">
                                     @if (categories != null)
                                     {
                                         @foreach (var category in categories)
                                         {
-                                            <option value="@category.CategoryId">@category.CategoryName</option>
+                                            <option value="@category.CategoryName">@category.CategoryName</option>
                                         }
                                     }
                                 </InputSelect>
+                                <ValidationMessage For="@(() => equipment.CategoryName)" />
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="brand">Brand</label>
-                                <InputText id="brand" class="form-control" @bind-Value="equipment.Brand" placeholder="Brand" />
+                                <InputText id="brand" class="form-control" @bind-Value="equipment.Brand" placeholder="Adidas" />
+                                <ValidationMessage For="@(() => equipment.Brand)" />
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="model">Model</label>
-                                <InputText id="model" class="form-control" @bind-Value="equipment.Model" placeholder="Model" />
+                                <InputText id="model" class="form-control" @bind-Value="equipment.Model" placeholder="Fussballliebe" />
+                                <ValidationMessage For="@(() => equipment.Model)" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3 mb-3">
-                                <label for="size">Size</label>
-                                <InputText id="size" class="form-control" @bind-Value="equipment.Size" placeholder="Size" />
+                                <label for="condition">Condition</label>
+                                <InputSelect id="condition" class="form-control" @bind-Value="equipment.Condition">
+                                    @foreach (var condition in Enum.GetValues(typeof(Condition)).Cast<Condition>())
+                                    {
+                                        <option value="@condition">@condition</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(() => equipment.Condition)" />
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="condition">Condition</label>
-                                <InputText id="condition" class="form-control" @bind-Value="equipment.Condition" placeholder="Condition" />
+                                <label for="quantity">Quantity</label>
+                                <InputNumber id="quantity" class="form-control" @bind-Value="equipment.QuantityInStock" />
+                                <ValidationMessage For="@(() => equipment.QuantityInStock)" />
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="price">Price</label>
-                                <InputNumber id="price" class="form-control" @bind-Value="equipment.PricePerDay" placeholder="Price" />
+                                <InputNumber id="price" class="form-control" @bind-Value="equipment.PricePerDay" />
+                                <ValidationMessage For="@(() => equipment.PricePerDay)" />
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-3 mb-3 d-flex align-items-center">
                                 <div class="form-check">
-                                    <InputCheckbox id="availability" class="form-check-input" @bind-Value="equipment.Availability" />
+                                    <input class="form-check-input" type="checkbox" id="availability" @bind="equipment.Availability">
                                     <label class="form-check-label" for="availability">Available</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Image: </label>
+                                <InputFile OnChange="HandleImageUpload"></InputFile>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                @if (!string.IsNullOrEmpty(equipment.ImageUrl))
+                                {
+                                    <img src="@equipment.ImageUrl" class="img-thumbnail" width="150" />
+                                }
                             </div>
                         </div>
                         <div class="button-container">
@@ -84,7 +123,7 @@
     }
 
     .modal-dialog {
-        max-width: 1500px;
+        max-width: 1000px;
         margin: 1.75rem auto;
     }
 
@@ -123,28 +162,35 @@
         gap: 10px;
         margin-top: 20px;
     }
+
+    .img-thumbnail {
+        display: block;
+        margin: 0 auto;
+    }
 </style>
 
 @code {
     [Parameter] public EventCallback OnSubmit { get; set; }
-    private EquipmentDto equipment;
+    private CreateEquipmentDto equipment;
     private List<CategoryDto> categories;
     private bool IsVisible { get; set; }
+    private List<string> validationErrors = new List<string>();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         categories = CategoryService.GetAll();
     }
 
-    public void Show(EquipmentDto equipmentToEdit = null)
+    public void Show(CreateEquipmentDto equipmentToEdit = null)
     {
+        validationErrors.Clear();
         if (equipmentToEdit != null)
         {
             equipment = equipmentToEdit;
         }
         else
         {
-            equipment = new EquipmentDto();
+            equipment = new CreateEquipmentDto();
         }
 
         IsVisible = true;
@@ -153,18 +199,57 @@
 
     private async Task HandleValidSubmit()
     {
-        if (equipment.EquipmentId == 0)
+        if (ValidateEquipment())
         {
-            EquipmentService.Create(equipment);
-        }
-        else
-        {
-            EquipmentService.Update(equipment.EquipmentId, equipment);
-        }
+            if (equipment.CategoryName == 0)
+            {
+                EquipmentService.Create(equipment);
+            }
+            else
+            {
+                EquipmentService.Update(equipment.EquipmentId, equipment);
+            }
 
-        IsVisible = false;
-        await OnSubmit.InvokeAsync();
-        StateHasChanged();
+            IsVisible = false;
+            await OnSubmit.InvokeAsync();
+            StateHasChanged();
+        }
+    }
+
+    private bool ValidateEquipment()
+    {
+        validationErrors.Clear();
+        var validator = new CreateEquipmentDtoValidator();
+        var validationResult = validator.Validate(equipment);
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                validationErrors.Add(error.ErrorMessage);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    {
+        if (e.GetMultipleFiles().Count > 0)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
+                if (fileInfo.Extension.ToLower() == ".png")
+                {
+                    equipment.ImageUrl = await FileService.UploadFile(file);
+                }
+                else
+                {
+                    ToastService.ShowToast(ToastLevel.Warning, "Please select .jpg/.jpeg/.png file only");
+                    return;
+                }
+            }
+        }
     }
 
     private void CloseModal()
@@ -173,175 +258,3 @@
         StateHasChanged();
     }
 }
-
-
-
-
-
-
-
-@* @inject IEquipmentService EquipmentService
-@inject ICategoryService CategoryService
-@inject NavigationManager _navigationManager
-
-@if (isPopupVisible)
-{
-    <div class="modal" style="display: block;">
-        <div class="modal-content">
-            <span class="close" @onclick="Close">&times;</span>
-            @EditForm
-            <EditForm Model="equipment" OnValidSubmit="Submit">
-
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <InputText id="name" class="form-control" @bind-Value="equipment.Name" />
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <InputTextArea id="description" class="form-control" @bind-Value="equipment.Description" />
-                </div>
-
-                <div class="form-group">
-                    <label for="brand">Brand</label>
-                    <InputText id="brand" class="form-control" @bind-Value="equipment.Brand" />
-                </div>
-
-                <div class="form-group">
-                    <label for="model">Model</label>
-                    <InputText id="model" class="form-control" @bind-Value="equipment.Model" />
-                </div>
-
-                <div class="form-group">
-                    <label for="availability">Availability</label>
-                    <InputCheckbox id="availability" class="form-control" @bind-Value="equipment.Availability" />
-                </div>
-
-                <div class="form-group">
-                    <label for="condition">Condition</label>
-                    <InputText id="condition" class="form-control" @bind-Value="equipment.Condition" />
-                </div>
-
-                <div class="form-group">
-                    <label for="size">Size</label>
-                    <InputText id="size" class="form-control" @bind-Value="equipment.Size" />
-                </div>
-
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <InputNumber id="price" class="form-control" @bind-Value="equipment.PricePerDay" />
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName">
-                        <option value="">Select a category</option>
-                        @foreach (var category in categories)
-                        {
-                            <option value="@category.CategoryId">@category.CategoryName</option>
-                        }
-                    </InputSelect>
-                </div>
-
-                <button type="submit" class="btn btn-primary" @onclick="Submit">Submit</button>
-                <button type="button" class="btn btn-secondary" @onclick="Close">Cancel</button>
-            </EditForm>
-        </div>
-    </div>
-}
-
-<style>
-    .modal {
-        display: none;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-        .modal.show {
-            display: flex;
-        }
-
-    .modal-content {
-        background-color: #fefefe;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-</style>
-
-
-@code {
-    [Parameter]
-    public RenderFragment EditForm { get; set; }
-
-    private EquipmentDto equipment = new EquipmentDto();
-    private List<CategoryDto> categories = new List<CategoryDto>();
-    private bool isPopupVisible = true;
-
-    protected override void OnInitialized()
-    {
-        categories = CategoryService.GetAll();
-    }
-
-    public void Show(EquipmentDto equipmentToEdit = null)
-    {
-        base.OnInitialized();
-        if (equipmentToEdit != null)
-        {
-            equipment = equipmentToEdit;
-        }
-        else
-        {
-            equipment = new EquipmentDto();
-        }
-
-        Show();
-        isPopupVisible = true;
-        StateHasChanged();
-    }
-
-    private async Task Submit()
-    {
-        if (equipment.EquipmentId == 0)
-        {
-            EquipmentService.Create(equipment);
-        }
-        else
-        {
-            EquipmentService.Update(equipment.EquipmentId, equipment);
-        }
-
-        isPopupVisible = false;
-        StateHasChanged();
-    }
-
-    private void Close()
-    {
-        _navigationManager.NavigateTo("/equipments");
-    }
-}
- *@

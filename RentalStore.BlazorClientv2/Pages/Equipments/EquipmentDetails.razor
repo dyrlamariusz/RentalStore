@@ -1,5 +1,6 @@
 ﻿@page "/equipment/{id:int}"
 @inject IEquipmentService EquipmentService
+@inject ICartService CartService
 
 @code {
     [Parameter]
@@ -10,6 +11,15 @@
     protected override async Task OnInitializedAsync()
     {
         equipment = await EquipmentService.GetById(Id);
+    }
+
+    private async Task AddToCart(EquipmentDto equipment)
+    {
+        if (equipment == null)
+        {
+            throw new ArgumentNullException(nameof(equipment), "Equipment cannot be null");
+        }
+        await CartService.AddToCart(equipment);
     }
 }
 
@@ -54,7 +64,7 @@
         </div>
 
         <div class="text-center my-4">
-            <button class="btn btn-primary btn-lg">Add to cart</button>
+            <button class="btn btn-primary btn-lg" @onclick="() => AddToCart(equipment)">Add to cart</button>
         </div>
     }
     else

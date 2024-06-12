@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace RentalStore.Domain.Models
 {
+    public enum Condition
+    {
+        New,
+        Used
+    }
     public class Equipment
     {
         public int EquipmentId { get; set; }
@@ -15,11 +20,12 @@ namespace RentalStore.Domain.Models
         public string Brand { get; set; }
         public string Model { get; set; }   
         public bool Availability { get; set; }
-        public string Condition { get; set; }
-        public string Size { get; set; }
+        public Condition Condition { get; set; }
         public int QuantityInStock { get; set; }
         public decimal PricePerDay { get; set; }
         public Category Category { get; set; }
+        //dodanie zdjęcia:
+        public string ImageUrl { get; set; } = "/images/no-image-icon.png";
         public ICollection<Rental> Rentals { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }
         public ICollection<Maintenance> Maintenances { get; set;}

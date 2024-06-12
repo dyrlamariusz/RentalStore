@@ -6,10 +6,12 @@ namespace RentalStore.Domain.Interfaces
     public interface IRentalRepository : IRepository<Rental>
     {
 
-        // NA RAZIE DODANA TYLKO TE METODY (Karina 02.06 21.04)
+        
         IList<Rental> GetActiveRentals();
-        //IList<Rental> GetRentalsByAgreementId(int aggrementId);
+        int GetMaxId();
+        Rental GetByIdWithDetails(int id);
 
+        int GetMaxRentalDetailId();
 
     }
 }

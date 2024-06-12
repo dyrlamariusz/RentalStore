@@ -1,11 +1,11 @@
-﻿@page "/"
+﻿@page "/manage-equipment"
 @inject IEquipmentService EquipmentService
 @inject ICategoryService CategoryService
 @inject IRentalService RentalService
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Manage Equipment</h3>
-    <button class="btn btn-primary" @onclick="ShowAddModal">Add Equipment</button>
+    <button class="btn btn-primary" @onclick="ShowAddModal"><span class="oi oi-plus" aria-hidden="true"></span> Add Equipment</button>
 </div>
 
 <div class="row mb-3">
@@ -22,11 +22,8 @@
         </select>
     </div>
     <div class="col-md-4 d-flex align-items-end position-relative">
-        <select class="form-control" @bind="sortOrder">
-            <option value="" disabled selected>Sort by...</option>
-            <option value="price_asc">Price Ascending</option>
-            <option value="price_desc">Price Descending</option>
-        </select>
+        <button class="btn btn-info me-2" @onclick="SortByQuantity">Sort by Quantity</button>
+        <button class="btn btn-info me-2" @onclick="SortByPrice">Sort by Price</button>
         <div class="position-relative">
             <button class="btn btn-secondary" @onclick="FilterEquipment">Filter</button>
             @if (isFilterApplied)
@@ -51,13 +48,13 @@ else
         <thead class="thead-dark">
             <tr>
                 <th>Id</th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Brand</th>
                 <th>Model</th>
                 <th>Availability</th>
                 <th>Condition</th>
-                <th>Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Action</th>
@@ -68,71 +65,24 @@ else
             {
                 <tr>
                     <td>@equipment.EquipmentId</td>
+                    <td><img src="@equipment.ImageUrl" width="24"></td>
                     <td>@equipment.Name</td>
                     <td>@equipment.CategoryName</td>
                     <td>@equipment.Brand</td>
                     <td>@equipment.Model</td>
                     <td>@(equipment.Availability ? "Yes" : "No")</td>
                     <td>@equipment.Condition</td>
-                    <td>@equipment.Size</td>
                     <td>@equipment.QuantityInStock</td>
                     <td>@equipment.PricePerDay.ToString("C")</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" @onclick="() => ShowEditModal(equipment)">Edit</button>
-                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteEquipment(equipment.EquipmentId)">Delete</button>
+                        <button class="btn btn-warning" @onclick="() => ShowEditModal(equipment)"><span class="oi oi-pencil" aria-hidden="true"></span> Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteEquipment(equipment.EquipmentId)"><span class="oi oi-delete" aria-hidden="true"></span> Delete</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
-<style>
-    .table-responsive {
-        margin-top: 20px;
-    }
-
-    .fancy-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .fancy-table th, .fancy-table td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    .fancy-table th {
-        background-color: #343a40;
-        color: white;
-    }
-
-    .fancy-table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .fancy-table tbody tr:hover {
-        background-color: #ddd;
-    }
-
-    .btn-sm {
-        margin-right: 5px;
-    }
-
-    .clear-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 1;
-    }
-
-    .me-2 {
-        margin-right: 0.5rem;
-    }
-</style>
 
 <AddOrUpdateEquipment @ref="addEditModal" OnSubmit="RefreshEquipment" />
 
@@ -175,12 +125,46 @@ else
 
         filteredEquipments = sortOrder switch
         {
+            "quantity_asc" => filteredEquipments.OrderBy(e => e.QuantityInStock),
+            "quantity_desc" => filteredEquipments.OrderByDescending(e => e.QuantityInStock),
             "price_asc" => filteredEquipments.OrderBy(e => e.PricePerDay),
             "price_desc" => filteredEquipments.OrderByDescending(e => e.PricePerDay),
             _ => filteredEquipments
         };
 
         isFilterApplied = isApplied;
+    }
+
+    private void SetSortOrder(string order)
+    {
+        sortOrder = order;
+        FilterAndSortEquipment();
+    }
+
+    private void SortByQuantity()
+    {
+        if (sortOrder == "quantity_asc")
+        {
+            sortOrder = "quantity_desc";
+        }
+        else
+        {
+            sortOrder = "quantity_asc";
+        }
+        FilterAndSortEquipment(true);
+    }
+
+    private void SortByPrice()
+    {
+        if (sortOrder == "price_asc")
+        {
+            sortOrder = "price_desc";
+        }
+        else
+        {
+            sortOrder = "price_asc";
+        }
+        FilterAndSortEquipment(true);
     }
 
     private void FilterEquipment()
@@ -224,109 +208,37 @@ else
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-@* @page "/search.equipment"
-@inject IEquipmentService EquipmentService
-@inject ICategoryService CategoryService
-
-<h3>Equipment</h3>
-
-<button class="brn btn-primary mb-3" @onclick="ShowAddModal">Add Equipment</button>
-
-@if (equipments == null)
-{
-    <p>Loading...</p>
-}
-else if (!equipments.Any())
-{
-    <p>No equipment found.</p>
-}
-else
-{
-    <div class="table-responsive">
-    <table class="table table-striped table-bordered fancy-table">
-        <thead class="thead-dark"> 
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Availability</th>
-                <th>Condition</th>
-                <th>Size</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var equipment in equipments)
-            {
-                <tr>
-                    <td>@equipment.EquipmentId</td>
-                    <td>@equipment.Name</td>
-                    <td>@equipment.CategoryName</td>
-                    <td>@equipment.Brand</td>
-                    <td>@equipment.Model</td>
-                    <td>@equipment.Availability</td>
-                    <td>@equipment.Condition</td>
-                    <td>@equipment.Size</td>
-                    <td>@equipment.QuantityInStock</td>
-                    <td>@equipment.PricePerDay</td>
-                    <td>
-                        <button class="btn-primary" @onclick="() => ShowEditModal(equipment)">Edit</button>
-                        <button class="btn-danger" @onclick="() => DeleteEquipment(equipment.EquipmentId)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    </div>
-}
-
 <style>
     .table-responsive {
-    margin-top: 20px;
-}
+        margin-top: 20px;
+    }
 
-.fancy-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .fancy-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.fancy-table th, .fancy-table td {
-    padding: 10px;
-    text-align: left;
-}
+        .fancy-table th, .fancy-table td {
+            padding: 10px;
+            text-align: left;
+        }
 
-.fancy-table th {
-    background-color: #343a40;
-    color: white;
-}
+        .fancy-table th {
+            background-color: #343a40;
+            color: white;
+        }
 
-.fancy-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+        .fancy-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-.fancy-table tbody tr:hover {
-    background-color: #ddd;
-}
+        .fancy-table tbody tr:hover {
+            background-color: #ddd;
+        }
 
-.btn-sm {
-    margin-right: 5px;
-}
+    .btn-sm {
+        margin-right: 5px;
+    }
 
     .clear-button {
         position: absolute;
@@ -335,137 +247,14 @@ else
         width: 100%;
         height: 100%;
         z-index: 1;
-        opacity: 0.9;
-    }
-    .me-2 {
-        margin-right: 0.5rem;
+        opacity: 1;
     }
 
+    .ms-2 {
+        margin-left: 0.5rem;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
 </style>
-
-<AddOrUpdateEquipment @ref="addEditModal" OnSubmit="RefreshEquipments" />
-
-@code {
-    private IEnumerable<EquipmentDto> equipments;
-    private AddOrUpdateEquipment addEditModal;
-
-    protected override void OnInitialized()
-    {
-        LoadEquipment();
-    }
-
-    private async Task LoadEquipment()
-    {
-        equipments = EquipmentService.GetAll();
-    }
-
-    private async Task DeleteEquipment(int id)
-    {
-        EquipmentService.Delete(id);
-        LoadEquipment();
-    }
-
-    private void ShowAddModal()
-    {
-        addEditModal.Show();
-    }
-
-    private void ShowEditModal(EquipmentDto equipment)
-    {
-        addEditModal.Show(equipment);
-    }
-
-    private async Task RefreshEquipments()
-    {
-        await LoadEquipment();
-    }
-} *@
-
-
-
-
-
-@* @page "/equipments"
-@inject IEquipmentService EquipmentService
-@inject ICategoryService CategoryService
-
-<h3>Equipments</h3>
-
-<button @onclick="ShowAddModal">Add Equipment</button>
-
-@if (equipments == null)
-{
-    <p>Loading...</p>
-}
-else if (!equipments.Any())
-{
-    <p>No equipment found.</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Availability</th>
-                <th>Condition</th>
-                <th>Size</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var equipment in equipments)
-            {
-                <tr>
-                    <td>@equipment.EquipmentId</td>
-                    <td>@equipment.Name</td>
-                    <td>@equipment.CategoryName</td>
-                    <td>@equipment.Brand</td>
-                    <td>@equipment.Model</td>
-                    <td>@equipment.Availability</td>
-                    <td>@equipment.Condition</td>
-                    <td>@equipment.Size</td>
-                    <td>@equipment.QuantityInStock</td>
-                    <td>@equipment.PricePerDay</td>
-                    <td>
-                        <button class="btn-primary" @onclick ="() => ShowEditModal(equipment)">Edit</button>
-                        <button class="btn-danger" @onclick="() => DeleteEquipment(equipment.EquipmentId)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-@code {
-    private IEnumerable<EquipmentDto> equipments = new List<EquipmentDto>();
-    private AddEditEquipmentModal addEditModal = new AddEditEquipmentModal();
-
-    protected override void OnInitialized()
-    {
-        equipments = EquipmentService.GetAll();
-    }
-
-    private async Task DeleteEquipment(int id)
-    {
-        EquipmentService.Delete(id);
-        equipments = EquipmentService.GetAll();
-    }
-
-    private void ShowAddModal()
-    {
-        addEditModal.Show();
-    }
-
-    private void ShowEditModal(EquipmentDto equipment)
-    {
-        addEditModal.Show(equipment);
-    }
-}
- *@

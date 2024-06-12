@@ -1,3 +1,5 @@
+using Blazored.Toast;
+using Blazored.Toast.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Components;
@@ -8,6 +10,7 @@ using NLog.Web;
 using RentalStore.Application.Mappings;
 using RentalStore.Application.Services;
 using RentalStore.Application.Validators;
+using RentalStore.BlazorServer.Services;
 using RentalStore.Domain.Interfaces;
 using RentalStore.Infrastructure;
 using RentalStore.Infrastructure.Repositories;
@@ -24,9 +27,13 @@ try
     // Add services to the container.
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
+    builder.Services.AddBlazoredToast();
 
     // rejestracja automappera w kontenerze IoC
     builder.Services.AddAutoMapper(typeof(RentalStoreMappingProfile));
+
+    builder.Services.AddScoped<IValidator<EquipmentDto>, EquipmentDtoValidator>();
+    builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<EquipmentDtoValidator>());
 
     // rejestracja kontekstu bazy w kontenerze IoC
     // var sqliteConnectionString = "Data Source=Kiosk.WebAPI.Logger.db";
@@ -46,6 +53,8 @@ try
     builder.Services.AddScoped<IEquipmentService, EquipmentService>();
     builder.Services.AddScoped<IRentalService, RentalService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<IFileService, FileService>();
+    builder.Services.AddScoped<IToastService, ToastService>();
 
     var app = builder.Build();
 

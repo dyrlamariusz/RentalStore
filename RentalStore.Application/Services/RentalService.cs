@@ -44,26 +44,29 @@ namespace RentalStore.Application.Services
             return rental.RentalId;
         }
 
-        //public int Create(CreateRentalDto dto)
-        //{
-        //    var rental = _mapper.Map<Rental>(dto);
-        //    var rentalDetails = _mapper.Map<List<RentalDetail>>(dto.Details);
-        //    rental.Details = rentalDetails;
-
-        //    _uow.RentalRepository.Insert(rental);
-        //    _uow.Commit();
-
-        //    return rental.RentalId;
-        //}
 
         public void Delete(int id)
         {
-            var rental = _uow.RentalRepository.Get(id);
+            var rental = _uow.RentalRepository.GetByIdWithDetails(id);
             if (rental == null)
             {
                 throw new NotFoundException("Rental not found");
             }
 
+            // Przywrócenie ilości sprzętu na stan magazynowy
+            foreach (var detail in rental.Details)
+            {
+                var equipment = _uow.EquipmentRepository.Get(detail.EquipmentId);
+                if (equipment == null)
+                {
+                    throw new NotFoundException("Equipment not found");
+                }
+
+                equipment.QuantityInStock += detail.Count;
+                _uow.EquipmentRepository.Update(equipment);
+            }
+
+            
             _uow.RentalRepository.Delete(rental);
             _uow.Commit();
         }

@@ -1,62 +1,111 @@
 ﻿@page "/forms"
+@using Radzen
+@using Radzen.Blazor
 @inject IRentalClientService RentalService
 @inject ICartService CartService
 @inject NavigationManager Navigation
+@inject CartStateService CartStateService
 
-<EditForm Model="@rental" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+@if (!orderPlaced)
+{
+    <RadzenTemplateForm TItem="CreateRentalDto" Data="@rental" Submit="@HandleValidSubmit">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+                <div class="col-md-6">
+                    <h1 class="text-center mb-4">Make an order</h1>
 
-    <div class="container">
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <h1 class="text-center mb-4">Make an order</h1>
-                <div class="form-outline mb-4">
-                    <InputText id="name" class="form-control shadow" @bind-Value="rental.CustomerName" />
-                    <label class="form-label" for="name">Name</label>
+                    <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerName">
+                        <RadzenLabel Text="Name" Component="CustomerName" />
+                        <RadzenTextBox Style="width: 100%;" @bind-Value="rental.CustomerName" Name="CustomerName" />
+                        <RadzenRequiredValidator Component="CustomerName" Text="Name is required" />
+                    </RadzenTemplateFormField>
+
+                    <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerSurname">
+                        <RadzenLabel Text="Surname" Component="CustomerSurname" />
+                        <RadzenTextBox Style="width: 100%;" @bind-Value="rental.CustomerSurname" Name="CustomerSurname" />
+                        <RadzenRequiredValidator Component="CustomerSurname" Text="Surname is required" />
+                    </RadzenTemplateFormField>
+
+                    <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerEmail">
+                        <RadzenLabel Text="Email address" Component="CustomerEmail" />
+                        <RadzenTextBox Style="width: 100%;" @bind-Value="rental.CustomerEmail" Name="CustomerEmail" />
+                        <RadzenEmailValidator Component="CustomerEmail" Text="Invalid email address" />
+                        <RadzenRequiredValidator Component="CustomerEmail" Text="Email is required" />
+                    </RadzenTemplateFormField>
+
+                    <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerPhone">
+                        <RadzenLabel Text="Phone" Component="CustomerPhone" />
+                        <RadzenTextBox Style="width: 100%;" @bind-Value="rental.CustomerPhone" Name="CustomerPhone" />
+                        <RadzenRequiredValidator Component="CustomerPhone" Text="Phone is required" />
+                    </RadzenTemplateFormField>
+
+                    <RadzenButton ButtonType="ButtonType.Submit" class="btn btn-primary btn-block mb-2" Text="Send" />
+                    <RadzenButton ButtonType="ButtonType.Button" class="btn btn-outline-primary btn-block mb-2" Text="Back" Click="BackToCardPage" />
+                    <RadzenButton ButtonType="ButtonType.Button" class="btn btn-outline-danger btn-block mb-2" Text="Cancel" Click="HandleCancel" />
                 </div>
-
-                <div class="form-outline mb-4">
-                    <InputText id="surname" class="form-control shadow" @bind-Value="rental.CustomerSurname" />
-                    <label class="form-label" for="surname">Surname</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                    <InputText id="email" type="email" class="form-control shadow" @bind-Value="rental.CustomerEmail" />
-                    <label class="form-label" for="email">Email address</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                    <InputText id="phone" type="tel" class="form-control shadow" @bind-Value="rental.CustomerPhone" />
-                    <label class="form-label" for="phone">Phone</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block mb-2">Send</button>
-                <button type="button" class="btn btn-outline-primary btn-block mb-2" @onclick="BackToCardPage">Back</button>
-                <button type="button" class="btn btn-outline-danger btn-block mb-2" @onclick="HandleCancel">Cancel</button>
             </div>
         </div>
+    </RadzenTemplateForm>
+}
+else
+{
+    <div class="center-content">
+        <div class="text-center">
+            <h2>Congratulations!</h2>
+            <p>Your order was placed successfully.</p>
+            <RadzenButton ButtonType="ButtonType.Button" class="btn btn-primary" Text="Back to shop" Click="BackToEquipmentPage" />
+        </div>
     </div>
-</EditForm>
+}
 
-@code {
-    private CreateRentalDto rental = new CreateRentalDto
-        {
-            RentalDate = DateTime.UtcNow,
-            ReturnDate = DateTime.UtcNow.AddDays(1) // Default 1 day rental
-        };
-
-    private async Task HandleValidSubmit()
-    {
-        rental.Total = await CalculateTotal();
-        await RentalService.CreateRentalAsync(rental);
-
+<style>
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        text-align: center;
     }
 
-    private async Task<decimal> CalculateTotal()
+        .center-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .center-content button {
+            width: auto;
+        }
+</style>
+
+@code {
+    private CreateRentalDto rental = new CreateRentalDto();
+    private bool orderPlaced = false;
+
+    private async Task HandleValidSubmit(CreateRentalDto rental)
     {
-        var cartItems = await CartService.GetCartItems();
-        return cartItems.Sum(item => (decimal) item.Equipment.PricePerDay);
+        rental.RentalDate = DateTime.UtcNow;
+        rental.ReturnDate = DateTime.UtcNow.AddDays(CartStateService.RentalDays);
+        rental.Total = CartStateService.TotalAmount;
+        rental.Status = RentalStatusDto.Active;
+
+        List<CartItemDto> cartItems = await CartService.GetCartItems();
+        foreach (var c in cartItems)
+        {
+            rental.Details.Add(
+                new CreateRentalDetailDto
+                    {
+                        EquipmentId = c.Equipment.EquipmentId,
+                        Count = c.Quantity
+                    }
+            );
+        }
+
+        await RentalService.CreateRentalAsync(rental); 
+        await CartService.ClearCart();
+        CartStateService.TotalAmount = 0;
+        CartStateService.RentalDays = 1;
+
+        orderPlaced = true;
+        rental = new CreateRentalDto(); 
     }
 
     private void BackToCardPage()
@@ -64,9 +113,16 @@
         Navigation.NavigateTo("/cart");
     }
 
+    private void BackToEquipmentPage()
+    {
+        Navigation.NavigateTo("/equipment");
+    }
+
     private async Task HandleCancel()
     {
         await CartService.ClearCart();
+        CartStateService.TotalAmount = 0;
+        CartStateService.RentalDays = 1;
         Navigation.NavigateTo("/equipment");
     }
 }

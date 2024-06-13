@@ -20,6 +20,7 @@ namespace RentalStore.BlazorClientv2
             builder.Services.AddScoped<IRentalClientService, RentalClientService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddSingleton<CartStateService>();
 
             // modyfikacja klienta http aby pobiera³ dane z pliku konfiguracyjnego
             builder.Services.AddScoped(sp => new HttpClient

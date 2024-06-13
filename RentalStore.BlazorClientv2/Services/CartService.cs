@@ -46,9 +46,6 @@ namespace RentalStore.BlazorClientv2.Services
             }
         }
 
-
-
-
         public async Task<List<CartItemDto>> GetCartItems()
         {
             var cartJson = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "cart");

@@ -6,8 +6,8 @@ namespace RentalStore.Application.Services
     {
         List<EquipmentDto> GetAll();
         EquipmentDto GetById(int id);
-        int Create(CreateEquipmentDto dto);
-        void Update(int id, UpdateEquipmentDto dto);
+        int Create(EquipmentDto dto);
+        void Update(int id, EquipmentDto dto);
         void Delete(int id);
         List<EquipmentDto> GetEquipmentByCategoryName(string categoryName); 
     }

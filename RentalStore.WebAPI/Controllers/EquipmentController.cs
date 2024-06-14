@@ -54,7 +54,7 @@ namespace RentalStore.Application.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Create([FromBody] CreateEquipmentDto dto)
+        public ActionResult Create([FromBody] EquipmentDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Update(int id, [FromBody] UpdateEquipmentDto dto)
+        public ActionResult Update(int id, [FromBody] EquipmentDto dto)
         {
             try
             {

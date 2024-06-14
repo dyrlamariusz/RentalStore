@@ -20,16 +20,11 @@ namespace RentalStore.Application.Services
             this._mapper = mapper;
         }
 
-        public int Create(CreateEquipmentDto dto)
+        public int Create(EquipmentDto dto)
         {
-            var category = _uow.CategoryRepository.Find(c => c.CategoryName == dto.CategoryName).FirstOrDefault();
-            if (category == null)
-            {
-                throw new BadRequestException("Invalid category name");
-            }
+            dto.CategoryId = _uow.CategoryRepository.Find(c => c.CategoryName == dto.CategoryName).FirstOrDefault().CategoryId;
 
             var equipment = _mapper.Map<Equipment>(dto);
-            equipment.CategoryId = category.CategoryId; // Ustawianie CategoryId na podstawie znalezionej kategorii
 
             // ustawianie domyslnego zdjecia
             equipment.ImageUrl = String.IsNullOrEmpty(dto.ImageUrl)
@@ -89,7 +84,7 @@ namespace RentalStore.Application.Services
             return result;
         }
 
-        public void Update(int id, UpdateEquipmentDto dto)
+        public void Update(int id, EquipmentDto dto)
         {
             var equipment = _uow.EquipmentRepository.Get(id);
             if (equipment == null)

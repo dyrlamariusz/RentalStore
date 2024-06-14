@@ -19,7 +19,7 @@ namespace RentalStore.Infrastructure
         {
             modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Category)
-            .WithMany(c => c.Equipments)
+            .WithMany(c => c.Equipment)
             .HasForeignKey(e => e.CategoryId);
 
             modelBuilder.Entity<LocationMap>()

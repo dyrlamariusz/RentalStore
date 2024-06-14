@@ -1,5 +1,6 @@
 ﻿using RentalStore.Domain.Models;
 using RentalStore.SharedKernel.Dto;
+using Condition = RentalStore.Domain.Models.Condition;
 
 namespace RentalStore.Infrastructure
 {
@@ -69,8 +70,7 @@ namespace RentalStore.Infrastructure
                             Brand = "ROSSIGNOL",
                             Model = "Nova 6",
                             Availability = true,
-                            Condition = "Nowe",
-                            Size = "Średnie",
+                            Condition = Condition.New,
                             QuantityInStock = 15,
                             PricePerDay = 200,
                             ImageUrl = "/images/no-image-icon.png"
@@ -88,8 +88,7 @@ namespace RentalStore.Infrastructure
                             Brand = "Kross",
                             Model = "Hexagon 6.0",
                             Availability = true,
-                            Condition = "Nowe",
-                            Size = "L",
+                            Condition = Condition.New,
                             QuantityInStock = 15,
                             PricePerDay = 170,
                             ImageUrl = "/images/no-image-icon.png"

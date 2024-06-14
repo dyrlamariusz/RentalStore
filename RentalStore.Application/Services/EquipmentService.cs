@@ -22,7 +22,7 @@ namespace RentalStore.Application.Services
 
         public int Create(EquipmentDto dto)
         {
-            dto.CategoryName = _uow.CategoryRepository.Find(c => c.CategoryId == dto.CategoryId).FirstOrDefault().CategoryName;
+            dto.CategoryId = _uow.CategoryRepository.Find(c => c.CategoryName == dto.CategoryName).FirstOrDefault().CategoryId;
 
             var equipment = _mapper.Map<Equipment>(dto);
 

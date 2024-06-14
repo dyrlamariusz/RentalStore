@@ -17,7 +17,7 @@ namespace RentalStore.Application.Services
             this._mapper = mapper;
         }
 
-        public int Create(CreateCategoryDto dto)
+        public int Create(CategoryDto dto)
         {
             if (dto == null)
             {
@@ -71,7 +71,7 @@ namespace RentalStore.Application.Services
             return result;
         }
 
-        public void Update(UpdateCategoryDto dto)
+        public void Update(CategoryDto dto)
         {
             if (dto == null)
             {

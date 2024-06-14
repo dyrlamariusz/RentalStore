@@ -1,6 +1,7 @@
 @namespace RentalStore.BlazorServer.Components
 @inject ICategoryService CategoryService
 @inject IEquipmentService EquipmentService
+@inject IServiceProvider ServiceProvider
 @inject IFileService FileService
 @inject IToastService ToastService
 
@@ -42,6 +43,7 @@
                             <div class="col-md-4 mb-3">
                                 <label for="category">Category</label>
                                 <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName">
+                                    <option value="" disabled selected>Select a category</option>
                                     @if (categories != null)
                                     {
                                         @foreach (var category in categories)
@@ -67,6 +69,7 @@
                             <div class="col-md-3 mb-3">
                                 <label for="condition">Condition</label>
                                 <InputSelect id="condition" class="form-control" @bind-Value="equipment.Condition">
+                                    <option value="" disabled selected>Select a condition</option>
                                     @foreach (var condition in Enum.GetValues(typeof(Condition)).Cast<Condition>())
                                     {
                                         <option value="@condition">@condition</option>
@@ -171,7 +174,7 @@
 
 @code {
     [Parameter] public EventCallback OnSubmit { get; set; }
-    private CreateEquipmentDto equipment;
+    private EquipmentDto equipment;
     private List<CategoryDto> categories;
     private bool IsVisible { get; set; }
     private List<string> validationErrors = new List<string>();
@@ -181,7 +184,7 @@
         categories = CategoryService.GetAll();
     }
 
-    public void Show(CreateEquipmentDto equipmentToEdit = null)
+    public void Show(EquipmentDto equipmentToEdit = null)
     {
         validationErrors.Clear();
         if (equipmentToEdit != null)
@@ -190,7 +193,7 @@
         }
         else
         {
-            equipment = new CreateEquipmentDto();
+            equipment = new EquipmentDto();
         }
 
         IsVisible = true;
@@ -201,7 +204,7 @@
     {
         if (ValidateEquipment())
         {
-            if (equipment.CategoryName == 0)
+            if (equipment.CategoryId == 0)
             {
                 EquipmentService.Create(equipment);
             }

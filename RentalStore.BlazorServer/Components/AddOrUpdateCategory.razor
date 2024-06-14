@@ -1,6 +1,6 @@
 @namespace RentalStore.BlazorServer.Components
 @inject ICategoryService CategoryService
-@inject IToastService ToastService
+@inject Blazored.Toast.Services.IToastService ToastService
 
 <div class="modal @(IsVisible ? "show" : "hide")" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -125,10 +125,12 @@
             if (category.CategoryId == 0)
             {
                 CategoryService.Create(category);
+                ToastService.ShowSuccess("Category saved successfully");
             }
             else
             {
                 CategoryService.Update(category);
+                ToastService.ShowInfo("Category updated successfully");
             }
 
             IsVisible = false;

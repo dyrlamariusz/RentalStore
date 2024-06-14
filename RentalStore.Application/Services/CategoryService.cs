@@ -24,7 +24,9 @@ namespace RentalStore.Application.Services
                 throw new BadRequestException("Category is null");
             }
 
-            var id = _uow.CategoryRepository.GetMaxId() + 1;
+            var maxId = _uow.CategoryRepository.GetMaxId();
+            var id = maxId + 1;
+
             var category = _mapper.Map<Category>(dto);
             category.CategoryId = id;
 

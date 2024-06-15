@@ -6,4 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="4.32.7" />
+  </ItemGroup>
 </Project>

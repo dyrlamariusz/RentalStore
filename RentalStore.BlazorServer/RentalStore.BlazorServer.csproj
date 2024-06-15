@@ -11,6 +11,7 @@
 		<Content Remove="Data\**" />
 		<EmbeddedResource Remove="Data\**" />
 		<None Remove="Data\**" />
+		<None Remove="Pages\Rentals\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,10 +20,12 @@
 
 	<ItemGroup>
 		<Folder Include="img\" />
+		<Folder Include="Pages\Rentals\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Blazored.Toast" Version="4.2.1" />
+	  <PackageReference Include="Radzen.Blazor" Version="4.32.7" />
 	</ItemGroup>
 
 </Project>

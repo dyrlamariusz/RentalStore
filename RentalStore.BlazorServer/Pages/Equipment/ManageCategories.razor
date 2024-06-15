@@ -24,6 +24,7 @@ else
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Default Image</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@ else
                     <td>@category.CategoryId</td>
                     <td>@category.CategoryName</td>
                     <td>@category.Description</td>
+                    <td><img src="@category.ImageUrl" width="24"></td>
                     <td>
                         <button class="btn btn-warning btn-sm" @onclick="() => ShowEditModal(category)">Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="() => DeleteCategory(category.CategoryId)">Delete</button>

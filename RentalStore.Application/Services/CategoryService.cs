@@ -86,6 +86,11 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Category not found");
             }
 
+            category.CategoryName = dto.CategoryName;
+            category.Description = dto.Description;
+            category.ImageUrl = dto.ImageUrl;
+
+            _uow.CategoryRepository.Update(category);
             _uow.Commit();
         }
 

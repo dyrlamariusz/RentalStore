@@ -1,6 +1,8 @@
 @namespace RentalStore.BlazorServer.Components
 @inject ICategoryService CategoryService
 @inject Blazored.Toast.Services.IToastService ToastService
+@inject IFileService FileService
+@inject NavigationManager Navigation
 
 <div class="modal @(IsVisible ? "show" : "hide")" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -34,6 +36,18 @@
                             <label for="description">Description</label>
                             <InputTextArea id="description" class="form-control" @bind-Value="category.Description" placeholder="Description" />
                             <ValidationMessage For="@(() => category.Description)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 mb-3">
+                                <label>Image: </label>
+                                <InputFile OnChange="HandleImageUpload"></InputFile>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                @if (!string.IsNullOrEmpty(category.ImageUrl))
+                                {
+                                    <img src="@category.ImageUrl" class="img-thumbnail" width="150" />
+                                }
+                            </div>
                         </div>
                         <div class="button-container">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -101,6 +115,12 @@
     private CategoryDto category;
     private bool IsVisible { get; set; }
     private List<string> validationErrors = new List<string>();
+    private string baseUrl;
+
+    protected override void OnInitialized()
+    {
+        baseUrl = Navigation.BaseUri;
+    }
 
     public void Show(CategoryDto categoryToEdit = null)
     {
@@ -136,6 +156,31 @@
             IsVisible = false;
             await OnSubmit.InvokeAsync();
             StateHasChanged();
+        }
+    }
+
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    {
+        if (e.GetMultipleFiles().Count > 0)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
+                if (fileInfo.Extension.ToLower() == ".png")
+                {
+                    var relativePath = await FileService.UploadFile(file);
+
+                    var formattedBaseUrl = baseUrl.Remove(baseUrl.Length-1);
+
+                    category.ImageUrl = $"{formattedBaseUrl}{relativePath}";
+                    StateHasChanged();
+                }
+                else
+                {
+                    ToastService.ShowToast(ToastLevel.Warning, "Please select .png file only");
+                    return;
+                }
+            }
         }
     }
 

@@ -4,6 +4,7 @@
 @inject IServiceProvider ServiceProvider
 @inject IFileService FileService
 @inject IToastService ToastService
+@inject NavigationManager Navigation
 
 <div class="modal @(IsVisible ? "show" : "hide")" tabindex="-1">
     <div class="modal-dialog modal-xl">
@@ -42,7 +43,7 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="category">Category</label>
-                                <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName">
+                                <InputSelect id="category" class="form-control" @bind-Value="equipment.CategoryName" @onchange="OnCategoryChanged">
                                     <option value="" disabled selected>Select a category</option>
                                     @if (categories != null)
                                     {
@@ -100,10 +101,7 @@
                                 <InputFile OnChange="HandleImageUpload"></InputFile>
                             </div>
                             <div class="col-md-6 mb-3">
-                                @if (!string.IsNullOrEmpty(equipment.ImageUrl))
-                                {
-                                    <img src="@equipment.ImageUrl" class="img-thumbnail" width="150" />
-                                }
+                                <img src="@imagePreviewUrl" class="img-thumbnail" width="150" />
                             </div>
                         </div>
                         <div class="button-container">
@@ -178,22 +176,31 @@
     private List<CategoryDto> categories;
     private bool IsVisible { get; set; }
     private List<string> validationErrors = new List<string>();
+    private string imagePreviewUrl = "/images/no-image-icon.png";
+    private string baseUrl;
+    private bool isImageUploaded = false; // Track if a new image has been uploaded
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         categories = CategoryService.GetAll();
+        baseUrl = Navigation.BaseUri;
     }
 
     public void Show(EquipmentDto equipmentToEdit = null)
     {
         validationErrors.Clear();
+        isImageUploaded = false; // Reset the flag when the modal is shown
         if (equipmentToEdit != null)
         {
             equipment = equipmentToEdit;
+            imagePreviewUrl = string.IsNullOrEmpty(equipment.ImageUrl)
+                ? GetCategoryImageUrl(equipment.CategoryName) ?? "/images/no-image-icon.png"
+                : equipment.ImageUrl;
         }
         else
         {
             equipment = new EquipmentDto();
+            imagePreviewUrl = "/images/no-image-icon.png";
         }
 
         IsVisible = true;
@@ -204,7 +211,13 @@
     {
         if (ValidateEquipment())
         {
-            if (equipment.CategoryId == 0)
+            var selectedCategory = categories.FirstOrDefault(c => c.CategoryName == equipment.CategoryName);
+            if (!isImageUploaded && string.IsNullOrEmpty(equipment.ImageUrl))
+            {
+                equipment.ImageUrl = selectedCategory?.ImageUrl ?? "/images/no-image-icon.png";
+            }
+
+            if (equipment.EquipmentId == 0)
             {
                 EquipmentService.Create(equipment);
             }
@@ -244,15 +257,39 @@
                 System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
                 if (fileInfo.Extension.ToLower() == ".png")
                 {
-                    equipment.ImageUrl = await FileService.UploadFile(file);
+                    var relativePath = await FileService.UploadFile(file);
+
+                    var formattedBaseUrl = baseUrl.Remove(baseUrl.Length - 1);
+
+                    equipment.ImageUrl = $"{formattedBaseUrl}{relativePath}";
+                    imagePreviewUrl = equipment.ImageUrl;
+                    isImageUploaded = true;
+                    StateHasChanged();
                 }
                 else
                 {
-                    ToastService.ShowToast(ToastLevel.Warning, "Please select .jpg/.jpeg/.png file only");
+                    ToastService.ShowToast(ToastLevel.Warning, "Please select .png file only");
                     return;
                 }
             }
         }
+    }
+
+    private void OnCategoryChanged(ChangeEventArgs e)
+    {
+        var selectedCategoryName = e.Value.ToString();
+        var selectedCategory = categories.FirstOrDefault(c => c.CategoryName == selectedCategoryName);
+        if (!isImageUploaded)
+        {
+            imagePreviewUrl = selectedCategory?.ImageUrl ?? "/images/no-image-icon.png";
+        }
+        StateHasChanged();
+    }
+
+    private string GetCategoryImageUrl(string categoryName)
+    {
+        var category = categories.FirstOrDefault(c => c.CategoryName == categoryName);
+        return category?.ImageUrl;
     }
 
     private void CloseModal()

@@ -33,7 +33,7 @@ namespace RentalStore.BlazorServer.Services
         {
             FileInfo fileInfo = new FileInfo(file.Name);
             var fileName = Guid.NewGuid().ToString() + fileInfo.Extension;
-            var dir = $"{_webHostEnvironment.WebRootPath}\\images\\product";
+            var dir = $"{_webHostEnvironment.WebRootPath}\\images";
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -43,7 +43,7 @@ namespace RentalStore.BlazorServer.Services
             await using FileStream fs = new FileStream(filePath, FileMode.Create);
             await file.OpenReadStream().CopyToAsync(fs);
 
-            var fullPath = $"/images/product/{fileName}";
+            var fullPath = $"/images/{fileName}";
             return fullPath;
         }
     }

@@ -1,7 +1,7 @@
 ﻿@page "/manage-equipment/categories"
 @inherits LayoutComponentBase
 @inject ICategoryService CategoryService
-@inject IToastService ToastService
+@inject Blazored.Toast.Services.IToastService ToastService
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Manage Categories</h3>
@@ -24,6 +24,7 @@ else
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Default Image</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@ else
                     <td>@category.CategoryId</td>
                     <td>@category.CategoryName</td>
                     <td>@category.Description</td>
+                    <td><img src="@category.ImageUrl" width="24"></td>
                     <td>
                         <button class="btn btn-warning btn-sm" @onclick="() => ShowEditModal(category)">Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="() => DeleteCategory(category.CategoryId)">Delete</button>

@@ -45,7 +45,7 @@ namespace RentalStore.Application.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Create([FromBody] CreateCategoryDto dto)
+        public ActionResult Create([FromBody] CategoryDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace RentalStore.Application.Controllers
             }
 
             var id = _categoryService.Create(dto);
-            _logger.LogDebug($"Utworzono nowy kategorie z id = {id}");
+            _logger.LogDebug($"Utworzono nową kategorie z id = {id}");
             var actionName = nameof(Get);
             var routeValues = new { id };
             return CreatedAtAction(actionName, routeValues, null);
@@ -78,7 +78,7 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Update(int id, [FromBody] UpdateCategoryDto dto)
+        public ActionResult Update(int id, [FromBody] CategoryDto dto)
         {
             if (id != dto.CategoryId)
             {

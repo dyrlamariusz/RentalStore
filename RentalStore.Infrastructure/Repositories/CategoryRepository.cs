@@ -18,7 +18,12 @@ namespace RentalStore.Infrastructure.Repositories
 
         public int GetMaxId()
         {
-            return _rentalStoreDbContext.Categories.Max(x => x.CategoryId);
+            var categories = _rentalStoreDbContext.Categories;
+            if (categories == null || !categories.Any())
+            {
+                return 0;
+            }
+            return categories.Max(x => x.CategoryId);
         }
 
         public Category GetCategoryByName(string name)

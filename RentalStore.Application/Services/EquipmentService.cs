@@ -20,26 +20,29 @@ namespace RentalStore.Application.Services
             this._mapper = mapper;
         }
 
-        public int Create(CreateEquipmentDto dto)
+        public int Create(EquipmentDto dto)
         {
             var category = _uow.CategoryRepository.Find(c => c.CategoryName == dto.CategoryName).FirstOrDefault();
+
             if (category == null)
             {
-                throw new BadRequestException("Invalid category name");
+                throw new Exception("Category not found");
             }
 
-            var equipment = _mapper.Map<Equipment>(dto);
-            equipment.CategoryId = category.CategoryId; // Ustawianie CategoryId na podstawie znalezionej kategorii
+            dto.CategoryId = category.CategoryId;
 
-            // ustawianie domyslnego zdjecia
-            equipment.ImageUrl = String.IsNullOrEmpty(dto.ImageUrl)
-            ? "/images/no-image-icon.png"
-            : dto.ImageUrl;
+            var equipment = _mapper.Map<Equipment>(dto);
+
+            equipment.ImageUrl = !string.IsNullOrEmpty(category.ImageUrl)
+                ? category.ImageUrl
+                : "/images/no-image-icon.png";
 
             _uow.EquipmentRepository.Insert(equipment);
             _uow.Commit();
+
             return equipment.EquipmentId;
         }
+
 
         public void Delete(int id)
         {
@@ -89,7 +92,7 @@ namespace RentalStore.Application.Services
             return result;
         }
 
-        public void Update(int id, UpdateEquipmentDto dto)
+        public void Update(int id, EquipmentDto dto)
         {
             var equipment = _uow.EquipmentRepository.Get(id);
             if (equipment == null)
@@ -106,10 +109,9 @@ namespace RentalStore.Application.Services
             _mapper.Map(dto, equipment);
             equipment.CategoryId = category.CategoryId;
 
-            // set default image url if user did not support its own
-            equipment.ImageUrl = String.IsNullOrEmpty(dto.ImageUrl)
-                ? "/images/no-image-icon.png"
-:               dto.ImageUrl;
+            equipment.ImageUrl = !string.IsNullOrEmpty(category.ImageUrl)
+                ? category.ImageUrl
+                : "/images/no-image-icon.png";
 
             _uow.EquipmentRepository.Update(equipment);
             _uow.Commit();

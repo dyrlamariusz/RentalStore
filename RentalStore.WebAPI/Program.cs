@@ -42,7 +42,7 @@ try
     builder.Services.AddFluentValidationAutoValidation();
 
     // rejestracja kontekstu bazy w kontenerze IoC
-    var sqliteConnectionString = "Data Source=RentalStore.WebAPI.Logger.db";
+    var sqliteConnectionString = "Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RentalStore.db";
     builder.Services.AddDbContext<RentalStoreDbContext>(options =>
         options.UseSqlite(sqliteConnectionString));
 

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace RentalStore.SharedKernel.Dto
 {
+    public enum Condition
+    {
+        New,
+        Used       
+    }
     public class EquipmentDto
     {
         public int EquipmentId { get; set; }
@@ -16,8 +21,7 @@ namespace RentalStore.SharedKernel.Dto
         public string Brand { get; set; }
         public string Model { get; set; }   
         public bool Availability { get; set; }
-        public string Condition { get; set; }
-        public string Size { get; set; }
+        public Condition Condition { get; set; }
         public int QuantityInStock { get; set; }
         public float PricePerDay { get; set; }
         // dodanie zdjecia:

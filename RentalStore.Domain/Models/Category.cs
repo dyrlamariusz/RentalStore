@@ -11,7 +11,8 @@ namespace RentalStore.Domain.Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
-        public ICollection<Equipment> Equipments { get; set;}
+        public string ImageUrl { get; set; }
+        public ICollection<Equipment> Equipment { get; set;}
         public DateTime ModifiedAt { get; set; }
     }
 }

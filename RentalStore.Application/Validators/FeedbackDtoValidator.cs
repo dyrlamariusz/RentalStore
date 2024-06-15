@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using RentalStore.Domain.Interfaces;
 using RentalStore.SharedKernel.Dto;
 
 namespace RentalStore.Application.Validators

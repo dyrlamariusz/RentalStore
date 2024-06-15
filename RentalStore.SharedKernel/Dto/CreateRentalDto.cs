@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 # warning czy to ma byc w ten sposob ? 
-using static RentalStore.Domain.Models.Rental;
 
 
 namespace RentalStore.SharedKernel.Dto

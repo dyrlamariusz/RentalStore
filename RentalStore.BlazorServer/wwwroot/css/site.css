@@ -62,3 +62,80 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.jumbotron {
+    background: url('/images/landing-bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+}
+
+.icon {
+    color: #007bff;
+}
+
+    .icon .fas {
+        margin-bottom: 10px;
+    }
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+}
+
+/* Toggle Styles */
+#wrapper {
+    padding-left: 250px;
+    transition: all 0.5s ease;
+}
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+#sidebar-wrapper {
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1000;
+    overflow-y: auto;
+    background: #f8f9fa;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 0;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    margin-right: 0;
+}
+
+.sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0.75rem 1.25rem;
+}
+
+.card-title {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.jumbotron {
+    background: url('/images/admin-bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+}
+

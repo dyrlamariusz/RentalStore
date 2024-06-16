@@ -11,7 +11,7 @@
     "RentalStore.BlazorServer": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:36162",
+      "applicationUrl": "https://localhost:7269",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

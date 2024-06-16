@@ -2,14 +2,16 @@
 @inject IEquipmentService _equipmentService
 @inject ICategoryService _categoryService
 @inject ICartService CartService
+@inject NotificationService _notificationService
 
 
 <PageTitle>Equipment list</PageTitle>
 
+
 <div class="container">
     <div class="d-flex flex-row justify-content-around">
         <div class="mw-10">
-            <h1 class="text-center" style="display: inline-block">Sports Collection</h1>
+            <h1 class="text-center text-primary mt-3" style="display: inline-block">Sports Collection</h1>
         </div>
     </div>
 
@@ -57,7 +59,7 @@
             @foreach (var e in _equipmentList)
             {
                 <div class="card m-2" style="width: 18rem;">
-                    <img class="card-img-top img-fluid" src="@e.ImageUrl" alt="Card image cap">
+                    <img class="card-img-top img-fluid custom-img" src="@e.ImageUrl" alt="Card image cap">
                     <div class="card-body align-content-center pb-0">
                         <h5 class="card-title fw-bold m-0">@e.Name</h5>
                     </div>
@@ -72,6 +74,15 @@
         </div>
     </div>
 </div>
+
+<style>
+    .custom-img {
+        width: 100%;
+        height: 200px; 
+        object-fit: cover;
+        object-position: center;
+    }
+</style>
 
 @code {
     private IEnumerable<EquipmentDto> _equipmentList = new List<EquipmentDto>();

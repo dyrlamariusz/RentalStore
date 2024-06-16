@@ -24,7 +24,9 @@ namespace RentalStore.Application.Services
                 throw new BadRequestException("Category is null");
             }
 
-            var id = _uow.CategoryRepository.GetMaxId() + 1;
+            var maxId = _uow.CategoryRepository.GetMaxId();
+            var id = maxId + 1;
+
             var category = _mapper.Map<Category>(dto);
             category.CategoryId = id;
 
@@ -84,6 +86,11 @@ namespace RentalStore.Application.Services
                 throw new NotFoundException("Category not found");
             }
 
+            category.CategoryName = dto.CategoryName;
+            category.Description = dto.Description;
+            category.ImageUrl = dto.ImageUrl;
+
+            _uow.CategoryRepository.Update(category);
             _uow.Commit();
         }
 

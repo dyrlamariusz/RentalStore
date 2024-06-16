@@ -20,7 +20,7 @@ namespace RentalStore.BlazorClientv2.Services
 
         public async Task<IEnumerable<EquipmentDto>> GetAll()
         {
-            var response = await _httpClient.GetAsync("/equipments");
+            var response = await _httpClient.GetAsync("/equipment");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

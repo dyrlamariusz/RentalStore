@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Radzen;
 using RentalStore.BlazorClientv2;
 using RentalStore.BlazorClientv2.Services;
 
@@ -20,6 +21,8 @@ namespace RentalStore.BlazorClientv2
             builder.Services.AddScoped<IRentalClientService, RentalClientService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddSingleton<CartStateService>();
+            builder.Services.AddScoped<NotificationService>();
 
             // modyfikacja klienta http aby pobiera³ dane z pliku konfiguracyjnego
             builder.Services.AddScoped(sp => new HttpClient

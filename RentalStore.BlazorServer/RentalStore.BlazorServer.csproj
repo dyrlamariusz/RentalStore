@@ -15,12 +15,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\images\bicycle.png" />
+	  <Content Remove="wwwroot\images\skis.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\RentalStore.Infrastructure\RentalStore.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="img\" />
 		<Folder Include="Pages\Rentals\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\images\bicycle.png" />
+	  <None Include="wwwroot\images\skis.png" />
 	</ItemGroup>
 
 	<ItemGroup>

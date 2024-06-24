@@ -11,7 +11,6 @@ namespace RentalStore.SharedKernel.Dto
 {
     public class CreateRentalDto
     {
-        //public int EquipmentId { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatusDto Status { get; set; }

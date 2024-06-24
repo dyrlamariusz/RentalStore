@@ -2,7 +2,6 @@
 
 namespace RentalStore.Domain.Interfaces
 {
-    // interfejs repozytorium generycznego
     public interface IRepository<TEntity> where TEntity : class
     {
         int Count();

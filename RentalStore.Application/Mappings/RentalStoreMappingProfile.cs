@@ -13,14 +13,7 @@ namespace RentalStore.Application.Mappings
     {
         public RentalStoreMappingProfile()
         {
-            CreateMap<Product, ProductDto>();
-            CreateMap<CreateProductDto, Product>()
-                .ForMember(m => m.Description, c => c.MapFrom(s => s.Desc));
-
-            
-
-            // mapowanie dla obiektów DTO
-            // ODKOMENTOWAC
+           
             CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
 
@@ -31,7 +24,6 @@ namespace RentalStore.Application.Mappings
                     return category?.FirstOrDefault(c => c.CategoryId == src.CategoryId)?.CategoryName;
                 }));
 
-
             CreateMap<CreateEquipmentDto, Equipment>();
             CreateMap<UpdateEquipmentDto, Equipment>();
 
@@ -39,7 +31,6 @@ namespace RentalStore.Application.Mappings
             CreateMap<CategoryDto, Category>();
             CreateMap<CreateCategoryDto, Category>();
 
-            // Mapowanie dla obiektów Rental
             CreateMap<Rental, RentalDto>()
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details))
                 .ReverseMap();
@@ -49,36 +40,15 @@ namespace RentalStore.Application.Mappings
 
             CreateMap<UpdateRentalDto, Rental>();
 
-            // Mapowanie dla obiektów RentalDetail
             CreateMap<RentalDetail, RentalDetailDto>().ReverseMap();
             CreateMap<CreateRentalDetailDto, RentalDetail>();
 
-            // Mapowanie dla obiektów RentalStatus
             CreateMap<RentalStatus, RentalStatusDto>().ReverseMap();
-
-            CreateMap<Agreement, AgreementDto>().ReverseMap();
-
-            /*CreateMap<Agreement, AgreementDto>();
-            CreateMap<AgreementDto, Agreement>();*/
-
-            CreateMap<Maintenance, MaintenanceDto>();
-            CreateMap<MaintenanceDto, Maintenance>();
-
-            CreateMap<Payment, PaymentDto>();
-            CreateMap<PaymentDto, Payment>();
-
-            
 
             CreateMap<Feedback, FeedbackDto>();
             CreateMap<FeedbackDto, Feedback>();
 
-            CreateMap<LocationMap, LocationMapDto>();
-            CreateMap<LocationMapDto, LocationMap>();
-
             CreateMap<RentalStatus, RentalStatusDto>().ReverseMap();
-            //CreateMap<RentalDetail, Rental>().ReverseMap();
-
-
 
         }
     }

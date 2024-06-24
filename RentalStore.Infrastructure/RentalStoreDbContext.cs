@@ -5,7 +5,6 @@ namespace RentalStore.Infrastructure
 {
     public class RentalStoreDbContext : DbContext
     {
-        public DbSet<Product> Products { get; set; } // DO USUNIECIA
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Rental> Rentals { get; set; }
@@ -21,9 +20,6 @@ namespace RentalStore.Infrastructure
             .HasOne(e => e.Category)
             .WithMany(c => c.Equipment)
             .HasForeignKey(e => e.CategoryId);
-
-            modelBuilder.Entity<LocationMap>()
-                .HasKey(lm => lm.LocationId);
 
             base.OnModelCreating(modelBuilder);
         }

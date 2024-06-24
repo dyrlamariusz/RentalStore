@@ -16,7 +16,6 @@ namespace RentalStore.BlazorClientv2
 
             //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            // rejestracja Service w kontenerze zale¿noœci
             builder.Services.AddScoped<IEquipmentService, EquipmentService>();
             builder.Services.AddScoped<IRentalClientService, RentalClientService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -24,7 +23,6 @@ namespace RentalStore.BlazorClientv2
             builder.Services.AddSingleton<CartStateService>();
             builder.Services.AddScoped<NotificationService>();
 
-            // modyfikacja klienta http aby pobiera³ dane z pliku konfiguracyjnego
             builder.Services.AddScoped(sp => new HttpClient
             {
                 BaseAddress = new Uri(builder.Configuration.GetValue<string>("RentalStoreAPIUrl"))

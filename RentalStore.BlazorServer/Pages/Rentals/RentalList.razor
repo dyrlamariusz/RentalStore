@@ -106,7 +106,7 @@
     {
         base.OnInitialized();
         _rentalList = _rentalService.GetAll();
-        _filteredRentals = _rentalList.ToList(); // Initially show all rentals
+        _filteredRentals = _rentalList.ToList(); 
     }
 
     protected async Task DeleteRental(int id)
@@ -137,7 +137,7 @@
     {
         _rentalList = _rentalService.GetAll();
         ApplySearchFilter(_searchTerm);
-        ApplySorting(); // Refresh sorting after data update
+        ApplySorting(); 
     }
 
     private void ApplySearchFilter(string value)
@@ -159,7 +159,7 @@
             ).ToList();
         }
 
-        ApplySorting(); // Reapply sorting after filtering
+        ApplySorting();
     }
 
     private void ApplySorting()

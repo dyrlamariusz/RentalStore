@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 
 namespace RentalStore.Infrastructure.Repositories
 {
-    // Implementacja repozytoriów specyficznych
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
         private readonly RentalStoreDbContext _rentalStoreDbContext;

@@ -12,6 +12,6 @@ namespace RentalStore.SharedKernel.Dto
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
-        //public ICollection<EquipmentDto> Equipments { get; set;}
+        
     }
 }

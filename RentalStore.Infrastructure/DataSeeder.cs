@@ -207,40 +207,7 @@ namespace RentalStore.Infrastructure
                     _dbContext.Equipments.AddRange(equipments);
                     _dbContext.SaveChanges();
                 }
-                    //if (!_dbContext.Feedbacks.Any())
-                    //{
-                    //    _dbContext.Feedbacks.Add(new Feedback
-                    //    {
-                    //        EquipmentId = 2,
-                    //        Rating = 5,
-                    //        Comment = "Great equipment!",
-                    //        FeedbackDate = DateTime.Now
-                    //    });
-                    //    _dbContext.SaveChanges();
-                    //}
-
-                    /*if (!_dbContext.RentalDetails.Any())
-                    {
-                        var rentaldetail = new List<RentalDetail>
-                        {
-                            new RentalDetail
-                                {
-                                    RentalDetailId = 1,
-                                    EquipmentId = 1,
-                                    Count = 2,
-                                    EquipmentPrice = 50
-                                },
-                                new RentalDetail
-                                {
-                                    RentalDetailId = 2,
-                                    EquipmentId = 2,
-                                    Count = 1,
-                                    EquipmentPrice = 75
-                                }
-                        };
-                        _dbContext.RentalDetails.AddRange(rentaldetail);
-                        _dbContext.SaveChanges();
-                    }*/
+                    
 
                     if (!_dbContext.Rentals.Any())
                 {
@@ -257,12 +224,12 @@ namespace RentalStore.Infrastructure
                     {
                         new RentalDetail
                         {
-                            EquipmentId = 1, // Assuming 1 is the ID for "Narty zjazdowe damskie"
+                            EquipmentId = 1, 
                             Count = 2,
                         },
                         new RentalDetail
                         {
-                            EquipmentId = 2, // Assuming 2 is the ID for "Rower górski"
+                            EquipmentId = 2, 
                             Count = 1,
                         }
                     }
@@ -281,12 +248,12 @@ namespace RentalStore.Infrastructure
                     {
                         new RentalDetail
                         {
-                            EquipmentId = 3, // Assuming 3 is the ID for "Narty biegowe"
+                            EquipmentId = 3, 
                             Count = 1,
                         },
                         new RentalDetail
                         {
-                            EquipmentId = 4, // Assuming 4 is the ID for "Deska snowboardowa"
+                            EquipmentId = 4, 
                             Count = 1,
                         }
                     }

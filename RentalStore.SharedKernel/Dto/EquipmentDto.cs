@@ -24,7 +24,6 @@ namespace RentalStore.SharedKernel.Dto
         public Condition Condition { get; set; }
         public int QuantityInStock { get; set; }
         public float PricePerDay { get; set; }
-        // dodanie zdjecia:
         public string ImageUrl { get; set; }
 
     }

@@ -10,12 +10,6 @@ namespace RentalStore.Application.Validators
             RuleFor(x => x.RentalId)
                 .GreaterThan(0).WithMessage("Rental ID must be greater than 0.");
 
-            /*RuleFor(x => x.EquipmentId)
-                .GreaterThan(0).WithMessage("Equipment ID must be greater than 0.");*/
-
-            /*RuleFor(x => x.AgreementId)
-                .GreaterThan(0).WithMessage("Agreement ID must be greater than 0.");*/
-
             RuleFor(x => x.RentalDate)
                 .NotEmpty().WithMessage("Rental date is required.");
 

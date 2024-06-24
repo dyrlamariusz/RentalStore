@@ -2,7 +2,6 @@
 
 namespace RentalStore.Domain.Interfaces
 {
-    // interfejsy repozytoriów specyficznych
     public interface IRentalRepository : IRepository<Rental>
     {
 

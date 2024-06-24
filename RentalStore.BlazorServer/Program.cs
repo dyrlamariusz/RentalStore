@@ -30,7 +30,8 @@ try
     builder.Services.AddAutoMapper(typeof(RentalStoreMappingProfile));
 
     builder.Services.AddScoped<IValidator<EquipmentDto>, EquipmentDtoValidator>();
-    builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<EquipmentDtoValidator>());
+    //builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<EquipmentDtoValidator>());
+
 
     // var sqliteConnectionString = "Data Source=Kiosk.WebAPI.Logger.db";
     var sqliteConnectionString = "Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RentalStore.db";
@@ -49,6 +50,11 @@ try
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<IFileService, FileService>();
     builder.Services.AddScoped<IToastService, ToastService>();
+
+    builder.Services.AddScoped<IValidator<CreateRentalDto>, RegisterCreateRentalDtoValidator>();
+    builder.Services.AddScoped<IValidator<UpdateRentalDto>, RegisterUpdateRentalDtoValidator>();
+
+    builder.Services.AddFluentValidationAutoValidation();
 
     var app = builder.Build();
 

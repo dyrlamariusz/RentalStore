@@ -12,6 +12,7 @@
     </div>
     <div class="card-body">
         <EditForm Model="@_rental" OnValidSubmit="@CreateRental">
+            <FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -120,6 +121,7 @@
 
 @code {
     private CreateRentalDto _rental = new CreateRentalDto();
+    private FluentValidationValidator? _fluentValidationValidator;
 
     private void CreateRental()
     {

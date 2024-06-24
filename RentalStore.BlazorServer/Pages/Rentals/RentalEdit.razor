@@ -12,6 +12,7 @@
     </div>
     <div class="card-body">
         <EditForm Model="@_rental" OnValidSubmit="@UpdateRental">
+            <FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -122,6 +123,7 @@
     [Parameter]
     public int Id { get; set; }
     private UpdateRentalDto _rental;
+    private FluentValidationValidator? _fluentValidationValidator;
 
     protected override void OnInitialized()
     {

@@ -20,7 +20,8 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Radzen.Blazor" Version="4.32.7" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
+    <PackageReference Include="OpenIdentity.FluentValidation.Blazor" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

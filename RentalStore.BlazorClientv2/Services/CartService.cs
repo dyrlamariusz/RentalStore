@@ -11,6 +11,8 @@ namespace RentalStore.BlazorClientv2.Services
         Task<List<CartItemDto>> GetCartItems();
         Task RemoveFromCart(int equipmentId);
         Task UpdateCartItemQuantity(int equipmentId, int quantity);
+        Task SaveCartItems(List<CartItemDto> cart);
+        Task ClearCart();
     }
 
     public class CartService : ICartService
@@ -44,9 +46,6 @@ namespace RentalStore.BlazorClientv2.Services
             }
         }
 
-
-
-
         public async Task<List<CartItemDto>> GetCartItems()
         {
             var cartJson = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "cart");
@@ -75,10 +74,15 @@ namespace RentalStore.BlazorClientv2.Services
             }
         }
 
-        private async Task SaveCartItems(List<CartItemDto> cart)
+        public async Task SaveCartItems(List<CartItemDto> cart)
         {
             var cartJson = System.Text.Json.JsonSerializer.Serialize(cart);
             await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "cart", cartJson);
+        }
+
+        public async Task ClearCart()
+        {
+            await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", "cart");
         }
     }
 }

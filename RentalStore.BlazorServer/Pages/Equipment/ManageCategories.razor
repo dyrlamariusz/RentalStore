@@ -1,7 +1,8 @@
 ﻿@page "/manage-equipment/categories"
 @inherits LayoutComponentBase
 @inject ICategoryService CategoryService
-@inject Blazored.Toast.Services.IToastService ToastService
+@inject IToastService ToastService
+@inject IJSRuntime _js
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Manage Categories</h3>
@@ -62,10 +63,15 @@ else
         categories = CategoryService.GetAll();
     }
 
-    private void DeleteCategory(int id)
+    private async Task DeleteCategory(int id)
     {
-        CategoryService.Delete(id);
-        LoadCategories();
+        var confirm = await _js.InvokeAsync<bool>("confirm", $"Are You Sure You Want To Delete {categories.FirstOrDefault(r => r.CategoryId==id).CategoryName}?");
+        if (confirm)
+        {
+            ToastService.ShowWarning($"{categories.FirstOrDefault(r => r.CategoryId==id).CategoryName} has been removed");
+            CategoryService.Delete(id);
+            LoadCategories();
+        }
     }
 
     private void ShowAddModal()

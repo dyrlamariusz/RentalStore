@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.18" />
+    <PackageReference Include="Radzen.Blazor" Version="4.32.7" />
+    <PackageReference Include="OpenIdentity.FluentValidation.Blazor" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

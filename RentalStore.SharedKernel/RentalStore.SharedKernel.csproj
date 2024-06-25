@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="4.32.7" />
+    <PackageReference Include="OpenIdentity.FluentValidation.Blazor" Version="3.0.0" />
+  </ItemGroup>
 </Project>

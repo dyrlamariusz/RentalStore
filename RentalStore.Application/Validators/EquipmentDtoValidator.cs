@@ -32,13 +32,9 @@ public class EquipmentDtoValidator : AbstractValidator<EquipmentDto>
             .Must(condition => condition == Condition.New || condition == Condition.Used)
             .WithMessage("Condition must be either 'New' or 'Used'.");
 
-        //RuleFor(x => x.CategoryName)
-        //    .Must(CategoryNameExists).WithMessage("Category do not exist.");
+        
     }
 
-        /*RuleForEach(x => x.Rentals).SetValidator(new RentalDtoValidator());
-        RuleForEach(x => x.Feedbacks).SetValidator(new FeedbackDtoValidator());
-        RuleForEach(x => x.Maintenances).SetValidator(new MaintenanceDtoValidator());
-        RuleForEach(x => x.LocationMaps).SetValidator(new LocationMapDtoValidator());*/
+        
 }
 

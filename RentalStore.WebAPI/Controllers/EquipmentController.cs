@@ -32,13 +32,6 @@ namespace RentalStore.Application.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<EquipmentDto> Get(int id)
         {
-            /*var result = _equipmentService.GetById(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            _logger.LogDebug($"Pobrano sprzęt o id = {id}");
-            return Ok(result);*/
             try
             {
                 var result = _equipmentService.GetById(id);

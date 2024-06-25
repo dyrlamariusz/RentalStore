@@ -1,22 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-@*<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>*@
-@*<NavMenu />*@
-
 <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="#">Rental Store</a>
@@ -33,9 +16,6 @@
                 <NavLink class="nav-link text-white align-content-center" href="">
                     <h5 class="m-0">Contact</h5>
                 </NavLink>
-                <NavLink class="nav-link text-white align-content-center" href="forms">
-                    <h5 class="m-0">Rent Equipment</h5>
-                </NavLink>
             </div>
             <div class="navbar-nav">
                 <NavLink class="nav-link text-white" href="/cart">
@@ -49,16 +29,6 @@
 
 </nav>
 
-<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
-    Timeout="10"
-    IconType="Blazored.Toast.Configuration.IconType.FontAwesome"
-    SuccessClass="success-toast-override"
-    SuccessIcon="fa fa-thumbs-up"
-    ErrorIcon="fa fa-bug"
-    WarningIcon="fa fa-warning"
-    InfoIcon="fa fa-info-circle">
-</BlazoredToasts>
-
 
 <div class="container">
     <div class="row">
@@ -67,3 +37,13 @@
         </div>
     </div>
 </div>
+
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
+                Timeout="10"
+                IconType="Blazored.Toast.Configuration.IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorIcon="fa fa-bug"
+                WarningIcon="fa fa-warning"
+                InfoIcon="fa fa-info-circle">
+</BlazoredToasts>

@@ -4,6 +4,7 @@
 @inject ICategoryService CategoryService
 @inject IRentalService RentalService
 @inject IToastService ToastService
+@inject IJSRuntime _js
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Manage Equipment</h3>
@@ -197,11 +198,15 @@ else
         return isFilterApplied;
     }
 
-    private void DeleteEquipment(int id)
+    private async Task DeleteEquipment(int id)
     {
-        ToastService.ShowWarning($"The {equipments.FirstOrDefault().EquipmentId=id} has been removed");
-        EquipmentService.Delete(id);
-        LoadEquipment();
+        var confirm = await _js.InvokeAsync<bool>("confirm", $"Are You Sure You Want To Delete {equipments.FirstOrDefault(r => r.EquipmentId==id).Name}?");
+        if (confirm)
+        {
+            ToastService.ShowWarning($"{equipments.FirstOrDefault(r => r.EquipmentId==id).Name} has been removed");
+            EquipmentService.Delete(id);
+            LoadEquipment();
+        }
     }
 
     private void ShowAddModal()

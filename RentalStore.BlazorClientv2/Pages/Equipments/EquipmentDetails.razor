@@ -1,6 +1,7 @@
 ﻿@page "/equipment/{id:int}"
 @inject IEquipmentService EquipmentService
 @inject ICartService CartService
+@inject IToastService ToastService
 
 @code {
     [Parameter]
@@ -20,6 +21,7 @@
             throw new ArgumentNullException(nameof(equipment), "Equipment cannot be null");
         }
         await CartService.AddToCart(equipment);
+        ToastService.ShowInfo($"{equipment.Name} has been added to the cart");
     }
 }
 
@@ -31,8 +33,7 @@
         </div>
         <div class="d-flex justify-content-center mb-4">
             <div class="position-relative w-70">
-                <img src="https://via.placeholder.com/400x300" alt="@equipment.Name" class="img-fluid rounded mx-auto d-block" />
-                <!-- W przyszłości można tu dodać slider -->
+                <img src="@equipment.ImageUrl" alt="@equipment.Name" class="img-fluid rounded mx-auto d-block" />
             </div>
         </div>
         <div class="text-center mb-4">

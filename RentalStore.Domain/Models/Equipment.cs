@@ -24,12 +24,9 @@ namespace RentalStore.Domain.Models
         public int QuantityInStock { get; set; }
         public decimal PricePerDay { get; set; }
         public Category Category { get; set; }
-        //dodanie zdjęcia:
         public string ImageUrl { get; set; } = "/images/no-image-icon.png";
         public ICollection<Rental> Rentals { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }
-        public ICollection<Maintenance> Maintenances { get; set;}
-        public ICollection<LocationMap> LocationMaps { get; set; }
         public DateTime ModifiedAt { get; set; }
     }
 }

@@ -29,14 +29,15 @@
                     <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerEmail">
                         <RadzenLabel Text="Email address" Component="CustomerEmail" class="mb-0 mt-2" />
                         <RadzenTextBox Style="width: 100%;" class="m-0" @bind-Value="rental.CustomerEmail" Name="CustomerEmail" />
-                        <RadzenEmailValidator Component="CustomerEmail" class="text-danger" Text="Invalid email address" />
                         <RadzenRequiredValidator Component="CustomerEmail" class="text-danger" Text="Email is required" />
+                        <RadzenRegexValidator Component="CustomerEmail" Pattern=@regexEmail class="text-danger" Text="Invalid email" />
                     </RadzenTemplateFormField>
 
                     <RadzenTemplateFormField TItem="CreateRentalDto" Property="CustomerPhone">
                         <RadzenLabel Text="Phone" class="mb-0 mt-2" Component="CustomerPhone" />
                         <RadzenTextBox Style="width: 100%;" @bind-Value="rental.CustomerPhone" Name="CustomerPhone" />
                         <RadzenRequiredValidator Component="CustomerPhone" class="text-danger" Text="Phone is required" />
+                        <RadzenRegexValidator Component="CustomerPhone" Pattern=@regexPhone class="text-danger" Text="Invalid phone number" />
                     </RadzenTemplateFormField>
 
                     <RadzenButton ButtonType="ButtonType.Submit" class="btn btn-primary btn-block mb-2 mt-3" Text="Send" />
@@ -79,6 +80,8 @@ else
 @code {
     private CreateRentalDto rental = new CreateRentalDto();
     private bool orderPlaced = false;
+    private string regexEmail = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    private string regexPhone = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
 
     private async Task HandleValidSubmit(CreateRentalDto rental)
     {

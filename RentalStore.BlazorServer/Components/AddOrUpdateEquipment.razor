@@ -1,4 +1,5 @@
 @namespace RentalStore.BlazorServer.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
 @inject ICategoryService CategoryService
 @inject IEquipmentService EquipmentService
 @inject IServiceProvider ServiceProvider
@@ -178,7 +179,7 @@
     private List<string> validationErrors = new List<string>();
     private string imagePreviewUrl = "/images/no-image-icon.png";
     private string baseUrl;
-    private bool isImageUploaded = false; // Track if a new image has been uploaded
+    private bool isImageUploaded = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -220,10 +221,12 @@
             if (equipment.EquipmentId == 0)
             {
                 EquipmentService.Create(equipment);
+                ToastService.ShowSuccess("Equipment have been added");
             }
             else
             {
                 EquipmentService.Update(equipment.EquipmentId, equipment);
+                ToastService.ShowSuccess("Equipment have been updated");
             }
 
             IsVisible = false;

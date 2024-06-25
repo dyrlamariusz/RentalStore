@@ -2,6 +2,7 @@
 @inject IRentalService _rentalService
 @inject IJSRuntime _js
 @inject NavigationManager _navigationManager
+@inject IToastService ToastService
 
 <PageTitle>Rental list</PageTitle>
 <h1>Rental list</h1>
@@ -118,6 +119,7 @@
             if (confirm)
             {
                 _rentalService.Delete(id);
+                ToastService.ShowInfo($"Rental {rental.RentalId} have been removed");
                 RefreshList();
             }
         }

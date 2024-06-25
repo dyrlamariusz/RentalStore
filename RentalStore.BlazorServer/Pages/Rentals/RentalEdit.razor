@@ -1,6 +1,7 @@
 ﻿@page "/rentals/edit/{id:int}"
 @inject IRentalService _rentalService
 @inject NavigationManager _navigationManager
+@inject IToastService ToastService
 
 <PageTitle>Edit Rental</PageTitle>
 
@@ -146,6 +147,7 @@
     private void UpdateRental()
     {
         _rentalService.Update(Id, _rental);
+        ToastService.ShowSuccess("Rental have been updated");
         _navigationManager.NavigateTo("/rentals");
     }
 

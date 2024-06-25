@@ -1,6 +1,7 @@
 ﻿@page "/equipment/{id:int}"
 @inject IEquipmentService EquipmentService
 @inject ICartService CartService
+@inject IToastService ToastService
 
 @code {
     [Parameter]
@@ -20,6 +21,7 @@
             throw new ArgumentNullException(nameof(equipment), "Equipment cannot be null");
         }
         await CartService.AddToCart(equipment);
+        ToastService.ShowInfo($"{equipment.Name} has been added to the cart");
     }
 }
 

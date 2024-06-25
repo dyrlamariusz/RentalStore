@@ -1,6 +1,7 @@
 ﻿@page "/rentals/create"
 @inject IRentalService _rentalService
 @inject NavigationManager _navigationManager
+@inject IToastService ToastService
 
 <PageTitle>Create Rental</PageTitle>
 
@@ -126,6 +127,7 @@
     private void CreateRental()
     {
         _rentalService.Create(_rental);
+        ToastService.ShowSuccess("Rental have been created");
         _navigationManager.NavigateTo("/rentals");
     }
 

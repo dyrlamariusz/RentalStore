@@ -1,20 +1,25 @@
-﻿using RentalStore.Domain.Contracts;
+﻿using RentalStore.Domain.Interfaces;
 
 namespace RentalStore.Infrastructure
 {
-    // implementacja Unit of Work
     public class RentalStoreUnitOfWork : IRentalStoreUnitOfWork
     {
         private readonly RentalStoreDbContext _context;
 
-        public IProductRepository ProductRepository { get; }
+        
+        public IEquipmentRepository EquipmentRepository { get; }
+        public IRentalRepository RentalRepository { get; }
+        public ICategoryRepository CategoryRepository { get; }
 
-        public RentalStoreUnitOfWork(RentalStoreDbContext context, IProductRepository productRepository)
+
+        public RentalStoreUnitOfWork(RentalStoreDbContext context, IEquipmentRepository equipmentRepository,IRentalRepository rentalRepository, ICategoryRepository categoryRepository)
         {
             this._context = context;
-            this.ProductRepository = productRepository;
-
+            this.EquipmentRepository = equipmentRepository;
+            this.RentalRepository = rentalRepository;
+            this.CategoryRepository = categoryRepository;
         }
+
 
         public void Commit()
         {

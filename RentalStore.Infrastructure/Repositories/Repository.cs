@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RentalStore.Domain.Contracts;
+using RentalStore.Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace RentalStore.Infrastructure.Repositories
@@ -45,6 +45,10 @@ namespace RentalStore.Infrastructure.Repositories
         public void Delete(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
+        }
+        public void Update(TEntity entity) 
+        {
+            _context.Set<TEntity>().Update(entity);
         }
     }
 }

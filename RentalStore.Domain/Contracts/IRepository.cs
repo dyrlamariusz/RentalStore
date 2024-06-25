@@ -1,8 +1,7 @@
 ﻿using System.Linq.Expressions;
 
-namespace RentalStore.Domain.Contracts
+namespace RentalStore.Domain.Interfaces
 {
-    // interfejs repozytorium generycznego
     public interface IRepository<TEntity> where TEntity : class
     {
         int Count();
@@ -11,5 +10,7 @@ namespace RentalStore.Domain.Contracts
         IList<TEntity> Find(Expression<Func<TEntity, bool>> expression);
         void Insert(TEntity entity);
         void Delete(TEntity entity);
+        void Update(TEntity entity);
+
     }
 }

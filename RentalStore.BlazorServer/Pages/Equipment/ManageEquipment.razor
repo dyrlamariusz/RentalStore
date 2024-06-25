@@ -3,6 +3,7 @@
 @inject IEquipmentService EquipmentService
 @inject ICategoryService CategoryService
 @inject IRentalService RentalService
+@inject IToastService ToastService
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Manage Equipment</h3>
@@ -152,10 +153,12 @@ else
         if (sortOrder == "quantity_asc")
         {
             sortOrder = "quantity_desc";
+            ToastService.ShowInfo("Sortowanie od najwiekszej ilosci do najmniejszej");
         }
         else
         {
             sortOrder = "quantity_asc";
+            ToastService.ShowInfo("Sortowanie od najmniejszej ilosci do najwiekszej");
         }
         FilterAndSortEquipment(true);
     }
@@ -165,10 +168,12 @@ else
         if (sortOrder == "price_asc")
         {
             sortOrder = "price_desc";
+            ToastService.ShowInfo("Sortowanie od najdrozszych do najtanszych");
         }
         else
         {
             sortOrder = "price_asc";
+            ToastService.ShowInfo("Sortowanie od najtanszych do najdrozszych");
         }
         FilterAndSortEquipment(true);
     }
@@ -194,6 +199,7 @@ else
 
     private void DeleteEquipment(int id)
     {
+        ToastService.ShowWarning($"The {equipments.FirstOrDefault().EquipmentId=id} has been removed");
         EquipmentService.Delete(id);
         LoadEquipment();
     }
